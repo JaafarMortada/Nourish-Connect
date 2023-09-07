@@ -1,9 +1,15 @@
-
+import { useNavigate } from "react-router-dom";
 import { logoBlack } from "../../assets";
 import PrimaryButton from "../ui/Button";
 import InputField from "../ui/Input";
+
 const LoginForm = () => {
 
+    const navigate = useNavigate()
+    
+    const NavigateToSignUp = () => {
+        navigate("/auth/signup")
+    }
 
     return (
         <div className="flex flex-col gap-5">
@@ -28,7 +34,10 @@ const LoginForm = () => {
                 <span className="text-[18px] pt-1">
                     Don’t have an account? 
                 </span>
-                <span className="text-[21px] font-semibold hover:text-[--primary] cursor-pointer">
+                <span 
+                    className="text-[21px] font-semibold hover:text-[--primary] cursor-pointer"
+                    onClick={NavigateToSignUp}    
+                >
                     Sign Up
                 </span>
             </div>
