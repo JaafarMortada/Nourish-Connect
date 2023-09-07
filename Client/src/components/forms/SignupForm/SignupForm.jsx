@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { logoBlack } from "../../../assets";
 import { Stepper, Step, Typography, step, Spinner } from "@material-tailwind/react";
 import {
@@ -11,11 +11,15 @@ import PrimaryButton from "../../ui/Button";
 import SignupStepOne from "./SignupSteps/SignupStepOne";
 import SignupStepTwo from "./SignupSteps/SignupStepTwo";
 import SignupStepThree from "./SignupSteps/SignupStepThree";
+import { useStoreData } from "../../../global/store";
+import { sendRequest } from "../../../config/request";
 
 const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastStep, isFirstStep, setIsFirstStep, setIsLastStep }) => {
 
+    const { store, setStoreData } = useStoreData()
+    
     const navigate = useNavigate()
-
+    
     const NavigateToLogin = () => {
         navigate("/auth/login")
     }
@@ -26,16 +30,34 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
         email: "",
         password: "",
         company_name: "",
-        latitude:"",
+        latitude: "",
         longitude: ""
     })
+
     const [signingUp, setSigningUp] = useState(false)
-    const handleDataChange = (e)=>{
-        setData({...data, [e.target.name]: e.target.value})
+
+    const handleDataChange = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value })
     }
 
-    const handleSignUp = () => {
-        setSigningUp(true);
+    const handleSignUp = async () => {
+        setSigningUp(true)
+        try {
+            const response = await sendRequest({
+                method: "POST",
+                route: "/api/auth/register",
+                includeHeaders: false,
+                body: { ...data, role },
+            });
+            if (response.message === "User created successfully") {
+                setStoreData({ ...store, token: response.user.token })
+                // navigate("/")
+            } else {
+
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -109,16 +131,16 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                 </Stepper>
                 <div className="mt-[4rem]">
                     {
-                    activeStep === 0 ?
-                        <SignupStepOne role={role} setRole={setRole}/>
-                        :
-                        (activeStep === 1 ? 
-                            <SignupStepTwo data={data} handleDataChange={handleDataChange}/> 
-                            : 
-                            <SignupStepThree data={data} role={role} handleDataChange={handleDataChange}/>)
+                        activeStep === 0 ?
+                            <SignupStepOne role={role} setRole={setRole} />
+                            :
+                            (activeStep === 1 ?
+                                <SignupStepTwo data={data} handleDataChange={handleDataChange} />
+                                :
+                                <SignupStepThree data={data} role={role} handleDataChange={handleDataChange} />)
                     }
                 </div>
-                
+
                 <div className="mt-5 flex justify-between">
                     <PrimaryButton
                         label={"Prev"}
@@ -133,23 +155,23 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                         onClick={activeStep === 2 ? handleSignUp : handleNext}
                         disabled={
                             (
-                                activeStep === 2 && 
-                                    (
-                                        data.company_name === '' || 
-                                        data.latitude === '' || 
-                                        data.longitude === ''
-                                    )
-                            ) 
-                            || 
+                                activeStep === 2 &&
+                                (
+                                    data.company_name === '' ||
+                                    data.latitude === '' ||
+                                    data.longitude === ''
+                                )
+                            )
+                            ||
                             (
-                                activeStep === 1 && 
-                                    (
-                                        data.username === '' || 
-                                        data.email === '' || 
-                                        data.password === '' ||
-                                        data.password.length < 8
-                                    )
-                            ) 
+                                activeStep === 1 &&
+                                (
+                                    data.username === '' ||
+                                    data.email === '' ||
+                                    data.password === '' ||
+                                    data.password.length < 8
+                                )
+                            )
                             || role === ''}
                     />
                 </div>
