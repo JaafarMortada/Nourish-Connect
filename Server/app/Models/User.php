@@ -42,4 +42,31 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function usertype()
+    {
+        return $this->belongsTo(UserType::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class, 'company_id');
+    }
+
+    public function cashiers()
+    {
+        return $this->hasMany(Cashier::class);
+    }
+
+    public function discounts()
+    {
+        return $this->hasMany(Discount::class, 'company_id');
+    }
+
+
 }

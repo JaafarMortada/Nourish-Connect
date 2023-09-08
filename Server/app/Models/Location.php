@@ -16,6 +16,11 @@ class Location extends Model
     ];
 
     public function users(){
-        return $this->hasMany(User::class, 'usertype_id');
+        return $this->hasMany(User::class);
+    }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
     }
 }
