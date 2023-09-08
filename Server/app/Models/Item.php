@@ -24,4 +24,9 @@ class Item extends Model
         return $this->belongsToMany(Cart::class, 'carts_items')->withPivot('quantity');
     }
 
+    public function donationItems()
+{
+    return $this->hasMany(DonationItem::class, 'item_id');
+}
+
 }
