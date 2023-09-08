@@ -14,6 +14,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { default_profile_pic, logoWhite } from "../../assets";
 import {
+    emptyStore,
     sidebarCashierLinks,
     sidebarCharityLinks,
     sidebarManagerLinks,
@@ -27,7 +28,7 @@ const Sidebar = () => {
 
     const [open, setOpen] = useState(0);
 
-    const { store } = useStoreData();
+    const { store, setStoreData } = useStoreData();
 
     const sidebarLinks =
         store.usertype === "manager"
@@ -39,6 +40,11 @@ const Sidebar = () => {
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
     };
+
+    const handleLogout = () => {
+        setStoreData(emptyStore)
+        navigate(`/auth/login`)
+    }   
 
     return (
         <Card className="h-[100vh] rounded-none w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 bg-[--background-black] overflow-auto">
@@ -107,7 +113,7 @@ const Sidebar = () => {
                                 {sidebarProfileLinks.map((Link, index) => (
                                     <ListItem
                                         key={`${Link.id}-${index}`}
-                                        onClick={() => navigate(`/${store.usertype}/${Link.id}`)}
+                                        onClick={Link.id === "logout" ? handleLogout : () => navigate(`/${store.usertype}/${Link.id}`)}
                                         className="text-[--text-gray]"
                                     >
                                         <ListItemPrefix>

@@ -11,6 +11,11 @@ import {
 
 } from "@heroicons/react/24/solid";
 
+export const emptyStore = {
+    token: '',
+    usertype: '',
+    
+}
 
 export const sidebarManagerLinks = [
     {
