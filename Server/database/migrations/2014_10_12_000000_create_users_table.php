@@ -23,7 +23,7 @@ return new class extends Migration
         });
 
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id('id');
             $table->string('username');
             $table->string('company_name');
             $table->string('email')->unique();
