@@ -1,14 +1,16 @@
 import { Input } from "@material-tailwind/react";
 
-const InputField = ({ type, label, value, onChange, }) => {
+const InputField = ({ name, type, label, value, onChange, error=false }) => {
     return (
         <Input
             variant="standard"
+            name={name}
             type={type}
             label={label}
             value={value}
             onChange={onChange}
             color='teal'
+            error={error}
         />
     )
 }
