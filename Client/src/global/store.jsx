@@ -5,6 +5,7 @@ const storeData = createContext();
 export const StoreDataProvider = ({ children }) => {
     const [store, setStoreData] = useState({
         token: '',
+        usertype: 'manager',
         
     });
 
