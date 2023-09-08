@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { logoBlack } from "../../../assets";
 import { Stepper, Step, Typography, step, Spinner } from "@material-tailwind/react";
 import {
@@ -25,8 +25,6 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
     const NavigateToLogin = () => {
         navigate("/auth/login")
     }
-
-    useEffect(()=>{console.log('logged in successfully: ' ,store.token)},[])
 
     const [role, setRole] = useState('')
     const [data, setData] = useState({

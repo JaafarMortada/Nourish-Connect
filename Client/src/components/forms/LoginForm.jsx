@@ -42,6 +42,7 @@ const LoginForm = () => {
             });
             if (response.message === "logged in successfully") {
                 setStoreData({ ...store, token: response.user.token })
+                // navigate("/")
             } else {
                 setSigningIn(false)
                 setError(true)
