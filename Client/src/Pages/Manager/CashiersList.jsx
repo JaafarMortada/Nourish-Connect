@@ -1,6 +1,7 @@
-import { Sidebar } from "../../components"
+import { Sidebar, CashiersTable } from "../../components"
 import { styles } from "../../constants"
-const Dashboard = () => {
+
+const CashiersList = () => {
   return (
     <>
         <div className="flex ">
@@ -10,14 +11,13 @@ const Dashboard = () => {
             
             <div className={styles.pageContainer}>
                 <div className={styles.pageHeaderText}>
-                  Dashboard
+                  My Cashiers
                 </div>
-
+                  <CashiersTable />
             </div>
         </div>
     </>
-    
   )
 }
 
-export default Dashboard
+export default CashiersList

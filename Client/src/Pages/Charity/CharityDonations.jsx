@@ -1,6 +1,6 @@
 import { Sidebar } from "../../components"
 import { styles } from "../../constants"
-const Dashboard = () => {
+const CharityDonations = () => {
   return (
     <>
         <div className="flex ">
@@ -10,7 +10,7 @@ const Dashboard = () => {
             
             <div className={styles.pageContainer}>
                 <div className={styles.pageHeaderText}>
-                  Dashboard
+                  Donations
                 </div>
 
             </div>
@@ -20,4 +20,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default CharityDonations

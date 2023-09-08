@@ -1,6 +1,6 @@
-import { Sidebar } from "../../components"
-import { styles } from "../../constants"
-const Dashboard = () => {
+import { Sidebar } from "../components"
+import { styles } from "../constants"
+const Profile = () => {
   return (
     <>
         <div className="flex ">
@@ -9,10 +9,9 @@ const Dashboard = () => {
             </div>
             
             <div className={styles.pageContainer}>
-                <div className={styles.pageHeaderText}>
-                  Dashboard
+            <div className={styles.pageHeaderText}>
+                  Profile Overview
                 </div>
-
             </div>
         </div>
     </>
@@ -20,4 +19,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Profile

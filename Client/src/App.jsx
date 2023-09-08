@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { StoreDataProvider } from './global/store';
 import {
   AuthRoutes,
+  CashierRoutes,
+  CharityRoutes,
   ManagerRoutes,
 
 } from './routes';
@@ -15,7 +17,9 @@ function App() {
       <StoreDataProvider>
         <Routes>
           <Route path="/auth/*" element={<AuthRoutes />} />
-          <Route path="/Manager/*" element={<ManagerRoutes />} />
+          <Route path="/manager/*" element={<ManagerRoutes />} />
+          <Route path="/cashier/*" element={<CashierRoutes />} />
+          <Route path="/charity/*" element={<CharityRoutes />} />
         </Routes>
       </StoreDataProvider>
     </BrowserRouter>
