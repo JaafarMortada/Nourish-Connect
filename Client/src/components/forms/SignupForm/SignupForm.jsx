@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logoBlack } from "../../../assets";
 import { Stepper, Step, Typography, step, Spinner } from "@material-tailwind/react";
 import {
@@ -7,22 +7,26 @@ import {
     UserIcon,
     BuildingLibraryIcon,
 } from "@heroicons/react/24/outline";
+import { useStoreData } from "../../../global/store";
+import { sendRequest } from "../../../config/request";
 import PrimaryButton from "../../ui/Button";
 import SignupStepOne from "./SignupSteps/SignupStepOne";
 import SignupStepTwo from "./SignupSteps/SignupStepTwo";
 import SignupStepThree from "./SignupSteps/SignupStepThree";
-import { useStoreData } from "../../../global/store";
-import { sendRequest } from "../../../config/request";
 
 const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastStep, isFirstStep, setIsFirstStep, setIsLastStep }) => {
 
     const { store, setStoreData } = useStoreData()
     
+    const [error, setError] = useState(false)
+
     const navigate = useNavigate()
     
     const NavigateToLogin = () => {
         navigate("/auth/login")
     }
+
+    useEffect(()=>{console.log('logged in successfully: ' ,store.token)},[])
 
     const [role, setRole] = useState('')
     const [data, setData] = useState({
@@ -38,6 +42,7 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
 
     const handleDataChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
+        setError(false)
     }
 
     const handleSignUp = async () => {
@@ -53,10 +58,14 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                 setStoreData({ ...store, token: response.user.token })
                 // navigate("/")
             } else {
-
+                setSigningUp(false)
+                setError(true)
+                setActiveStep(1)
             }
         } catch (error) {
-            console.log(error)
+            setSigningUp(false)
+            setError(true)
+            setActiveStep(1)
         }
     }
 
@@ -135,9 +144,9 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                             <SignupStepOne role={role} setRole={setRole} />
                             :
                             (activeStep === 1 ?
-                                <SignupStepTwo data={data} handleDataChange={handleDataChange} />
+                                <SignupStepTwo data={data} handleDataChange={handleDataChange} error={error} />
                                 :
-                                <SignupStepThree data={data} role={role} handleDataChange={handleDataChange} />)
+                                <SignupStepThree data={data} role={role} handleDataChange={handleDataChange} error={error} />)
                     }
                 </div>
 
@@ -152,7 +161,10 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                     <PrimaryButton
                         label={activeStep === 2 ? (signingUp ? <Spinner /> : "Sign Up") : "Next"}
                         classNames={"bg-[--primary] w-[80.69px] flex justify-center items-center p-0"}
-                        onClick={activeStep === 2 ? handleSignUp : handleNext}
+                        onClick={activeStep === 2 ? handleSignUp : () => {
+                            setSigningUp(false)
+                            handleNext()
+                        }}
                         disabled={
                             (
                                 activeStep === 2 &&
@@ -172,7 +184,7 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                                     data.password.length < 8
                                 )
                             )
-                            || role === ''}
+                            || role === '' || signingUp}
                     />
                 </div>
             </div>

@@ -1,16 +1,18 @@
 import InputField from "../../../ui/Input"
 import { Typography } from "@material-tailwind/react"
 
-const SignupStepTwo = ({ data, handleDataChange }) => {
+const SignupStepTwo = ({ data, handleDataChange, error }) => {
     return (
         <div className="ss:w-[500px] w-[300px] flex flex-col gap-5 " >
             <InputField
+                error={error}
                 label={'Enter your username'}
                 value={data.username}
                 onChange={handleDataChange}
                 name={'username'}
             />
             <InputField
+                error={error}
                 label={'Enter your Email'}
                 value={data.email}
                 onChange={handleDataChange}
@@ -18,6 +20,7 @@ const SignupStepTwo = ({ data, handleDataChange }) => {
             />
             <div>
                 <InputField
+                    error={error}
                     type={"password"}
                     label={'Enter your password'}
                     value={data.password}
