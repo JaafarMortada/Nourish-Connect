@@ -11,6 +11,7 @@ import InventoryCard from "./cards/inventoryCard/inventoryCard";
 import TextAreaField from "./ui/TextAreaField";
 import FileDragInput from "./ui/FileDragInput";
 import UploadSalesData from "./cards/uploadSalesData/UploadSalesData";
+import ErrorDialog from "./ui/ErrorDialog";
 
 export {
     CashiersTable,
@@ -26,5 +27,6 @@ export {
     TextAreaField,
     FileDragInput,
     UploadSalesData,
+    ErrorDialog,
     
 }
