@@ -11,7 +11,7 @@ import {
     AccordionBody,
 } from "@material-tailwind/react";
 
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, PowerIcon } from "@heroicons/react/24/outline";
 import { default_profile_pic, logoWhite } from "../../assets";
 import {
     emptyStore,
@@ -99,9 +99,17 @@ const Sidebar = () => {
                             <span className="text-[16px]">Company name</span>
                         </div>
 
-                        {store.usertype === "cashier" ? null : (
-                            <AccordionHeader className="absolute right-5 top-auto w-5 border-b-0 text-[--text-gray]" >{''}</AccordionHeader>
-                        )}
+                        {store.usertype === "cashier" 
+                            ? 
+                                <PowerIcon 
+                                    className="absolute right-2 top-auto w-5 border-b-0 text-[--primary]"
+                                    onClick={handleLogout}
+                                /> 
+                            : 
+                            (
+                                <AccordionHeader className="absolute right-5 top-auto w-5 border-b-0 text-[--text-gray]" >{''}</AccordionHeader>
+                            )
+                        }
 
                     </ListItem>
                     <hr className="my-2 border-[--text-gray]" />
