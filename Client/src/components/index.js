@@ -7,6 +7,8 @@ import InputField from "./ui/Input";
 import ItemsList from "./cards/itemsList/ItemsList";
 import Checkout from "./cards/checkout/Checkout";
 import ReceiptsTable from "./cards/tables/Receipts";
+import InventoryCard from "./cards/inventoryCard/inventoryCard";
+import TextAreaField from "./ui/TextAreaField";
 
 export {
     CashiersTable,
@@ -18,5 +20,7 @@ export {
     ItemsList,
     Checkout,
     ReceiptsTable,
-    
+    InventoryCard,
+    TextAreaField,
+
 }

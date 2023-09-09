@@ -1,4 +1,4 @@
-import { Sidebar } from "../../components"
+import { InventoryCard, Sidebar } from "../../components"
 import { styles } from "../../constants"
 const Inventory = () => {
   return (
@@ -12,7 +12,7 @@ const Inventory = () => {
                 <div className={styles.pageHeaderText}>
                   Inventory
                 </div>
-
+                <InventoryCard />
             </div>
         </div>
     </>
