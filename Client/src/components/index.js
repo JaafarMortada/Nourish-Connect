@@ -9,6 +9,8 @@ import Checkout from "./cards/checkout/Checkout";
 import ReceiptsTable from "./cards/tables/Receipts";
 import InventoryCard from "./cards/inventoryCard/inventoryCard";
 import TextAreaField from "./ui/TextAreaField";
+import FileDragInput from "./ui/FileDragInput";
+import UploadSalesData from "./cards/uploadSalesData/UploadSalesData";
 
 export {
     CashiersTable,
@@ -22,5 +24,7 @@ export {
     ReceiptsTable,
     InventoryCard,
     TextAreaField,
-
+    FileDragInput,
+    UploadSalesData,
+    
 }

@@ -111,3 +111,52 @@ export const styles = {
     pageContainer: "flex flex-col flex-1 h-[100vh] overflow-auto min-w-[500px] items-center "
 
   };
+
+
+export const inventoryUploadConditions = [
+    {
+        id:'inventoryConditionsTitle',
+        text: 'Before Uploading Please make sure that the file contains the data listed below:'
+    },
+    {
+        id:'inventory-condition-1',
+        text: 'Item’s Name'
+    },
+    {
+        id:'inventory-condition-2',
+        text: 'item’s Stock Price as well as the retail price and the quantity'
+    },
+    {
+        id:'inventory-condition-3',
+        text: 'item’s category'
+    },
+    {
+        id:'inventory-condition-4',
+        text: 'item’s barcode'
+    },
+    {
+        id:'inventory-condition-5',
+        text: 'item’s production and expiry date'
+    }
+
+]
+
+export const POSuploadConditions = [
+    {
+        id:'POSConditionsTitle',
+        text: 'Before Uploading Please make sure that the file contains the data listed below:'
+    },
+    {
+        id:'POS-condition-1',
+        text: 'Item’s Name'
+    },
+    {
+        id:'POS-condition-2',
+        text: 'item’s barcode'
+    },
+    {
+        id:'POS-condition-3',
+        text: 'Sold quantity'
+    },
+    
+]
