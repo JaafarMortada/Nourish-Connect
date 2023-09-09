@@ -6,7 +6,9 @@ import {
   Chip,
   Avatar,
 } from "@material-tailwind/react";
+import { useState } from "react";
 import PrimaryButton from "../../ui/Button";
+import AddCashierModal from "../../modals/addCashier/AddCashierModal";
 
 const TABLE_HEAD = ["Username & Email", "Employed", "Status"];
 
@@ -24,7 +26,14 @@ const TABLE_ROWS = [
 
 
 const Table = () => {
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(!open);
+
   return (
+    <>
+    <AddCashierModal open={open} handleOpen={handleOpen}/>
 
     <Card className="flex flex-col h-[80%] w-[95%]">
       <CardHeader floated={false} shadow={false} className="rounded-none ">
@@ -38,7 +47,7 @@ const Table = () => {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col sm:flex-row">
-            <PrimaryButton classNames="flex items-center bg-[--primary]" size="sm" label='Add Cashier' />
+            <PrimaryButton classNames="flex items-center bg-[--primary]" size="sm" label='Add Cashier' onClick={handleOpen}/>
           </div>
         </div>
 
@@ -131,6 +140,8 @@ const Table = () => {
         </CardBody>}
 
     </Card>
+        
+    </>
   );
 }
 

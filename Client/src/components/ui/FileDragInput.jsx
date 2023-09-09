@@ -26,7 +26,7 @@ const FileDragInput = ({ name, onFileUpload }) => {
             />
             <Dropzone onDrop={handleDrop}>
                 {({ getRootProps, getInputProps }) => (
-                    <section className=" rounded-lg flex">
+                    <section className=" rounded-lg flex cursor-pointer">
                         <div {...getRootProps()} className="lg:w-[250px] w-[180px] h-[120px] border-2 border-[--primary] rounded-lg flex flex-col items-center justify-center gap-3">
                             <input
                                 {...getInputProps()}
