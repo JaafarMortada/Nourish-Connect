@@ -9,7 +9,7 @@ import CheckoutItemCard from "../miniCards/CheckoutItemCard";
 import PrimaryButton from "../../ui/Button";
 import { useEffect, useState } from "react";
 
-const Checkout = ({ data, setCheckoutItems, handleRemoveFromCheckout, handleQuantity, checkoutRequest }) => {
+const Checkout = ({ data, setCheckoutItems, handleRemoveFromCheckout, handleQuantity, checkoutRequest, error }) => {
   const [total, setTotal] = useState(0)
   useEffect(()=>{
     let new_total = 0;
@@ -51,7 +51,7 @@ const Checkout = ({ data, setCheckoutItems, handleRemoveFromCheckout, handleQuan
           <span className="font-bold">Total: </span>
           <span>{total}$</span>
         </div>
-        <PrimaryButton label={'Checkout'} classNames={"w-[80%] bg-[--primary]"} onClick={checkoutRequest} />
+        <PrimaryButton label={`${error ? "An error occurred" : "Checkout"}`} classNames={`w-[80%] ${ error ? "bg-red-500" : "bg-[--primary]"}`} onClick={checkoutRequest} />
       </div>
 
     </Card>
