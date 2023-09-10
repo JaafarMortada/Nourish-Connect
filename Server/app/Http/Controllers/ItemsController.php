@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\File;
 
+use function Laravel\Prompts\search;
+
 class ItemsController extends Controller
 {
     public function addItem(Request $request) {
@@ -56,6 +58,26 @@ class ItemsController extends Controller
         return response()->json([
             'message' => 'Item added successfully',
             'item' => $item
+        ], 200);
+    }
+
+    public function getItems($search = null){
+
+        $inventory_id = Auth::user()->cashiers[0]->company->inventories[0]->id;
+        $query = Item::where('inventory_id', $inventory_id);
+        if ($search) {
+            $query->where(function ($innerQuery) use ($search) {
+                $innerQuery->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('category', $search)
+                    ->orWhere('barcode', $search);
+            });
+        }
+
+        $items = $query->get();
+
+        return response()->json([
+            'message' => 'success',
+            'item' => $items
         ], 200);
     }
 }
