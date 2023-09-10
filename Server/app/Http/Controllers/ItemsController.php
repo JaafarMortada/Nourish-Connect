@@ -19,9 +19,9 @@ class ItemsController extends Controller
                 'price' => 'required|numeric', 
                 'original_price' => 'required|numeric',
                 'quantity' => 'required|numeric',
-                'production_date' => 'date',
+                'production_date' => 'date', 
                 'expiry_date' => 'date',
-                'image' => [File::image()],
+                'image' => 'sometimes|image',
                 'category' => 'required|string|max:255',
                 'barcode' => 'required|string',
             ]);

@@ -31,7 +31,7 @@ return new class extends Migration
             $table->bigInteger('available_quantity');
             $table->date('production_date')->nullable();
             $table->date('expiry_date')->nullable();
-            $table->bigInteger('pic_url')->nullable();
+            $table->longText('pic_url')->nullable();
             $table->string('category');
             $table->text('barcode');
             $table->unsignedBigInteger('inventory_id');

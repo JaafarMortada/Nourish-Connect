@@ -60,7 +60,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function cashiers()
     {
-        return $this->hasMany(Cashier::class);
+        return $this->hasMany(Cashier::class, "cashier_id");
     }
 
     public function discounts()
