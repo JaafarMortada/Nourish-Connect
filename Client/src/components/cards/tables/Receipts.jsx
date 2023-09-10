@@ -4,22 +4,37 @@ import {
     Typography,
     CardBody,
 } from "@material-tailwind/react";
+import { useState, useEffect } from "react";
+import { sendRequest } from '../../../config/request'
+import { useStoreData } from "../../../global/store";
+import moment from "moment"
 
-const TABLE_HEAD = ["ID", "Customer's name", "Number of items", "Time", "Total"];
-
-const TABLE_ROWS = [
-    {
-        id: "3",
-        customerName: "Stephen Tries",
-        numberOfItems: "Number of Items",
-        time: "15:45",
-        total: "45",
-    },
-
-];
-
+const TABLE_HEAD = ["ID", "barcode", "Time", "Number of items", "Total"];
 
 const ReceiptsTable = () => {
+
+    const { store, setStoreData } = useStoreData()
+
+    const [receiptsData, setReceiptsData] = useState([])
+
+    useEffect(()=>{
+        const getReceiptsHandler = async ()=>{
+            try {
+                const response = await sendRequest({
+                    method: "GET",
+                    route: "/api/cashier/items/get_receipts",
+                    token: store.token,
+
+                });
+                if(response.carts){
+                    setReceiptsData(response.carts);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getReceiptsHandler()
+    }, [])
     return (
 
         <Card className="flex flex-col h-[40%] w-full">
@@ -33,7 +48,7 @@ const ReceiptsTable = () => {
                 </div>
 
             </CardHeader>
-            {TABLE_ROWS.length === 0
+            {receiptsData.length === 0
                 ?
                 <div className="flex flex-1 h-full justify-center items-center">
                     <Typography color="gray" className="mt-1 font-normal text-center">
@@ -62,9 +77,9 @@ const ReceiptsTable = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {TABLE_ROWS.map(
-                                ({ id, customerName, numberOfItems, time, total }, index) => {
-                                    const isLast = index === TABLE_ROWS.length - 1;
+                            {receiptsData.map(
+                                ({ id, created_at, barcode, total_items, total_price }, index) => {
+                                    const isLast = index === receiptsData.length - 1;
                                     const classes = isLast
                                         ? "px-4"
                                         : "px-4 border-b border-blue-gray-50";
@@ -90,7 +105,7 @@ const ReceiptsTable = () => {
                                                     color="blue-gray"
                                                     className="font-normal"
                                                 >
-                                                    {customerName}
+                                                    {moment(created_at).format('LLLL')}
                                                 </Typography>
                                             </td>
                                             <td className={classes}>
@@ -99,7 +114,7 @@ const ReceiptsTable = () => {
                                                     color="blue-gray"
                                                     className="font-normal"
                                                 >
-                                                    {numberOfItems}
+                                                    {barcode}
                                                 </Typography>
                                             </td>
                                             <td className={classes}>
@@ -108,7 +123,7 @@ const ReceiptsTable = () => {
                                                     color="blue-gray"
                                                     className="font-normal"
                                                 >
-                                                    {time}
+                                                    {total_items}
                                                 </Typography>
                                             </td>
                                             <td className={classes}>
@@ -117,7 +132,7 @@ const ReceiptsTable = () => {
                                                     color="blue-gray"
                                                     className="font-normal"
                                                 >
-                                                    {total}
+                                                    {total_price}
                                                 </Typography>
                                             </td>
                                         </tr>
