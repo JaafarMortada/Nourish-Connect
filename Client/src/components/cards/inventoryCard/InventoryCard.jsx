@@ -3,7 +3,6 @@ import {
   CardHeader,
   Typography,
   CardBody,
-  Textarea,
 } from "@material-tailwind/react";
 
 import PrimaryButton from "../../ui/Button";
@@ -12,23 +11,92 @@ import TextAreaField from "../../ui/TextAreaField";
 import FileDragInput from "../../ui/FileDragInput";
 import { useState } from "react";
 import { inventoryUploadConditions } from "../../../constants";
+import { sendRequest } from "../../../config/request";
+import { useStoreData } from "../../../global/store";
 
 const InventoryCard = () => {
 
-
-
   const [data, setData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    original_price: "",
+    quantity: "",
+    production_date: "",
+    expiry_date: "",
+    category: "",
+    barcode: "",
     inventoryFile: "",
 
   })
+
+  const { store } = useStoreData()
+
+  const [error, setError] = useState(false)
+
   const handleFileUpload = (file) => {
     setData({ ...data, inventoryFile: file })
+  };
+  const handleImageUpload = (file) => {
+    setData({ ...data, image: file })
   };
 
   const handleDataChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
 
+  const handleError = () => {
+    setError(true)
+    setTimeout(() => {
+      setError(false);
+    }, 3000)
+  }
+
+  const handleAddItem = async () => {
+        try {
+          const formData = new FormData();
+          formData.append('name', data.name);
+          formData.append('description', data.description);
+          formData.append('price', data.price);
+          formData.append('original_price', data.original_price);
+          formData.append('quantity', data.quantity);
+          formData.append('production_date', data.production_date);
+          formData.append('expiry_date', data.expiry_date);
+          if (data.image) formData.append('image', data.image);
+          formData.append('category', data.category);
+          formData.append('barcode', data.barcode);
+          const response = await sendRequest({
+            method: "POST",
+            route: "/api/cashier/items/add_item/",
+            token: store.token,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            body: formData,
+
+          });
+          console.log('123')
+          if (response.message === "Item added successfully") {
+            setData({
+              name: "",
+              description: "",
+              price: "",
+              original_price: "",
+              quantity: "",
+              production_date: "",
+              expiry_date: "",
+              category: "",
+              barcode: "",
+              inventoryFile: "",
+            })
+          } else {
+            handleError()
+          }
+        } catch (error) {
+          handleError()
+        }
+      }
+  
   return (
 
     <Card className="flex flex-col h-[80%] w-[95%]">
@@ -44,40 +112,102 @@ const InventoryCard = () => {
       </CardHeader>
 
       <CardBody className="flex flex-wrap overflow-scroll px-0  justify-center lg:flex-row flex-col">
-        <div className="w-[full] flex-1 flex flex-col items-center gap-10">
-          <div className="flex gap-10 lg:flex-row flex-col">
+        <div className="w-[full] flex-1 flex flex-col items-center gap-10 overflow-scroll">
+          <div className="flex gap-10 lg:flex-row flex-col pt-5">
             <div className="w-[200px]">
-              <InputField label={"Item's name"} />
+              <InputField
+                label={"Item's name"}
+                name={"name"}
+                value={data.name}
+                onChange={handleDataChange}
+              />
             </div>
             <div className="w-[200px]">
-              <InputField label={"Stock Price"} />
+              <InputField
+                label={"Stock Price"}
+                name={"original_price"}
+                value={data.original_price}
+                onChange={handleDataChange}
+              />
             </div>
             <div className="w-[200px]">
-              <InputField label={"Retail Price"} />
+              <InputField
+                label={"Retail Price"}
+                name={"price"}
+                value={data.price}
+                onChange={handleDataChange}
+              />
             </div>
             <div className="w-[200px]">
-              <InputField label={"Category"} />
+              <InputField
+                label={"Category"}
+                name={"category"}
+                value={data.category}
+                onChange={handleDataChange}
+              />
             </div>
           </div>
           <div className="flex gap-10 lg:flex-row flex-col">
             <div className="w-[200px]">
-              <InputField label={"Barcode"} />
+              <InputField
+                label={"Barcode"}
+                name={"barcode"}
+                value={data.barcode}
+                onChange={handleDataChange}
+              />
             </div>
             <div className="w-[200px]">
-              <InputField label={"Quantity"} />
+              <InputField
+                label={"Quantity"}
+                name={"quantity"}
+                value={data.quantity}
+                onChange={handleDataChange}
+              />
             </div>
             <div className="w-[200px]">
-              <InputField label={"Production Date"} type={"date"} />
+              <InputField
+                label={"Production Date"}
+                type={"date"}
+                name={"production_date"}
+                value={data.production_date}
+                onChange={handleDataChange}
+              />
             </div>
             <div className="w-[200px]">
-              <InputField label={"Expiry Date"} type={"date"} />
+              <InputField
+                label={"Expiry Date"}
+                type={"date"}
+                name={"expiry_date"}
+                value={data.expiry_date}
+                onChange={handleDataChange}
+              />
             </div>
           </div>
-          <div className="lg:w-[920px] w-[200px] flex justify-center items-center">
-            <TextAreaField label={"Description"} />
+          <div className="lg:w-[920px] w-[200px] flex  lg:flex-row flex-col justify-center items-center gap-20">
+            <TextAreaField
+              label={"Description"}
+              name={"description"}
+              value={data.description}
+              onChange={handleDataChange}
+            />
+            <FileDragInput
+              onFileUpload={handleImageUpload}
+              label={"Add the item's image."}
+              classNames={"!w-[200px] !px-2 !h-[100px] !font-[16px]"}
+              showIcon={false}
+              name={"image"}
+              value={data.image}
+              accepted_types={['image/jpeg', 'image/png', 'image/jpg',]}
+              error_message={"Please Upload an image file only."}
+            />
+
           </div>
           <div className="flex lg:justify-end justify-center lg:w-[920px] w-[200px] max-h-[40px]">
-            <PrimaryButton label={"Add Item"} classNames={"w-[200px] bg-[--primary] "} />
+            <PrimaryButton
+              label={`${error ? "An error occurred" : "Add Item"}`}
+              classNames={ `w-[200px] ${ error ? "bg-red-500" : "bg-[--primary]"}`}
+              onClick={handleAddItem}
+            />
           </div>
           <div className="w-full pl-4">
             <Typography variant="h5" color="blue-gray" className="left-0">
@@ -97,15 +227,14 @@ const InventoryCard = () => {
                   <li key={condition.id}>{condition.text}</li>
               ))}
             </div>
-            <FileDragInput name={"inventoryData"} value={data.inventoryFile} onFileUpload={handleFileUpload} />
+            <FileDragInput
+              name={"inventoryData"}
+              value={data.inventoryFile}
+              onFileUpload={handleFileUpload}
+            />
 
           </div>
         </div>
-
-
-
-
-
 
       </CardBody>
 
