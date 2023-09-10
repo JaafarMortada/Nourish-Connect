@@ -7,6 +7,7 @@ use App\Models\UserType;
 use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cashier;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -95,6 +96,48 @@ class AuthController extends Controller
             'user' => $user
         ], 200);
     
+    }
+
+    public function addCashier(Request $request) {
+        $manager = Auth::user();
+
+        try{
+            $request->validate([
+                'username' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255',
+                'latitude' => 'required|numeric',
+                'longitude' => 'required|numeric',
+                'password' => 'required|string|min:8',
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json(["message" => 'validation failed']);
+        }
+
+
+        $location = new Location;
+        $location->latitude = $request->latitude;
+        $location->longitude = $request->longitude;
+        $location->save();
+
+        $cashier = new User;
+        $cashier->username = $request->username;
+        $cashier->email = $request->email;
+        $cashier->company_name = $manager->company_name;
+        $cashier->usertype_id = 2;
+        $cashier->location_id = $location->id;
+        $cashier->password = Hash::make($request->password);
+        $cashier->save();
+
+        $cashierRecord = new Cashier();
+        $cashierRecord->company_id = $manager->id;
+        $cashierRecord->cashier_id = $cashier->id;
+        $cashierRecord->save();
+
+        return response()->json([
+            'message' => 'Cashier created successfully',
+            'cashier' => $cashier
+        ], 200);
+
     }
 
     public function logout()
