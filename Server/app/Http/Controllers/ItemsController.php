@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\File;
-
-use function Laravel\Prompts\search;
 
 class ItemsController extends Controller
 {
@@ -78,6 +78,70 @@ class ItemsController extends Controller
         return response()->json([
             'message' => 'success',
             'item' => $items
+        ], 200);
+    }
+
+    public function checkoutReceipt(Request $request){
+
+        $receiptJSON = json_decode($request->receipt);
+
+        if (is_null($receiptJSON)){
+            return response()->json(["message" => "Invalid Format"]);
+        }
+        
+        $cart = new Cart;
+        $cart->inventory_id = $request->inventory_id;
+        $cart->barcode = uniqid($request->inventory_id."-", true);
+        $cart->save();
+        foreach($receiptJSON as $receiptItem){
+            $dbItem = Item::where('id', $receiptItem->id)->first();
+            if (is_null($dbItem) || $dbItem->available_quantity <= 0){
+                continue;
+            }
+            $quantity_to_checkout = min($dbItem->available_quantity, $receiptItem->quantity);
+            $new_quantity = $dbItem->available_quantity - $quantity_to_checkout;
+            $dbItem->available_quantity = $new_quantity;
+            $dbItem->save();
+            $cartItem = new CartItem;
+            $cartItem->item_id = $dbItem->id;
+            $cartItem->cart_id = $cart->id;
+            $cartItem->quantity = $quantity_to_checkout;
+            $cartItem->save();
+        }
+        return response()->json([
+            'message' => 'success',
+            'cart' => $cart->items
+        ], 200);
+    }
+
+    public function getReceipt($search = null){
+
+        $inventory_id = Auth::user()->cashiers[0]->company->inventories[0]->id;
+
+        $query = Cart::where('inventory_id', $inventory_id);
+        if ($search) {
+            $query->where(function ($innerQuery) use ($search) {
+                $innerQuery->where('barcode', $search)
+                    ->orWhere('id', $search);
+            });
+        }
+
+        $carts = $query->get();
+        $cartsData = $carts->map(function ($cart) {
+            return [
+                'id' => $cart->id,
+                'created_at' => $cart->created_at,
+                'barcode' => $cart->barcode,
+                'total_price' => $cart->items->sum(function ($item) {
+                    return $item->price * $item->pivot->quantity;
+                }),
+                'total_items' => $cart->items->sum('pivot.quantity'),
+            ];
+        });
+    
+        return response()->json([
+            'message' => 'success',
+            'carts' => $cartsData,
         ], 200);
     }
 }
