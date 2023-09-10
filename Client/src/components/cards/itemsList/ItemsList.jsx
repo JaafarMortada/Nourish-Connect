@@ -12,7 +12,7 @@ import ItemCard from "../miniCards/ItemCard";
 import { sendRequest } from "../../../config/request";
 import { useEffect, useState } from "react";
 import { useStoreData } from "../../../global/store";
-const ItemsList = () => {
+const ItemsList = ( {setCheckoutItems} ) => {
 
   const { store, setStoreData } = useStoreData()
 
@@ -62,7 +62,9 @@ const ItemsList = () => {
       <CardBody className="overflow-scroll flex flex-wrap gap-x-10 gap-y-5 justify-around">
         {
           itemsData.map((item) => (
-            <ItemCard key={item.id} data={item} />
+            <ItemCard key={item.id} data={item} 
+            setCheckoutItems={setCheckoutItems}
+            />
           ))
         }
       </CardBody>

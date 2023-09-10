@@ -1,7 +1,7 @@
 import { Tooltip } from "@material-tailwind/react";
 import { notFound } from "../../../assets";
 import { PlusIcon } from "@heroicons/react/24/solid";
-const ItemCard = ({ data }) => {
+const ItemCard = ({ data, setCheckoutItems }) => {
     return (
         <div className="flex items-center rounded-lg h-[60px] w-[220px] bg-[#E0F8EA] text-[--text-black]">
             <img
@@ -15,9 +15,19 @@ const ItemCard = ({ data }) => {
                 <span className="text-gray-700 text-[16px]">{data.price} $</span>
             </div>
             <div className="flex flex-1 justify-center">
-                <Tooltip className="bg-[--primary]" content={'Add to Cart'}>
-                    <PlusIcon className="w-[30px] h-[30px] text-[--primary] hover:scale-[1.2] transition-all cursor-pointer" />
-                </Tooltip>
+                {
+                    data.available_quantity === 0
+                        ?
+                        null
+                        :
+                        <Tooltip className="bg-[--primary]" content={'Add to Cart'}>
+                            <PlusIcon
+                                className="w-[30px] h-[30px] text-[--primary] hover:scale-[1.2] transition-all cursor-pointer"
+                                onClick={() => setCheckoutItems(data)}
+                            />
+                        </Tooltip>
+                }
+
             </div>
         </div>
     )
