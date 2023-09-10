@@ -8,6 +8,7 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cashier;
+use App\Models\Inventory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -83,6 +84,14 @@ class AuthController extends Controller
         $user->location_id = $location->id;
         $user->password = Hash::make($request->password);
         $user->save();
+
+        if($role->id === 1) {
+            $inventory = new Inventory();
+            $inventory->company_id = $user->id;
+            $inventory->location_id = $location->id;
+            $inventory->description = "This is " . $request->company_name . "'s inventory.";
+            $inventory->save();
+        }
 
         $token = Auth::login($user);
         $user->token = $token;
