@@ -6,7 +6,7 @@ const ItemCard = ({ data, setCheckoutItems }) => {
         <div className="flex items-center rounded-lg h-[60px] w-[220px] bg-[#E0F8EA] text-[--text-black]">
             <img
                 src={data.pic_url ? `http://127.0.0.1:8000/storage/${data.pic_url}` : notFound}
-                className="min-w-10 h-10 mx-2 rounded-md bg-[--accent]"
+                className="w-10  h-10 mx-2 rounded-md bg-[--accent]"
             />
             <div className="flex flex-col ">
                 <Tooltip content={data.name} className="bg-[--primary]">
