@@ -12,18 +12,37 @@ import ItemCard from "../miniCards/ItemCard";
 import { sendRequest } from "../../../config/request";
 import { useEffect, useState } from "react";
 import { useStoreData } from "../../../global/store";
-const ItemsList = ( {setCheckoutItems} ) => {
+const ItemsList = ({ setCheckoutItems }) => {
 
   const { store, setStoreData } = useStoreData()
 
   const [itemsData, setItemsData] = useState([])
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const useDebounce = (value, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setDebouncedValue(value);
+      }, [delay]);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }, [value, delay]);
+
+    return debouncedValue;
+  };
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
     const getItemsHandler = async () => {
       try {
         const response = await sendRequest({
           method: "GET",
-          route: "/api/cashier/items/get_items",
+          route: `/api/cashier/items/get_items/${debouncedSearchTerm}`,
           token: store.token,
         });
         if (response.item) {
@@ -34,7 +53,7 @@ const ItemsList = ( {setCheckoutItems} ) => {
       }
     }
     getItemsHandler()
-  }, [])
+  }, [debouncedSearchTerm])
 
   return (
     <Card className="h-[60%] w-full">
@@ -51,6 +70,8 @@ const ItemsList = ( {setCheckoutItems} ) => {
               labelProps={{
                 className: "translate-y-[5px] "
               }}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
 
               label="Search Items"
               icon={<MagnifyingGlassIcon className="h-5 w-5 translate-y-[5px]" />}
@@ -62,8 +83,10 @@ const ItemsList = ( {setCheckoutItems} ) => {
       <CardBody className="overflow-scroll flex flex-wrap gap-x-10 gap-y-5 justify-around">
         {
           itemsData.map((item) => (
-            <ItemCard key={item.id} data={item} 
-            setCheckoutItems={setCheckoutItems}
+            <ItemCard 
+              key={item.id} 
+              data={item}
+              setCheckoutItems={setCheckoutItems}
             />
           ))
         }
