@@ -41,9 +41,17 @@ const Table = () => {
     }
     getCashiers()
   }, [])
+
+  const handleAddedCashier = (newData) => {
+    setCashiersData((prevCashiersData) => [
+      ...prevCashiersData,
+      newData,
+    ])
+    
+  }
   return (
     <>
-    <AddCashierModal open={open} handleOpen={handleOpen}/>
+    <AddCashierModal open={open} handleOpen={handleOpen} handleNewCashier={handleAddedCashier}/>
 
     <Card className="flex flex-col h-[80%] w-[95%]">
       <CardHeader floated={false} shadow={false} className="rounded-none ">
@@ -138,7 +146,7 @@ const Table = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {moment(most_recent_login).format('LLLL')}
+                          {most_recent_login ? moment(most_recent_login).format('LLLL') : "No recent logins"}
                         </Typography>
                       </td>
                       <td className={classes}>
