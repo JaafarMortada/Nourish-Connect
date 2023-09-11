@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +33,30 @@ class ProfileController extends Controller
         return response()->json([
             'message' => 'success',
             'profile' => $user,
+
+        ], 200);
+    }
+
+    public function editProfile(Request $request) {
+        try{
+            $request->validate([
+                'image' => 'sometimes|image',
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json(["message" => 'validation failed: '. $e]);
+        }
+        $user = User::where('id', Auth::id())->first();
+
+        if (!is_null($request->file('image'))) {
+            $profilePicture = $request->file('image');
+            $file_name = time() . '_' . uniqid() . "_user_image." . $profilePicture->getClientOriginalExtension();
+            $profilePicture->storeAs('public/profilePictures', $file_name);
+            $user->pic_url = "profilePictures/" .$file_name;
+            
+        }
+        $user->save();
+        return response()->json([
+            'message' => 'success',
 
         ], 200);
     }

@@ -15,6 +15,7 @@ Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
 });
 
 Route::get('get_profile', [ProfileController::class, 'getProfile']);
+Route::post('edit_profile', [ProfileController::class, 'editProfile']);
 
 Route::group(["middleware" => "cashier", "prefix" => "/cashier"], function () {
     Route::prefix('/items')->group(function () {
