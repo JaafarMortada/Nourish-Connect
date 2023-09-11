@@ -8,6 +8,7 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Cashier;
+use App\Models\CashierLogin;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -42,6 +43,13 @@ class AuthController extends Controller
 
         $user = Auth::user();
         $user->token = $token;
+
+        if ($user->usertype_id === 2){
+            $cashier = Cashier::where('cashier_id', $user->id)->first();
+            $cashier_login = new CashierLogin;
+            $cashier_login->cashier_id = $cashier->id;
+            $cashier_login->save();
+        }
 
         unset($user->created_at);
         unset($user->updated_at);
