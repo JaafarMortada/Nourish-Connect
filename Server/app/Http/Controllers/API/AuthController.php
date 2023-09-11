@@ -34,7 +34,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         $token = Auth::attempt($credentials);
-        
+
         if (!$token) {
             return response()->json([
                 'message' => 'Unauthorized',
@@ -44,7 +44,7 @@ class AuthController extends Controller
         $user = Auth::user();
         $user->token = $token;
 
-        if ($user->usertype_id === 2){
+        if ($user->usertype_id === 2) {
             $cashier = Cashier::where('cashier_id', $user->id)->first();
             $cashier_login = new CashierLogin;
             $cashier_login->cashier_id = $cashier->id;
@@ -63,10 +63,10 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        try{
+        try {
             $request->validate([
                 'username' => 'required|string|max:255',
-                'company_name' => 'required|string|max:255', 
+                'company_name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255',
                 'latitude' => 'required|numeric',
                 'longitude' => 'required|numeric',
@@ -76,7 +76,7 @@ class AuthController extends Controller
         } catch (\Throwable $e) {
             return response()->json(["message" => 'validation failed']);
         }
-        
+
         $role = UserType::where('usertype', $request->role)->first();
 
         $location = new Location;
@@ -93,7 +93,7 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        if($role->id === 1) {
+        if ($role->id === 1) {
             $inventory = new Inventory();
             $inventory->company_id = $user->id;
             $inventory->location_id = $location->id;
@@ -112,18 +112,19 @@ class AuthController extends Controller
             'message' => 'User created successfully',
             'user' => $user
         ], 200);
-    
     }
 
-    public function addCashier(Request $request) {
+    public function addCashier(Request $request)
+    {
         $manager = Auth::user();
 
-        try{
+        try {
             $request->validate([
                 'username' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255',
-                'latitude' => 'required|numeric',
-                'longitude' => 'required|numeric',
+                'image' => 'sometimes|image',
+                // 'latitude' => 'required|numeric',
+                // 'longitude' => 'required|numeric',
                 'password' => 'required|string|min:8',
             ]);
         } catch (\Throwable $e) {
@@ -131,17 +132,23 @@ class AuthController extends Controller
         }
 
 
-        $location = new Location;
-        $location->latitude = $request->latitude;
-        $location->longitude = $request->longitude;
-        $location->save();
+        // $location = new Location;
+        // $location->latitude = $request->latitude;
+        // $location->longitude = $request->longitude;
+        // $location->save();
 
         $cashier = new User;
         $cashier->username = $request->username;
         $cashier->email = $request->email;
         $cashier->company_name = $manager->company_name;
         $cashier->usertype_id = 2;
-        $cashier->location_id = $location->id;
+        $cashier->location_id = $manager->location_id;
+        if (!is_null($request->file('image'))) {
+            $image = $request->file('image');
+            $file_name = time() . '_' . uniqid() . "_user_image." . $image->getClientOriginalExtension();
+            $image->storeAs('public/profilePictures', $file_name);
+            $cashier->pic_url = "profilePictures/" . $file_name;
+        }
         $cashier->password = Hash::make($request->password);
         $cashier->save();
 
@@ -150,11 +157,25 @@ class AuthController extends Controller
         $cashierRecord->cashier_id = $cashier->id;
         $cashierRecord->save();
 
+
+        $mostRecentLogin = $cashierRecord->cashierLogins->max('created_at');
+        $loginCount = $cashierRecord->cashierLogins->count();
+        
+
+        $responseCashier = [
+            'username' => $cashier->username,
+            'email' => $cashier->email,
+            'pic_url' => $cashier->pic_url,
+            'login_count' => $loginCount,
+            'most_recent_login' => $mostRecentLogin,
+            'created_at' => $cashier->created_at,
+        ];
+
         return response()->json([
             'message' => 'Cashier created successfully',
-            'cashier' => $cashier
-        ], 200);
+            'cashier' => $responseCashier
 
+        ], 200);
     }
 
     public function logout()
