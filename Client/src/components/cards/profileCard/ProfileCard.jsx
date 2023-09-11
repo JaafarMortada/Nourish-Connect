@@ -83,7 +83,7 @@ const ProfileCard = () => {
             }
         } catch (error) {
             console.log(error);
-            
+
         }
     }
 
@@ -137,7 +137,7 @@ const ProfileCard = () => {
                                         {profileData.username}
                                     </Typography>
                                     <Typography color="gray" className="font-normal ">
-                                        Manager at a {profileData.company_name}
+                                        {`${store.usertype === 'manager' ? "Manager" : store.usertype === 'charity' ? 'Coordinator' : ''}`} at a {profileData.company_name}
                                     </Typography>
                                 </div>
                                 <div className="flex h-full lg:flex-row flex-col ">
@@ -156,16 +156,13 @@ const ProfileCard = () => {
                                         <UserInfoCard
                                             icon={<BiSolidDonateHeart className="w-8 h-8" />}
                                             title={"Donations"}
-                                            info={[`Delivered: ${profileData.donations_count}`]}
+                                            info={[`${store.usertype === 'manager' ? "Delivered" : store.usertype === 'charity' ? 'Received' : ''}: ${profileData.donations_count}`]}
                                         />
                                     </div>
                                 </div>
                             </div>
                         </CardBody>}
-
                 </Card>
-
-
             </>
     )
 }
