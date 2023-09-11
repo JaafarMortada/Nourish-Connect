@@ -24,11 +24,18 @@ class ProfileController extends Controller
                 'message' => 'Unauthorized',
             ], 401);
         }
-
-        $user->donations_count = $user->donationDonators->count();
+        if ($user->usertype_id == 1) {
+            $user->donations_count = $user->donationDonators->count();
+            unset($user->donationDonators);
+        }
+        if ($user->usertype_id == 3) {
+            $user->donations_count = $user->donationReceivers->count();
+            unset($user->donationReceivers);
+        }
+        
         $user->latitude = $user->location->latitude;
         $user->longitude = $user->location->longitude;
-        unset($user->donationDonators);
+        
         unset($user->location);
         return response()->json([
             'message' => 'success',
