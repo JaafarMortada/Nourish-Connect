@@ -9,7 +9,7 @@ class Donation extends Model
 {
     use HasFactory;
 
-    protected $table = 'donations_items';
+    protected $table = 'donations';
 
     public function donator()
     {
