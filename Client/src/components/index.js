@@ -13,6 +13,9 @@ import FileDragInput from "./ui/FileDragInput";
 import UploadSalesData from "./cards/uploadSalesData/UploadSalesData";
 import ErrorDialog from "./ui/ErrorDialog";
 import AddCashierModal from "./modals/addCashier/AddCashierModal";
+import ProfileCard from "./cards/profileCard/ProfileCard";
+import UserInfoCard from "./cards/miniCards/UserInfoCard";
+
 export {
     CashiersTable,
     Sidebar,
@@ -29,5 +32,7 @@ export {
     UploadSalesData,
     ErrorDialog,
     AddCashierModal,
+    ProfileCard,
+    UserInfoCard,
     
 }
