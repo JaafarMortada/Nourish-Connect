@@ -2,11 +2,13 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\ItemsController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
+    Route::get('get_cashiers', [CashierController::class, 'getCashiers']);
     Route::post('add_cashier', [AuthController::class, 'addCashier']);
 
 });

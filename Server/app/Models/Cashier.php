@@ -14,6 +14,11 @@ class Cashier extends Model
         return $this->belongsTo(User::class, 'company_id');
     }
 
+    public function account()
+    {
+        return $this->belongsTo(User::class, 'cashier_id');
+    }
+
     public function cashierLogins()
     {
         return $this->hasMany(CashierLogin::class);
