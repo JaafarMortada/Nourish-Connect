@@ -3,34 +3,44 @@ import {
   CardHeader,
   Typography,
   CardBody,
-  Chip,
   Avatar,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useStoreData } from "../../../global/store";
+import { sendRequest } from "../../../config/request";
 import PrimaryButton from "../../ui/Button";
+import { default_profile_pic } from "../../../assets";
 import AddCashierModal from "../../modals/addCashier/AddCashierModal";
+import moment from "moment"
 
-const TABLE_HEAD = ["Username & Email", "Employed", "Status"];
 
-const TABLE_ROWS = [
-  // {
-  //     img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-  //     name: "John Michael",
-  //     email: "john@creative-tim.com",
-  //     job: "Manager",
-  //     org: "Organization",
-  //     online: true,
-  //     date: "23/04/18",
-  //   },
-];
-
+const TABLE_HEAD = ["Username & Email", "Employed At", "Last Login", "Number of Logins"];
 
 const Table = () => {
 
+  const { store } = useStoreData()
   const [open, setOpen] = useState(false);
+  const [cashiersData, setCashiersData] = useState([])
 
   const handleOpen = () => setOpen(!open);
 
+  useEffect(() => {
+    const getCashiers = async () => {
+      try {
+        const response = await sendRequest({
+            method: "GET",
+            route: "/api/manager/get_cashiers",
+            token: store.token,
+        });
+        if(response.message === "success"){
+            setCashiersData(response.cashiers);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    }
+    getCashiers()
+  }, [])
   return (
     <>
     <AddCashierModal open={open} handleOpen={handleOpen}/>
@@ -52,7 +62,7 @@ const Table = () => {
         </div>
 
       </CardHeader>
-      {TABLE_ROWS.length === 0
+      {cashiersData.length === 0
         ?
         <div className="flex flex-1 h-full justify-center items-center">
           <Typography color="gray" className="mt-1 font-normal text-center">
@@ -81,25 +91,25 @@ const Table = () => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
-                ({ img, name, email, online, date }, index) => {
-                  const isLast = index === TABLE_ROWS.length - 1;
+              {cashiersData.map(
+                ({ pic_url, username, email, login_count, most_recent_login, created_at}, index) => {
+                  const isLast = index === cashiersData.length - 1;
                   const classes = isLast
                     ? "px-4"
                     : "px-4 border-b border-blue-gray-50";
 
                   return (
-                    <tr key={name} className={`${index % 2 === 0 ? "" : "bg-blue-gray-50/50"}`}>
+                    <tr key={email} className={`${index % 2 === 0 ? "" : "bg-blue-gray-50/50"}`}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
-                          <Avatar src={img} alt={name} size="sm" />
+                          <Avatar src={pic_url ? `http://127.0.0.1:8000/storage/${pic_url}` : default_profile_pic} alt={username} size="sm" />
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {name}
+                              {username}
                             </Typography>
                             <Typography
                               variant="small"
@@ -118,19 +128,30 @@ const Table = () => {
                           color="blue-gray"
                           className="font-normal"
                         >
-                          {date}
+                          {moment(created_at).format('LLLL')}
+                        </Typography>
+                      </td>
+
+                      <td className={classes}>
+                      <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {moment(most_recent_login).format('LLLL')}
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <div className="w-max">
-                          <Chip
-                            variant="ghost"
-                            size="sm"
-                            value={online ? "online" : "offline"}
-                            color={online ? "green" : "blue-gray"}
-                          />
-                        </div>
+
+                      <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {login_count}
+                        </Typography>
                       </td>
+
                     </tr>
                   );
                 },
