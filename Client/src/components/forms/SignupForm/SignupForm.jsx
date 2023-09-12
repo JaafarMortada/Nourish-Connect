@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logoBlack } from "../../../assets";
 import { Stepper, Step, Typography, step, Spinner } from "@material-tailwind/react";
 import {
@@ -41,6 +41,10 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
     const handleDataChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
         setError(false)
+    }
+
+    const handleLocation = (lng,lat) => {
+        setData({...data, longitude: lng, latitude: lat})
     }
 
     const handleSignUp = async () => {
@@ -144,7 +148,7 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                             (activeStep === 1 ?
                                 <SignupStepTwo data={data} handleDataChange={handleDataChange} error={error} />
                                 :
-                                <SignupStepThree data={data} role={role} handleDataChange={handleDataChange} error={error} />)
+                                <SignupStepThree data={data} role={role} handleDataChange={handleDataChange} error={error} handleLocation={handleLocation}/>)
                     }
                 </div>
 
