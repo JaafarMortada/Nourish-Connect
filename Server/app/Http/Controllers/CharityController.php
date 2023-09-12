@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CharityRequest;
+use App\Models\Donation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,5 +57,40 @@ class CharityController extends Controller
             'donationRequest' => $donationRequest
         ], 200);
 
+    }
+
+    public function getRequestsData(){
+        $requests = Auth::User()->charityRequests;
+
+        $responseRequests = $requests->map(function ($request) {
+            $quantity = 0;
+            $donators = [];
+            foreach($request->donations as $donation) {
+                $donators[] = $donation->donator->company_name;
+                foreach($donation->donationItems as $item) {
+                    $quantity += $item->quantity;
+                }
+
+            }
+            if ($quantity == 0 || $quantity < intval($request->quantity)){
+                $status = false;
+            } else {
+                $status = true;
+            }
+            return [
+                "title" => $request->title,
+                "category" => $request->category,
+                "requested_quantity" => intval($request->quantity),
+                "received_quantity" => $quantity,
+                "donated_by" => $donators,
+                "status" => $status,
+
+            ];
+        });
+
+        return response()->json([
+            'message' => 'success',
+            'donations' => $responseRequests
+        ], 200);
     }
 }

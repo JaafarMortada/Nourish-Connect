@@ -21,6 +21,11 @@ class Donation extends Model
         return $this->belongsTo(User::class, 'receiver_id');
     }
 
+    public function toRequest()
+    {
+        return $this->belongsTo(CharityRequest::class, 'request_id');
+    }
+
     public function donationItems()
     {
         return $this->hasMany(DonationItem::class, 'donation_id');

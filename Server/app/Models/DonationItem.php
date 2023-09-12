@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DonationItem extends Model
 {
     use HasFactory;
+    
+    protected $table = 'donations_items';
 
     public function item()
     {

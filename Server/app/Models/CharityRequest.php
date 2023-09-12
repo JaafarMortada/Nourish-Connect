@@ -13,7 +13,11 @@ class CharityRequest extends Model
 
     public function requestedBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "charity_id");
+    }
+    public function donations()
+    {
+        return $this->hasMany(Donation::class, "request_id");
     }
 
 }

@@ -18,6 +18,7 @@ Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
 
 Route::group(["middleware" => "charity", "prefix" => "/charity"], function () {
     Route::post('request_donation', [CharityController::class, 'requestDonation']);
+    Route::get('get_requests', [CharityController::class, 'getRequestsData']);
 
 });
 
