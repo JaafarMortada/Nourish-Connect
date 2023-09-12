@@ -17,6 +17,7 @@ import ProfileCard from "./cards/profileCard/ProfileCard";
 import UserInfoCard from "./cards/miniCards/UserInfoCard";
 import Map from "./map/Map";
 import CharitiesMapList from "./charitiesMapList/CharitiesMapList";
+import CharityCard from "./cards/miniCards/CharityCard";
 
 export {
     CashiersTable,
@@ -38,5 +39,6 @@ export {
     UserInfoCard,
     Map,
     CharitiesMapList,
-    
+    CharityCard,
+
 }

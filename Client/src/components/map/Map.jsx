@@ -61,7 +61,7 @@ const Map = ({
                     showMarkers.map((marker) => (
                         <Marker position={[marker.latitude, marker.longitude]} key={marker.id} draggable={false}>
                             <Popup>
-                                {marker.name}
+                                {marker.company_name}
                             </Popup>
                         </Marker>
                     ))
