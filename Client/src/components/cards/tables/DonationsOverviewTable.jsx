@@ -4,6 +4,8 @@ import {
     Typography,
     CardBody,
     Chip,
+    Tooltip,
+
 
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
@@ -18,6 +20,24 @@ const DonationsOverviewTable = () => {
     const { store } = useStoreData()
 
     const [donationsData, setDonationsData] = useState([])
+
+    useEffect(() => {
+        const getDonations = async () => {
+            try {
+                const response = await sendRequest({
+                    method: "GET",
+                    route: "/api/charity/get_requests",
+                    token: store.token,
+                });
+                if (response.message === "success") {
+                    setDonationsData(response.donations);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getDonations()
+    }, [])
 
     return (
         <>
@@ -63,7 +83,7 @@ const DonationsOverviewTable = () => {
                             </thead>
                             <tbody>
                                 {donationsData.map(
-                                    ({ title, category, quantity, donated_by, status }, index) => {
+                                    ({ title, category, requested_quantity, received_quantity, donated_by, status }, index) => {
                                         const isLast = index === donationsData.length - 1;
                                         const classes = isLast
                                             ? "px-4 py-2"
@@ -100,7 +120,7 @@ const DonationsOverviewTable = () => {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {quantity}
+                                                        {received_quantity}/{requested_quantity}
                                                     </Typography>
                                                 </td>
                                                 <td className={classes}>
@@ -110,17 +130,40 @@ const DonationsOverviewTable = () => {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {donated_by}
+                                                        {
+                                                            donated_by.length === 0 ? null :
+                                                                donated_by.length === 1 ?
+                                                                    donated_by[0] :
+                                                                    <Tooltip className="bg-[--primary]" content={
+                                                                        donated_by.map((donator, index) => (
+
+                                                                            index === donated_by.length - 1 ?
+
+                                                                                <span key={index}>
+
+                                                                                    and {donator}.
+
+                                                                                </span> :
+                                                                                <span key={index}>
+
+                                                                                    {donator}, <br />
+
+                                                                                </span>
+                                                                        ))
+                                                                    }>
+                                                                        <span>{donated_by[0]} and others</span>
+                                                                    </Tooltip>
+                                                        }
                                                     </Typography>
                                                 </td>
                                                 <td className={`${classes}`}>
-                                                        <Chip
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            value={status ? "Received" : "Pending"}
-                                                            color={status ? "green" : "blue-gray"}
-                                                            className="w-[100px] flex justify-center"
-                                                        />
+                                                    <Chip
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        value={status ? "Received" : "Pending"}
+                                                        color={status ? "green" : "blue-gray"}
+                                                        className="w-[100px] flex justify-center"
+                                                    />
                                                 </td>
 
                                             </tr>
