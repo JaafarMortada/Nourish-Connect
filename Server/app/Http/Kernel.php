@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
+        'charity' => \App\Http\Middleware\CharityMiddleware::class,
         'cashier' => \App\Http\Middleware\CashierMiddleware::class,
         'manager' => \App\Http\Middleware\managerMiddleware::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
