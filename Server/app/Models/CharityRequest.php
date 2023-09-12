@@ -9,9 +9,11 @@ class CharityRequest extends Model
 {
     use HasFactory;
 
+    protected $table = 'charities_requests';
+
     public function requestedBy()
     {
-        return $this->belongsTo(User::class, 'charity_id');
+        return $this->belongsTo(User::class);
     }
 
 }
