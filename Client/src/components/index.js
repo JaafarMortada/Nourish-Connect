@@ -15,6 +15,8 @@ import ErrorDialog from "./ui/ErrorDialog";
 import AddCashierModal from "./modals/addCashier/AddCashierModal";
 import ProfileCard from "./cards/profileCard/ProfileCard";
 import UserInfoCard from "./cards/miniCards/UserInfoCard";
+import Map from "./map/Map";
+import CharitiesMapList from "./charitiesMapList/CharitiesMapList";
 
 export {
     CashiersTable,
@@ -34,5 +36,7 @@ export {
     AddCashierModal,
     ProfileCard,
     UserInfoCard,
+    Map,
+    CharitiesMapList,
     
 }
