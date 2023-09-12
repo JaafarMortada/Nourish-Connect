@@ -19,6 +19,7 @@ import Map from "./map/Map";
 import CharitiesMapList from "./charitiesMapList/CharitiesMapList";
 import CharityCard from "./cards/miniCards/CharityCard";
 import RequestDonation from "./cards/requestDonation/RequestDonation";
+import DonationsOverviewTable from "./cards/tables/DonationsOverviewTable";
 
 export {
     CashiersTable,
@@ -42,6 +43,6 @@ export {
     CharitiesMapList,
     CharityCard,
     RequestDonation,
-    
+    DonationsOverviewTable,
 
 }

@@ -1,22 +1,26 @@
-import { RequestDonation, Sidebar } from "../../components"
+import { DonationsOverviewTable, RequestDonation, Sidebar } from "../../components"
 import { styles } from "../../constants"
 const CharityDonations = () => {
   return (
     <>
-        <div className="flex ">
-            <div className="w-[290px]">
-                <Sidebar />
-            </div>
-            
-            <div className={styles.pageContainer}>
-                <div className={styles.pageHeaderText}>
-                  Donations
-                </div>
-                <RequestDonation />
-            </div>
+      <div className="flex ">
+        <div className="w-[290px]">
+          <Sidebar />
         </div>
+
+        <div className={styles.pageContainer}>
+          <div className={styles.pageHeaderText}>
+            Donations
+          </div>
+          <div className="flex flex-col gap-5 w-full items-center mb-5">
+            <RequestDonation />
+            <DonationsOverviewTable />
+          </div>
+
+        </div>
+      </div>
     </>
-    
+
   )
 }
 
