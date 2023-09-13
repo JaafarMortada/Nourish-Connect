@@ -41,6 +41,7 @@ class Kernel extends HttpKernel
         'charity' => \App\Http\Middleware\CharityMiddleware::class,
         'cashier' => \App\Http\Middleware\CashierMiddleware::class,
         'manager' => \App\Http\Middleware\managerMiddleware::class,
+        'manager.or.charity' => \App\Http\Middleware\managerOrCharityMiddleware::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,

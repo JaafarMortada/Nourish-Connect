@@ -10,9 +10,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('search_users/{search}', [ChatController::class, 'searchUsers']);
-
-
 Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
     Route::get('get_cashiers', [CashierController::class, 'getCashiers']);
     Route::get("get_charities", [CharityController::class, "getCharities"]);
@@ -26,8 +23,16 @@ Route::group(["middleware" => "charity", "prefix" => "/charity"], function () {
 
 });
 
-Route::get('get_profile', [ProfileController::class, 'getProfile']);
-Route::post('edit_profile', [ProfileController::class, 'editProfile']);
+Route::group(["middleware" => "manager.or.charity", "prefix" => "/manager_charity"], function () {
+    Route::prefix('/profile')->group(function () {
+        Route::get('/get_profile', [ProfileController::class, 'getProfile']);
+        Route::post('/edit_profile', [ProfileController::class, 'editProfile']);
+    });
+    Route::prefix('/chat')->group(function () {
+        Route::get('/search_users/{search?}', [ChatController::class, 'searchUsers']);
+    });
+
+});
 
 Route::group(["middleware" => "cashier", "prefix" => "/cashier"], function () {
     Route::prefix('/items')->group(function () {
