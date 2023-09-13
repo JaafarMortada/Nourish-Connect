@@ -41,7 +41,7 @@ const ProfileCard = () => {
             try {
                 const response = await sendRequest({
                     method: "GET",
-                    route: "/api/get_profile",
+                    route: "/api/manager_charity/profile/get_profile",
                     token: store.token,
                 });
                 if (response.message === "success") {
@@ -68,7 +68,7 @@ const ProfileCard = () => {
             formData.append("image", imageFile);
             const response = await sendRequest({
                 method: "POST",
-                route: "/api/edit_profile",
+                route: "/api/manager_charity/profile/edit_profile",
                 token: store.token,
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -148,11 +148,11 @@ const ProfileCard = () => {
                                             info={[profileData.email]}
                                         />
 
-                                        <UserInfoCard
+                                        {/* <UserInfoCard
                                             icon={<MapPinIcon />}
                                             title={"Location"}
                                             info={[`Latitude: ${profileData.latitude}`, `longitude: ${profileData.longitude}`]}
-                                        />
+                                        /> */}
                                         <UserInfoCard
                                             icon={<BiSolidDonateHeart className="w-8 h-8" />}
                                             title={"Donations"}
