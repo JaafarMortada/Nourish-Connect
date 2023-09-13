@@ -1,4 +1,4 @@
-import { Sidebar } from "../components"
+import { Messenger, Sidebar } from "../components"
 import { styles } from "../constants"
 const ChatsPage = () => {
   return (
@@ -9,7 +9,7 @@ const ChatsPage = () => {
             </div>
             
             <div className={styles.pageContainer}>
-
+              <Messenger />
             </div>
         </div>
     </>

@@ -20,6 +20,7 @@ import CharitiesMapList from "./charitiesMapList/CharitiesMapList";
 import CharityCard from "./cards/miniCards/CharityCard";
 import RequestDonation from "./cards/requestDonation/RequestDonation";
 import DonationsOverviewTable from "./cards/tables/DonationsOverviewTable";
+import Messenger from "./chat/Messenger";
 
 export {
     CashiersTable,
@@ -44,5 +45,6 @@ export {
     CharityCard,
     RequestDonation,
     DonationsOverviewTable,
-
+    Messenger,
+    
 }
