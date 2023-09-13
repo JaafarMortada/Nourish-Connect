@@ -4,9 +4,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CharityController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+
+Route::get('search_users/{search}', [ChatController::class, 'searchUsers']);
 
 
 Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
