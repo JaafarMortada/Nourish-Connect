@@ -20,20 +20,25 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    public function login(Request $request)
+    public function login(Request $request, $refresh = null)
     {
         try {
-            $request->validate([
-                'email' => 'required|string|email',
-                'password' => 'required|string',
-            ]);
+            if (!$refresh) {
+                $request->validate([
+                    'email' => 'required|string|email',
+                    'password' => 'required|string',
+                ]);
+            }
         } catch (\Throwable $e) {
             return response()->json(["message" => 'validation failed']);
         }
 
-        $credentials = $request->only('email', 'password');
-
-        $token = Auth::attempt($credentials);
+        if ($refresh) {
+            $token = Auth::refresh();
+        } else {
+            $credentials = $request->only('email', 'password');
+            $token = Auth::attempt($credentials);
+        }
 
         if (!$token) {
             return response()->json([
@@ -160,7 +165,7 @@ class AuthController extends Controller
 
         $mostRecentLogin = $cashierRecord->cashierLogins->max('created_at');
         $loginCount = $cashierRecord->cashierLogins->count();
-        
+
 
         $responseCashier = [
             'username' => $cashier->username,
