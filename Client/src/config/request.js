@@ -16,7 +16,7 @@ export const sendRequest = async ({
   if (!route) throw Error("URL required");
   
   axios.defaults.headers.authorization = includeHeaders
-    ? `Bearer ${token}`
+    ? `Bearer ${localStorage.getItem("token")}`
     : "";
 
   try {

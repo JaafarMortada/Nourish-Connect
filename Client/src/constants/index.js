@@ -14,6 +14,11 @@ import {
 export const emptyStore = {
     token: '',
     usertype: '',
+    usertype_id: '',
+    email: '',
+    user_id: '',
+    username: '',
+    pic_url: null,
     
 }
 
