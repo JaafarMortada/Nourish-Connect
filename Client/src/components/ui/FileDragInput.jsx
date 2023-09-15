@@ -14,12 +14,14 @@ const FileDragInput = (
 ) => {
 
     const [open, setOpen] = useState(false);
+    const [file, setFile] = useState(null);
 
     const handleOpen = () => setOpen(!open);
     const handleDrop = (acceptedFiles) => {
         const file = acceptedFiles[0];
         if (accepted_types.includes(file.type)) {
             onFileUpload(file);
+            setFile(file);
         } else {
             setOpen(true)
         }
@@ -42,12 +44,18 @@ const FileDragInput = (
                                 name={name}
                             />
                             {
-                                showIcon ? <ArrowUpTrayIcon className="w-10 h-10 text-[--primary]" /> : null
+                                showIcon && !file ? <ArrowUpTrayIcon className="w-10 h-10 text-[--primary]" /> : null
 
                             }
                             <div className='text-center'>
-                                <span className="text-[16px] font-bold text-[--primary]">{label ? label : 'Choose a file.'} </span>
-                                <span className="text-[16px] text-[--primary]">Or Drag it here.</span>
+                                {file ? <span className="text-[16px] font-bold text-[--primary]">{file && file.name} </span> :
+                                <>
+                                    <span className="text-[16px] font-bold text-[--primary]">{label ? label : 'Choose a file.'} </span>
+                                    <span className="text-[16px] text-[--primary]">Or Drag it here.</span>
+                                </>
+                                    
+                                }
+                                
                             </div>
                         </div>
                     </section>

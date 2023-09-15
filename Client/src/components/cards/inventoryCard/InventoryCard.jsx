@@ -215,7 +215,7 @@ const InventoryCard = () => {
             </Typography>
           </div>
 
-          <div className="flex lg:flex-row flex-col-reverse w-[70%] items-center justify-between border-2 border-[--primary] rounded-lg p-10">
+          <div className="flex lg:w-[920px] w-[200px] lg:flex-row flex-col-reverse items-center lg:justify-between ">
             <div>
               {inventoryUploadConditions.map((condition) => (
                 condition.id === 'inventoryConditionsTitle'

@@ -22,6 +22,7 @@ const ProfileCard = () => {
     const [existingLogo, setExistingLogo] = useState(null)
     const [profileData, setProfileData] = useState({})
     const [loading, setLoading] = useState(true)
+    const [uploading, setUploading] = useState(false)
     const [isUnauthorized, setIsUnauthorized] = useState()
     const [imageFile, setImageFile] = useState(null)
     const handleLogoChange = (e) => {
@@ -51,11 +52,11 @@ const ProfileCard = () => {
                     }
                     setLoading(false)
                 } else if (response.message === "Unauthorized") {
-                    setIsUnauthorized(true)
+                    // setIsUnauthorized(true)
                 }
             } catch (error) {
                 console.log(error);
-                setIsUnauthorized(true)
+                // setIsUnauthorized(true)
 
             }
         }
@@ -63,6 +64,7 @@ const ProfileCard = () => {
     }, [])
 
     const handleLogoUpload = async () => {
+        setUploading(true)
         try {
             const formData = new FormData();
             formData.append("image", imageFile);
@@ -98,36 +100,46 @@ const ProfileCard = () => {
                     {loading ? <Spinner className="w-20 h-20" /> :
                         <CardBody className="overflow-scroll px-5 flex-1 flex md:flex-row flex-col justify-between items-center md:gap-0 gap-10">
                             <div className="w-[300px] h-fit flex flex-col items-center justify-center gap-10">
-                                <Avatar
-                                    src={newLogo ? newLogo :
-                                        existingLogo ? existingLogo :
-                                            default_profile_pic
-                                    }
-                                    withBorder={true}
-                                    className="w-[200px] h-[200px] border-[--primary]"
-                                />
+                                <label>
+
+                                    <Avatar
+                                        src={newLogo ? newLogo :
+                                            existingLogo ? existingLogo :
+                                                default_profile_pic
+                                        }
+                                        withBorder={true}
+                                        className="w-[200px] h-[200px] border-[--primary] cursor-pointer hover:scale-105 transition-all"
+                                    />
+                                    <input type="file" className="hidden" onChange={handleLogoChange} />
+
+                                </label>
+
+
                                 {
                                     newLogo ?
-                                        <div className="flex gap-5">
+                                        <div className="flex gap-5 h-[40px]">
                                             <PrimaryButton
                                                 label={"Cancel"}
-                                                classNames={"bg-[--primary] w-[100px]"}
+                                                classNames={"bg-[--primary] w-[100px] flex justify-center items-center p-0"}
                                                 onClick={() => setNewLogo(null)}
+                                                disabled={uploading}
                                             />
                                             <PrimaryButton
-                                                label={"Confirm"}
-                                                classNames={"bg-[--primary] w-[100px]"}
+                                                label={uploading ? <Spinner /> : "Confirm"}
+                                                classNames={"bg-[--primary] w-[100px] flex justify-center items-center p-0 "}
                                                 onClick={handleLogoUpload}
+                                                disabled={uploading}
                                             />
                                         </div>
 
                                         :
-                                        <InputField
-                                            type={"file"}
-                                            label={"Upload or Edit your logo"}
-                                            onChange={handleLogoChange}
-                                            error={false}
-                                        />
+                                        <Typography
+                                            variant="small"
+                                            color="gray"
+                                            className=" flex gap-1 font-normal justify-center w-full h-[40px]"
+                                        >
+                                            Click on Your Profile Picture to edit it.
+                                        </Typography>
                                 }
 
                             </div>
