@@ -4,7 +4,7 @@ import ContactCard from "./ContactCard"
 import { useStoreData } from "../../global/store"
 import { useEffect, useState } from "react"
 import { sendRequest } from "../../config/request"
-const ContactsContainer = () => {
+const ContactsContainer = ({setReceiverData}) => {
     const { store } = useStoreData()
 
     const [contacts, setContacts] = useState([])
@@ -33,7 +33,7 @@ const ContactsContainer = () => {
             try {
                 const response = await sendRequest({
                     method: "GET",
-                    route: `/api/search_users/${debouncedSearchTerm}`,
+                    route: `/api/manager_charity/chat/search_users/${debouncedSearchTerm}`,
                     token: store.token,
                 });
                 if (response.message === "success") {
@@ -68,7 +68,7 @@ const ContactsContainer = () => {
             <div className="flex flex-col gap-2 max-h-full overflow-scroll justify-start">
                 {contacts.length > 0 ?
                     contacts.map((contact) => (
-                        <ContactCard data={contact} key={contact.id} />
+                        <ContactCard data={contact} key={contact.id} handleContactClick={setReceiverData}/>
 
                     )) :
                     <span className="text-[--text-gray] text-center">You have no chats, search users and start a new chat </span>}
