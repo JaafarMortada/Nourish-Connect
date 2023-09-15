@@ -36,7 +36,7 @@ const Sidebar = () => {
             ? sidebarManagerLinks
             : store.usertype === "cashier"
                 ? sidebarCashierLinks
-                : store.usertype === "cashier" ?
+                : store.usertype === "charity" ?
                     sidebarCharityLinks 
                     : [];
 
@@ -46,6 +46,7 @@ const Sidebar = () => {
 
     const handleLogout = () => {
         setStoreData(emptyStore)
+        localStorage.removeItem('token')
         navigate(`/auth/login`)
     }   
 

@@ -30,6 +30,7 @@ const ContactsContainer = ({setReceiverData}) => {
 
     useEffect(() => {
         const getContactsHandler = async () => {
+            if (store.token !== '')
             try {
                 const response = await sendRequest({
                     method: "GET",
@@ -44,7 +45,7 @@ const ContactsContainer = ({setReceiverData}) => {
             }
         }
         getContactsHandler()
-    }, [debouncedSearchTerm])
+    }, [debouncedSearchTerm, store.token])
 
 
     return (
