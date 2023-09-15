@@ -15,6 +15,7 @@ Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
     Route::get('get_cashiers', [CashierController::class, 'getCashiers']);
     Route::get("get_charities", [CharityController::class, "getCharities"]);
     Route::get("get_donations_data", [DonationController::class, "getDonationsData"]);
+    Route::get("get_donations_stats", [DonationController::class, "getDonationsStats"]);
     Route::post('add_cashier', [AuthController::class, 'addCashier']);
 
 });

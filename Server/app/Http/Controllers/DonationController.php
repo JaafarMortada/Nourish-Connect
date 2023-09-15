@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +31,28 @@ class DonationController extends Controller
         return response()->json([
             'message' => 'success',
             'donations' => $responseDonations
+        ], 200);
+    }
+
+    public function getDonationsStats(){
+        $user = Auth::user();
+        $donations = $user->donationDonators;
+
+        $donationsData = $donations->map(function ($donation) {
+            $items = $donation->donationItems;
+            return [
+                "total_items" => $items->sum('quantity'),
+                "donated_to" => $donation->toRequest->requestedBy->id,
+
+            ];
+        });
+
+        return response()->json([
+            'message' => 'success',
+            'number_of_donations' => $donations->count(),
+            'number_of_charities' => $donationsData->unique('donated_to')->count(),
+            'number_of_items' => $donationsData->sum('total_items'),
+
         ], 200);
     }
 }
