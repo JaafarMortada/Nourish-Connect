@@ -9,6 +9,7 @@ import {
     Accordion,
     AccordionHeader,
     AccordionBody,
+    Spinner,
 } from "@material-tailwind/react";
 
 import { ChevronDownIcon, PowerIcon } from "@heroicons/react/24/outline";
@@ -35,7 +36,9 @@ const Sidebar = () => {
             ? sidebarManagerLinks
             : store.usertype === "cashier"
                 ? sidebarCashierLinks
-                : sidebarCharityLinks;
+                : store.usertype === "cashier" ?
+                    sidebarCharityLinks 
+                    : [];
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
@@ -51,9 +54,11 @@ const Sidebar = () => {
             <div className="mb-2 p-4">
                 <img src={logoWhite} />
             </div>
-            <hr className="my-2 border-blue-gray-500" />
+            <hr className="my-2 border-[--text-gray]" />
             <List>
-                {sidebarLinks.map((Link, index) =>
+                {
+                sidebarLinks.length === 0 ? <Spinner className="w-10 h-10 self-center" /> :
+                sidebarLinks.map((Link, index) =>
                     Link.id === "separator" ? (
                         <hr className="my-2 border-[--text-gray]" key={index} />
                     ) : (
@@ -89,14 +94,14 @@ const Sidebar = () => {
                     >
                         <ListItemPrefix>
                             <Avatar
-                                src={default_profile_pic}
+                                src={store.pic_url ? `http://127.0.0.1:8000/storage/${store.pic_url}` : default_profile_pic}
                                 className="h-12 w-12 p-0.5 bg-[--primary]"
                             />
                         </ListItemPrefix>
-                        <div>
-                            <span className="text-[21px]">Username</span>
+                        <div className="max-w-[150px] truncate">
+                            <span className="text-[21px]">{store.username}</span>
                             <br />
-                            <span className="text-[16px]">Company name</span>
+                            <span className="text-[16px]">{store.company_name}</span>
                         </div>
 
                         {store.usertype === "cashier" 
