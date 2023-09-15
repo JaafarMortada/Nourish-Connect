@@ -47,6 +47,16 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
         setData({...data, longitude: lng, latitude: lat})
     }
 
+    useEffect(()=>{
+        if (store.usertype === "manager"){
+            navigate(`/${store.usertype}/dashboard`)
+        } else if (store.usertype === "cashier"){
+            navigate(`/${store.usertype}/point-of-sales`)
+        } else if (store.usertype === "charity"){
+            navigate(`/${store.usertype}/donations`)
+        }
+    }, [store])
+
     const handleSignUp = async () => {
         setSigningUp(true)
         try {
@@ -57,9 +67,21 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                 body: { ...data, role },
             });
             if (response.message === "User created successfully") {
-                setStoreData({ ...store, token: response.user.token })
-                // navigate("/")
-            } else {
+                localStorage.setItem('token', response.user.token);
+
+                setStoreData({
+                    ...store,
+                    token: response.user.token,
+                    usertype: response.user.usertype_id === 1 ? "manager" : response.user.usertype_id === 2 ? "cashier" : response.user.usertype_id === 3 ? "charity" : "",
+                    usertype_id: response.user.usertype_id,
+                    email: response.user.email,
+                    user_id: response.user.id,
+                    username: response.user.username,
+                    company_name: response.user.company_name,
+                    pic_url: response.user.pic_url,
+
+                  });
+                
                 setSigningUp(false)
                 setError(true)
                 setActiveStep(1)

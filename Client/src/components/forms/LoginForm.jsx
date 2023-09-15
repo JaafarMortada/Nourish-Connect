@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logoBlack } from "../../assets";
 import { Spinner } from "@material-tailwind/react";
 import { sendRequest } from "../../config/request";
@@ -31,6 +31,16 @@ const LoginForm = () => {
         navigate("/auth/signup")
     }
 
+    useEffect(()=>{
+        if (store.usertype === "manager"){
+            navigate(`/${store.usertype}/dashboard`)
+        } else if (store.usertype === "cashier"){
+            navigate(`/${store.usertype}/point-of-sales`)
+        } else if (store.usertype === "charity"){
+            navigate(`/${store.usertype}/donations`)
+        }
+    }, [store])
+
     const handleSignIn = async () => {
         setSigningIn(true)
         try {
@@ -41,8 +51,22 @@ const LoginForm = () => {
                 body: data,
             });
             if (response.message === "logged in successfully") {
-                setStoreData({ ...store, token: response.user.token })
-                // navigate("/")
+                localStorage.setItem('token', response.user.token);
+
+                setStoreData({
+                        ...store,
+                        token: response.user.token,
+                        usertype: response.user.usertype_id === 1 ? "manager" : response.user.usertype_id === 2 ? "cashier" : response.user.usertype_id === 3 ? "charity" : "",
+                        usertype_id: response.user.usertype_id,
+                        email: response.user.email,
+                        user_id: response.user.id,
+                        username: response.user.username,
+                        company_name: response.user.company_name,
+                        pic_url: response.user.pic_url,
+
+                      });
+                  setSigningIn(false)
+
             } else {
                 setSigningIn(false)
                 setError(true)
