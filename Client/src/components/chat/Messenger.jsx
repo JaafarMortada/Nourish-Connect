@@ -29,16 +29,16 @@ const Messenger = () => {
   const handleContactClick = (id, data) => {
     setReceiverId(id)
     setHeaderData(data)
-    // console.log(id)
+
   }
   useEffect(() => {
-    // console.log(store)
 
     const queryMessages = query(
       messagesRef,
 
       or(where("sender_id", "==", receiverId),
-      where("receiver_id", "in", [store.user_id, receiverId]),)
+      where("receiver_id", "in", [store.user_id, receiverId]),),
+      orderBy("created_at")
 
     );
     const unSubscribe = onSnapshot(queryMessages, (snapshot) => {
@@ -46,7 +46,6 @@ const Messenger = () => {
       snapshot.forEach((doc) => {
         messages.push({ ...doc.data(), id: doc.id });
       });
-      // console.log(messages);
       setMessages(messages);
     });
 

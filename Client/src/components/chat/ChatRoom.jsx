@@ -6,6 +6,8 @@ import ChatBubble from "./ChatBubble"
 import { useState } from "react";
 import { useStoreData } from "../../global/store";
 import { sendRequest } from "../../config/request";
+import { collection, addDoc } from "firebase/firestore"; 
+import { db } from "../../firebase/firebaseConfig";
 
 const ChatRoom = ({ messages, receiverId, receiverData }) => {
     const { store } = useStoreData()
@@ -28,7 +30,10 @@ const ChatRoom = ({ messages, receiverId, receiverData }) => {
         setNewMessageData({ ...newMessageData, [e.target.name]: e.target.value })
     }
 
+    const messagesRef = collection(db, "messages");
+
     const HandleSendMessage = async () => {
+        if (newMessageData.text === "") return;
         setSending(true)
         try {
             const formData = new FormData();
@@ -46,11 +51,12 @@ const ChatRoom = ({ messages, receiverId, receiverData }) => {
             });
 
             if (response.message === "success") {
-                setSending(false)
+                
                 setNewMessageData({
                     text: ''
                 })
-
+                await addDoc(messagesRef, response.new_message);
+                setSending(false)
 
             } else {
                 setSending(false)
@@ -64,7 +70,7 @@ const ChatRoom = ({ messages, receiverId, receiverData }) => {
 
     useEffect(() => {
         scrollToBottom();
-    }, []);
+    }, [messages]);
 
     return (
 
@@ -72,7 +78,7 @@ const ChatRoom = ({ messages, receiverId, receiverData }) => {
             <div className="flex items-center  bg-[--background-black] w-full text-white min-h-[83px] border-l-4 border-black pl-3 shadow-xl ">
                 {
                     receiverId !== 0 && <ContactCard headerCard={true} data={receiverData} />
-                    
+
                 }
             </div>
             <div className="flex flex-col max-h-[90%] flex-1 justify-end w-full">
