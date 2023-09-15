@@ -1,6 +1,10 @@
-import { DonationsOverviewTable, RequestDonation, Sidebar } from "../../components"
+import { DonationsOverviewTable, PrimaryButton, RequestDonation, Sidebar } from "../../components"
 import { styles } from "../../constants"
+import { useState } from "react";
 const CharityDonations = () => {
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
   return (
     <>
       <div className="flex ">
@@ -9,13 +13,19 @@ const CharityDonations = () => {
         </div>
 
         <div className={styles.pageContainer}>
-          <div className={styles.pageHeaderText}>
+          <div className={`${styles.pageHeaderText}`}>
             Donations
+            <PrimaryButton 
+              label={'New Request'}
+              classNames={"bg-[--primary]"}
+              onClick={handleOpen}
+              />
+
           </div>
-          <div className="flex flex-col gap-5 w-full items-center mb-5">
-            <RequestDonation />
+        
+            <RequestDonation open={open} handleOpen={handleOpen}/>
             <DonationsOverviewTable />
-          </div>
+       
 
         </div>
       </div>

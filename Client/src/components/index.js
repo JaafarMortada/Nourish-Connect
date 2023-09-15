@@ -18,7 +18,7 @@ import UserInfoCard from "./cards/miniCards/UserInfoCard";
 import Map from "./map/Map";
 import CharitiesMapList from "./charitiesMapList/CharitiesMapList";
 import CharityCard from "./cards/miniCards/CharityCard";
-import RequestDonation from "./cards/requestDonation/RequestDonation";
+import RequestDonation from "./modals/requestDonation/RequestDonation";
 import DonationsOverviewTable from "./cards/tables/DonationsOverviewTable";
 import Messenger from "./chat/Messenger";
 

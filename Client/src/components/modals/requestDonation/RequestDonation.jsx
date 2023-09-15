@@ -1,7 +1,9 @@
 
 import {
     Card,
-    CardHeader,
+    Dialog,
+    DialogHeader,
+    DialogBody,
     Typography,
     CardBody,
 } from "@material-tailwind/react";
@@ -13,7 +15,7 @@ import { useState } from "react";
 import { sendRequest } from "../../../config/request";
 import { useStoreData } from "../../../global/store";
 
-const RequestDonation = () => {
+const RequestDonation = ({open, handleOpen}) => {
 
     const [data, setData] = useState({
         title: "",
@@ -65,8 +67,18 @@ const RequestDonation = () => {
 
     return (
 
-        <Card className="flex flex-col w-[95%]">
-            <CardHeader floated={false} shadow={false} className="rounded-none ">
+        <Dialog 
+            className="flex flex-col overflow-scroll"
+            size="xl"
+            open={open}
+            handler={handleOpen}
+            animate={{
+                mount: { scale: 1, y: 0 },
+                unmount: { scale: 0.9, y: -100 },
+            }}
+            // className="overflow-scroll"
+            >
+            <DialogHeader floated={false} shadow={false} className="rounded-none ">
                 <div className="mb-4 h-fit flex items-center justify-between gap-8">
                     <div>
                         <Typography variant="h5" color="blue-gray">
@@ -75,9 +87,9 @@ const RequestDonation = () => {
                     </div>
                 </div>
 
-            </CardHeader>
+            </DialogHeader>
 
-            <CardBody className="flex flex-wrap overflow-scroll px-0  justify-center lg:flex-row flex-col">
+            <DialogBody className="flex flex-wrap overflow-scroll px-0  justify-center lg:flex-row flex-col">
                 <div className="w-[full] flex-1 flex flex-col items-center gap-10 overflow-scroll">
                     <div className="flex gap-10 lg:flex-row flex-col pt-5">
                         <div className="lg:w-[280px] w-[200px]">
@@ -114,6 +126,7 @@ const RequestDonation = () => {
                             onChange={handleDataChange}
                         />
                     </div>
+                    
                     <div className="flex lg:justify-end justify-center lg:w-[920px] w-[200px] max-h-[40px]">
                         <PrimaryButton
                             label={`${error ? "An error occurred" : "Send Request"}`}
@@ -122,8 +135,8 @@ const RequestDonation = () => {
                         />
                     </div>
                 </div>
-            </CardBody>
-        </Card>
+            </DialogBody>
+        </Dialog>
     );
 }
 

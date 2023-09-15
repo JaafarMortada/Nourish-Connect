@@ -112,7 +112,7 @@ export const sidebarProfileLinks = [
 ]
 
 export const styles = {
-    pageHeaderText: "w-[95%] text-[27px] font-semibold my-5",
+    pageHeaderText: "w-[95%] text-[27px] font-semibold my-5 flex justify-between",
     pageContainer: "flex flex-col flex-1 h-[100vh] overflow-auto min-w-[500px] items-center "
 
   };
