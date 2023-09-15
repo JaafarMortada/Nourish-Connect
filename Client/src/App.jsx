@@ -14,7 +14,7 @@ import { useState } from 'react';
 function App() {
 
   const { store } = useStoreData();
-  const [ authorized, setAuthorized ] = useState(localStorage.getItem("token") && store.token !== '')
+  const [ authorized, setAuthorized ] = useState(localStorage.getItem("token"))
   return (
     <BrowserRouter>
       <Routes>

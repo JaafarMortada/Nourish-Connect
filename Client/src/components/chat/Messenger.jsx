@@ -46,7 +46,10 @@ const Messenger = () => {
       snapshot.forEach((doc) => {
         messages.push({ ...doc.data(), id: doc.id });
       });
-      setMessages(messages);
+      setMessages(messages.filter((message) => (
+        (message.receiver_id === store.user_id && message.sender_id === receiverId) ||
+        (message.receiver_id === receiverId && message.sender_id === store.user_id)
+    )));
     });
 
     return () => unSubscribe();

@@ -86,15 +86,20 @@ const ChatRoom = ({ messages, receiverId, receiverData }) => {
 
                 <div className="  overflow-y-auto pb-4 transition-all flex flex-col scroll-transition px-5" ref={chatContainerRef}>
 
-                    {messages.length > 0 ?
+                    {
+                    receiverId === 0 ?
+
+                    <span className="text-[--text-gray] text-center">Start or continue conversation by selecting a contact. </span> 
+                    
+                    : messages.length > 0 ?
                         messages.map((message) => (
 
-                            (message.receiver_id === store.user_id && message.sender_id === receiverId) ||
-                                (message.receiver_id === receiverId && message.sender_id === store.user_id) ? (
                                 <ChatBubble data={message} currentUser={store.user_id === message.sender_id} key={message.id} />
-                            ) : null
+                          
                         )) :
-                        <span className="text-[--text-gray] text-center">You have no chats, search users and start a new chat </span>}
+                        
+                        <span className="text-[--text-gray] text-center">Its so quite here... </span>                            
+                    }
                 </div>
                 <div className="px-5 mb-5">
                     {receiverId !== 0 && <Input
