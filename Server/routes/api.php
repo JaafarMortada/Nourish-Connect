@@ -30,6 +30,8 @@ Route::group(["middleware" => "manager.or.charity", "prefix" => "/manager_charit
     });
     Route::prefix('/chat')->group(function () {
         Route::get('/search_users/{search?}', [ChatController::class, 'searchUsers']);
+        Route::post('/new_message', [ChatController::class, 'saveNewMessage']);
+
     });
 
 });
