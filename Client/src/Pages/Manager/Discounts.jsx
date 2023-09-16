@@ -1,4 +1,4 @@
-import { Sidebar } from "../../components"
+import { DiscountsTable, Sidebar } from "../../components"
 import { styles } from "../../constants"
 const Discounts = () => {
   return (
@@ -12,7 +12,7 @@ const Discounts = () => {
                 <div className={styles.pageHeaderText}>
                   Discounts
                 </div>
-
+                <DiscountsTable />
             </div>
         </div>
     </>
