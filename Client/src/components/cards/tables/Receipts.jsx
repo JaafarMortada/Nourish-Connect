@@ -37,7 +37,7 @@ const ReceiptsTable = () => {
     }, [])
     return (
 
-        <Card className="flex flex-col h-[40%] w-full">
+        <Card className="flex flex-col max-h-[35%] w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none mb-2">
                 <div className="h-fit flex items-center justify-between gap-8">
                     <div>

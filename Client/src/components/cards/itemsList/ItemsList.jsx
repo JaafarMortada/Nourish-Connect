@@ -56,8 +56,8 @@ const ItemsList = ({ setCheckoutItems }) => {
   }, [debouncedSearchTerm])
 
   return (
-    <Card className="h-[60%] w-full">
-      <CardHeader floated={false} shadow={false} className="rounded-none pb-[10px]">
+    <Card className="h-[60%] w-full flex flex-col">
+      <CardHeader floated={false} shadow={false} className=" rounded-none ">
         <div className="mb-8 flex items-center justify-between gap-8  translate-y-[5px]">
           <div>
             <Typography variant="h5" color="blue-gray">
@@ -80,7 +80,7 @@ const ItemsList = ({ setCheckoutItems }) => {
         </div>
 
       </CardHeader>
-      <CardBody className="overflow-scroll flex flex-wrap gap-x-10 gap-y-5 justify-around">
+      <CardBody className="overflow-scroll flex flex-wrap gap-x-10 gap-y-5 justify-around flex-1">
         {
           itemsData.map((item) => (
             <ItemCard 

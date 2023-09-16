@@ -21,7 +21,7 @@ const Checkout = ({ data, setCheckoutItems, handleRemoveFromCheckout, handleQuan
     setTotal(new_total);
   }, [data])
   return (
-    <Card className="h-full w-[25%] ml-5 flex flex-col justify-between">
+    <Card className="h-[97%] w-[25%] ml-5 flex flex-col justify-between">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-8 flex items-center justify-between gap-8">
           <div>

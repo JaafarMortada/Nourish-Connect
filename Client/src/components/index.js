@@ -10,7 +10,7 @@ import ReceiptsTable from "./cards/tables/Receipts";
 import InventoryCard from "./cards/inventoryCard/inventoryCard";
 import TextAreaField from "./ui/TextAreaField";
 import FileDragInput from "./ui/FileDragInput";
-import UploadSalesData from "./cards/uploadSalesData/UploadSalesData";
+import UploadSalesData from "./modals/uploadSalesData/UploadSalesData";
 import ErrorDialog from "./ui/ErrorDialog";
 import AddCashierModal from "./modals/addCashier/AddCashierModal";
 import ProfileCard from "./cards/profileCard/ProfileCard";
