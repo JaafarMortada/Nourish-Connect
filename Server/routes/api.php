@@ -9,15 +9,17 @@ use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromptDataController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
-    Route::get('get_cashiers', [CashierController::class, 'getCashiers']);
+    Route::get("get_cashiers", [CashierController::class, 'getCashiers']);
     Route::get("get_charities", [CharityController::class, "getCharities"]);
     Route::get("get_donations_data", [DonationController::class, "getDonationsData"]);
     Route::get("get_donations_stats", [DonationController::class, "getDonationsStats"]);
-    Route::post('add_cashier', [AuthController::class, 'addCashier']);
+    Route::post("add_cashier", [AuthController::class, 'addCashier']);
+    Route::get("get_suggestions", [PromptDataController::class, "getAiSuggestions"]);
 
 });
 
