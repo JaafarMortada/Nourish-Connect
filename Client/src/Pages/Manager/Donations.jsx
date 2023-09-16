@@ -1,4 +1,4 @@
-import { Sidebar } from "../../components"
+import { ManagersDonationsOverview, Sidebar } from "../../components"
 import { styles } from "../../constants"
 const Donations = () => {
   return (
@@ -12,7 +12,7 @@ const Donations = () => {
                 <div className={styles.pageHeaderText}>
                   Donations
                 </div>
-
+                <ManagersDonationsOverview />
             </div>
         </div>
     </>
