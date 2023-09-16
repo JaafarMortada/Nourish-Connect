@@ -46,7 +46,7 @@ Route::group(["middleware" => "cashier", "prefix" => "/cashier"], function () {
         Route::post("/add_item", [ItemsController::class, "addItem"]);
         Route::post("/checkout", [ItemsController::class, "checkoutReceipt"]);
         Route::get("/get_receipts/{search?}", [ItemsController::class, "getReceipt"]);
-        Route::post('/import_file', [ExcelController::class, 'uploadExcelOrCSV']);
+        Route::post('/import_file/{for}', [ExcelController::class, 'uploadExcelOrCSV']);
 
     });
 });
