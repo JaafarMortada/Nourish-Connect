@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CharityController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DiscountsController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ExcelController;
@@ -22,6 +23,7 @@ Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
     Route::get("get_donations_stats", [DonationController::class, "getDonationsStats"]);
     Route::post("add_cashier", [AuthController::class, 'addCashier']);
     Route::get("get_suggestions", [PromptDataController::class, "getAiSuggestions"]);
+    Route::get("get_week_days_revenue", [DashboardController::class, "getWeekDaysRevenue"]);
 
 });
 
