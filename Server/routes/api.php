@@ -6,6 +6,7 @@ use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CharityController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DonationController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,8 @@ Route::group(["middleware" => "cashier", "prefix" => "/cashier"], function () {
         Route::post("/add_item", [ItemsController::class, "addItem"]);
         Route::post("/checkout", [ItemsController::class, "checkoutReceipt"]);
         Route::get("/get_receipts/{search?}", [ItemsController::class, "getReceipt"]);
+        Route::post('/import_file', [ExcelController::class, 'uploadExcelOrCSV']);
+
     });
 });
 

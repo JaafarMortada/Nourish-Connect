@@ -9,6 +9,22 @@ class Item extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'original_price',
+        'initial_quantity',
+        'available_quantity',
+        'pic_url',
+        'production_date',
+        'expiry_date',
+        'category',
+        'barcode',
+        'inventory_id',
+
+    ];
+
     public function inventory()
     {
         return $this->belongsTo(Inventory::class);
