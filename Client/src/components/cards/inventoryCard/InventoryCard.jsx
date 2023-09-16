@@ -3,6 +3,7 @@ import {
   CardHeader,
   Typography,
   CardBody,
+  Spinner,
 } from "@material-tailwind/react";
 
 import PrimaryButton from "../../ui/Button";
@@ -33,6 +34,8 @@ const InventoryCard = () => {
   const { store } = useStoreData()
 
   const [error, setError] = useState(false)
+  const [fileError, setFileError] = useState(false)
+  const [uploading, setUploading] = useState(false)
 
   const handleFileUpload = (file) => {
     setData({ ...data, inventoryFile: file })
@@ -52,54 +55,92 @@ const InventoryCard = () => {
     }, 3000)
   }
 
-  const handleAddItem = async () => {
-        try {
-          const formData = new FormData();
-          formData.append('name', data.name);
-          formData.append('description', data.description);
-          formData.append('price', data.price);
-          formData.append('original_price', data.original_price);
-          formData.append('quantity', data.quantity);
-          formData.append('production_date', data.production_date);
-          formData.append('expiry_date', data.expiry_date);
-          if (data.image) formData.append('image', data.image);
-          formData.append('category', data.category);
-          formData.append('barcode', data.barcode);
-          const response = await sendRequest({
-            method: "POST",
-            route: "/api/cashier/items/add_item/",
-            token: store.token,
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-            body: formData,
+  const handleFileError = () => {
+    setUploading(false)
+    setFileError(true)
+    setTimeout(() => {
+      setFileError(false);
+    }, 3000)
+  }
 
-          });
-          console.log('123')
-          if (response.message === "Item added successfully") {
-            setData({
-              name: "",
-              description: "",
-              price: "",
-              original_price: "",
-              quantity: "",
-              production_date: "",
-              expiry_date: "",
-              category: "",
-              barcode: "",
-              inventoryFile: "",
-            })
-          } else {
-            handleError()
-          }
-        } catch (error) {
-          handleError()
-        }
+  const handleAddItem = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('description', data.description);
+      formData.append('price', data.price);
+      formData.append('original_price', data.original_price);
+      formData.append('quantity', data.quantity);
+      formData.append('production_date', data.production_date);
+      formData.append('expiry_date', data.expiry_date);
+      if (data.image) formData.append('image', data.image);
+      formData.append('category', data.category);
+      formData.append('barcode', data.barcode);
+      const response = await sendRequest({
+        method: "POST",
+        route: "/api/cashier/items/add_item/",
+        token: store.token,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData,
+
+      });
+      console.log('123')
+      if (response.message === "Item added successfully") {
+        setData({
+          name: "",
+          description: "",
+          price: "",
+          original_price: "",
+          quantity: "",
+          production_date: "",
+          expiry_date: "",
+          category: "",
+          barcode: "",
+          inventoryFile: "",
+        })
+      } else {
+        handleError()
       }
-  
+    } catch (error) {
+      handleError()
+    }
+  }
+
+  const handleUpload = async () => {
+    setUploading(true)
+    try {
+      const formData = new FormData();
+      formData.append('file', data.inventoryFile);
+
+      const response = await sendRequest({
+        method: "POST",
+        route: "/api/cashier/items/import_file/items",
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData,
+
+      });
+      if (response.message === "data imported successfully") {
+        setData({
+          ...data,
+          inventoryFile: "",
+        })
+        setUploading(false)
+
+      } else {
+        handleFileError()
+      }
+    } catch (error) {
+      handleFileError()
+    }
+  }
+
   return (
 
-    <Card className="flex flex-col h-[80%] w-[95%]">
+    <Card className="flex flex-col h-[88%] w-[95%]">
       <CardHeader floated={false} shadow={false} className="rounded-none ">
         <div className="mb-4 h-fit flex items-center justify-between gap-8">
           <div>
@@ -205,7 +246,7 @@ const InventoryCard = () => {
           <div className="flex lg:justify-end justify-center lg:w-[920px] w-[200px] max-h-[40px]">
             <PrimaryButton
               label={`${error ? "An error occurred" : "Add Item"}`}
-              classNames={ `w-[200px] ${ error ? "bg-red-500" : "bg-[--primary]"}`}
+              classNames={`w-[200px] ${error ? "bg-red-500" : "bg-[--primary]"}`}
               onClick={handleAddItem}
             />
           </div>
@@ -233,6 +274,13 @@ const InventoryCard = () => {
               onFileUpload={handleFileUpload}
             />
 
+          </div>
+          <div className="flex justify-end lg:w-[920px] w-[200px]">
+            <PrimaryButton
+              label={uploading ? <Spinner className="w-4" /> : `${fileError ? "An error occurred" : "Upload file"}`}
+              classNames={`max-h-[40px]  flex justify-center items-center w-[200px] ${fileError ? "bg-red-500" : "bg-[--primary]"}`}
+              onClick={handleUpload}
+            />
           </div>
         </div>
 

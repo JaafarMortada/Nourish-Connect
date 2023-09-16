@@ -32,6 +32,7 @@ const UploadSalesData = ({ open, handleOpen }) => {
     }
 
     const handleError = () => {
+        setUploading(false)
         setError(true)
         setTimeout(() => {
           setError(false);
