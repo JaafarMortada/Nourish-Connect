@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PromptDataController extends Controller
 {
-    public function getAiSuggestions()
+    public function getAiSuggestions($for)
     {
 
         $charities = User::where("usertype_id", 3)->get();
@@ -93,41 +93,44 @@ class PromptDataController extends Controller
 
         $responseData = json_decode($response->getBody(), true);
         $decodedValue = json_decode($responseData['user_outputs']['Node_Name_7']['value'], true);
+        if ($for == "donations") {
+            try {
+                foreach ($decodedValue['response']['donation_suggestions'] as $donationSuggestion) {
+                    if (!$donationSuggestion['request_id']) {
+                        continue;
+                    }
 
-        try {
-            foreach ($decodedValue['response']['donation_suggestions'] as $donationSuggestion) {
-                if(!$donationSuggestion['request_id']) {
-                    continue;
+                    $suggestion = new DonationSuggestion;
+                    $suggestion->item_id = $donationSuggestion['item_id'];
+                    $suggestion->charity_id = $donationSuggestion['charity_id'];
+                    $suggestion->quantity = $donationSuggestion['quantity_to_donate'];
+                    $suggestion->request_id = $donationSuggestion['request_id'];
+                    $suggestion->save();
                 }
-                
-                $suggestion = new DonationSuggestion;
-                $suggestion->item_id = $donationSuggestion['item_id'];
-                $suggestion->charity_id = $donationSuggestion['charity_id'];
-                $suggestion->quantity = $donationSuggestion['quantity_to_donate'];
-                $suggestion->request_id = $donationSuggestion['request_id'];
-                $suggestion->save();
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => 'unable to generate donation suggestions',
+
+                ], 200);
             }
-        } catch (\Throwable $e) {
-            return response()->json([
-                'message' => 'unable to generate donation suggestions',
-                
-            ], 200);
+        } elseif ($for == "discounts") {
+            try {
+                foreach ($decodedValue['response']['discount_suggestions'] as $discountSuggestion) {
+                    $suggestion = new DiscountSuggestion;
+                    $suggestion->item_id = $discountSuggestion['item_id'];
+                    $suggestion->percentage = $discountSuggestion['discount_percentage'];
+                    $suggestion->until = $discountSuggestion['discount_until'];
+                    $suggestion->save();
+                }
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => 'unable to generate discount suggestions',
+
+                ], 200);
+            }
         }
 
-        try {
-            foreach ($decodedValue['response']['discount_suggestions'] as $discountSuggestion) {
-                $suggestion = new DiscountSuggestion;
-                $suggestion->item_id = $discountSuggestion['item_id'];
-                $suggestion->percentage = $discountSuggestion['discount_percentage'];
-                $suggestion->until = $discountSuggestion['discount_until'];
-                $suggestion->save();
-            }
-        } catch (\Throwable $e) {
-            return response()->json([
-                'message' => 'unable to generate discount suggestions',
 
-            ], 200);
-        }
 
         return response()->json([
             'message' => 'success',
