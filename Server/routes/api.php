@@ -22,6 +22,7 @@ Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
     Route::get("get_discounts_data", [DiscountsController::class, "getDiscountsData"]);
     Route::get("get_donations_data", [DonationController::class, "getDonationsData"]);
     Route::get("get_donations_stats", [DonationController::class, "getDonationsStats"]);
+    Route::get("approve_donation/{suggestion_id}", [DonationController::class, "approveDonation"]);
     Route::post("add_cashier", [AuthController::class, 'addCashier']);
     Route::get("get_suggestions", [PromptDataController::class, "getAiSuggestions"]);
     Route::get("get_week_days_revenue", [DashboardController::class, "getWeekDaysRevenue"]);

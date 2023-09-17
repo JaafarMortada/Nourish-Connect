@@ -45,6 +45,11 @@ class Item extends Model
         return $this->hasMany(DonationItem::class, 'item_id');
     }
 
+    public function suggestionItem()
+    {
+        return $this->hasMany(DonationSuggestion::class, 'item_id');
+    }
+
     public function suggestedInDonations()
     {
         return $this->belongsToMany(User::class, 'donations_suggestions', 'item_id', 'charity_id')

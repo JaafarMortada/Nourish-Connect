@@ -30,4 +30,9 @@ class DonationSuggestion extends Model
     {
         return $this->belongsTo(CharityRequest::class, 'request_id');
     }
+
+    public function hasItem()
+    {
+        return $this->belongsTo(Item::class, 'item_id');
+    }
 }
