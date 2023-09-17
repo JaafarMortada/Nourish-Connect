@@ -13,9 +13,6 @@ class SuggestionsController extends Controller
     {
         $user = Auth::user();
         $items = $user->inventories[0]->items;
-        foreach ($items as $item) {
-            $item->suggestedInDonation;
-        }
 
         $donationSuggestionsData = $items->map(function ($item) {
 
@@ -32,8 +29,8 @@ class SuggestionsController extends Controller
                 $donators = [];
                 foreach ($request->donations as $donation) {
                     $donators[] = $donation->donator->company_name;
-                    foreach ($donation->donationItems as $item) {
-                        $quantity += $item->quantity;
+                    foreach ($donation->donationItems as $donationItem) {
+                        $quantity += $donationItem->quantity;
                     }
                 }
                 if (!($quantity == 0 || $quantity < intval($request->quantity))) {
