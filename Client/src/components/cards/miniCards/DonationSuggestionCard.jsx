@@ -7,14 +7,14 @@ import {
 } from "@material-tailwind/react";
 import ApproveDonation from "../../modals/approveDonation/ApproveDonationModal";
 import { useState } from "react";
-const DonationSuggestionCard = ( {data} ) => {
+const DonationSuggestionCard = ( {data, removeApproved} ) => {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
 
     return (
         <>
-            <ApproveDonation open={open} handleOpen={handleOpen} data={data}/>
+            <ApproveDonation open={open} handleOpen={handleOpen} data={data} removeApproved={removeApproved}/>
             <Card color="transparent" className="flex flex-col min-w-[350px] bg-[#E0F8EA] py-0">
                 <CardBody className="flex flex-col h-full justify-between p-5">
 

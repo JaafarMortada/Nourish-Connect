@@ -1,29 +1,48 @@
-
 import {
-    Card,
     Dialog,
     DialogHeader,
     DialogBody,
     Typography,
-    CardBody,
     DialogFooter,
+    Spinner,
 } from "@material-tailwind/react";
 
 import PrimaryButton from "../../ui/Button";
 import { useState } from "react";
 import { sendRequest } from "../../../config/request";
 
-const ApproveDonation = ({ open, handleOpen, data }) => {
+const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
 
     const [error, setError] = useState(false)
+    const [approving, setApproving] = useState(false)
 
     const handleError = () => {
         setError(true)
         setTimeout(() => {
             setError(false);
+            setApproving(false)
         }, 3000)
     }
 
+    const approveDonation = async () => {
+        setApproving(true)
+        try {
+            const response = await sendRequest({
+                method: "GET",
+                route: `/api/manager/approve_donation/${data.suggestion_id}`,
+            });
+            if (response.message === "success") {
+                setApproving(false)
+                removeApproved(data.suggestion_id)
+                handleOpen()
+            } else {
+                handleError()
+            }
+        } catch (error) {
+            console.log(error);
+            handleError()
+        }
+    }
 
     return (
 
@@ -53,15 +72,24 @@ const ApproveDonation = ({ open, handleOpen, data }) => {
                     Thank you for your generous contribution. Before proceeding, we kindly request your approval to finalize the donation process.
                     <br />The details of your donation are listed below.
                 </Typography>
-                <Typography className="text-[16px] ml-5 my-5">
+                <Typography className="text-[16px] ml-5 my-5 text-[--text-black]">
                     <li className="truncate">
                         <span className="font-bold">Charity: </span> {data.charity_name}
                     </li>
                     <li className="truncate">
-                        <span className="font-bold">Item: </span> {data.item_name}
+                        <span className="font-bold">Description (Context written by the charity):<br /> </span>
+                        <div className="max-w-full max-h-40 whitespace-normal truncate border-t-2 border-b-2 my-2">
+                            {data.request_description}
+
+                        </div>
+
+                    </li>
+
+                    <li className="truncate">
+                        <span className="font-bold">Suggested item: </span> {data.item_name}
                     </li>
                     <li className="truncate">
-                        <span className="font-bold">Requested Quantity: </span> {data.requested_quantity}
+                        <span className="font-bold">Requested quantity: </span> {data.requested_quantity}
                     </li>
                     <li className="truncate">
                         <span className="font-bold">Quantity to donate: </span> {data.quantity_to_donate}
@@ -70,8 +98,10 @@ const ApproveDonation = ({ open, handleOpen, data }) => {
             </DialogBody>
             <DialogFooter className="border-t-2">
                 <PrimaryButton
-                    label={"Approve"}
-                    classNames={"bg-[--primary]"}
+                    label={approving ? <Spinner /> : "Approve"}
+                    disabled={approving}
+                    classNames={`min-w-[107px] flex justify-center ${error ? "bg-red-500" : "bg-[--primary]"}`}
+                    onClick={approveDonation}
                 />
             </DialogFooter>
         </Dialog>

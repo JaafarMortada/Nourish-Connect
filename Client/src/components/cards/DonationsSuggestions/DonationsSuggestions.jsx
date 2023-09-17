@@ -16,6 +16,13 @@ const DonationsSuggestions = () => {
     const [suggestionsData, setSuggestionsData] = useState([])
     const [loading, setLoading] = useState(true)
 
+    const removeApprovedSuggestion = (suggestionId) => {
+        const updatedSuggestions = suggestionsData.filter(
+            (suggestion) => suggestion.suggestion_id !== suggestionId
+        );
+        setSuggestionsData(updatedSuggestions);
+    };
+
     const getDonationSuggestions = async () => {
         try {
             const response = await sendRequest({
@@ -39,7 +46,7 @@ const DonationsSuggestions = () => {
         try {
             const response = await sendRequest({
                 method: "GET",
-                route: "/api/manager/get_suggestions",
+                route: "/api/manager/get_suggestions/donations",
             });
             if (response.message === "success") {
                 getDonationSuggestions()
@@ -65,33 +72,34 @@ const DonationsSuggestions = () => {
                                 Donation Suggestions
                             </Typography>
                         </div>
-                        <PrimaryButton classNames="flex items-center bg-[--primary]" size="sm" label='Generate New' onClick={generateSuggestions}/>
+                        <PrimaryButton classNames="flex items-center bg-[--primary]" size="sm" label='Generate New' onClick={generateSuggestions} />
                     </div>
                 </CardHeader>}
 
                 {
-                loading ? <Spinner className="w-20 h-20" /> :
-                suggestionsData.length === 0
-                    ?
-                    <div className="flex flex-1 h-full justify-center items-center">
-                        <Typography color="gray" className="mt-1 font-normal text-center">
-                            No suggestions found.<br />Click on the button to generate new suggestions.
-                        </Typography>
-                    </div>
-                    :
-                    <CardBody className=" px-5 flex  flex-1 ">
-                        <div className={`w-full h-full flex gap-5 overflow-scroll rounded-sm `}>
-                        {
-                                suggestionsData.map((suggestion, index) => (
-                                    <DonationSuggestionCard
-                                        key={index}
-                                        data={suggestion}
-                                    />
-                                ))
-                            }
+                    loading ? <Spinner className="w-20 h-20" /> :
+                        suggestionsData.length === 0
+                            ?
+                            <div className="flex flex-1 h-full justify-center items-center">
+                                <Typography color="gray" className="mt-1 font-normal text-center">
+                                    No suggestions found.<br />Click on the button to generate new suggestions.
+                                </Typography>
+                            </div>
+                            :
+                            <CardBody className=" px-5 flex  flex-1 ">
+                                <div className={`w-full h-full flex gap-5 overflow-scroll rounded-sm `}>
+                                    {
+                                        suggestionsData.map((suggestion, index) => (
+                                            <DonationSuggestionCard
+                                                key={index}
+                                                data={suggestion}
+                                                removeApproved={removeApprovedSuggestion}
+                                            />
+                                        ))
+                                    }
 
-                        </div>
-                    </CardBody>
+                                </div>
+                            </CardBody>
                 }
             </Card>
         </>
