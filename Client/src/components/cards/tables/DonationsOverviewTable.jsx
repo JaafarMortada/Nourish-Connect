@@ -40,9 +40,8 @@ const DonationsOverviewTable = () => {
     }, [])
 
     return (
-        <>
 
-            <Card className="flex flex-col h-[80%] w-[95%]">
+            <Card className="flex flex-col flex-1 w-[95%] min-h-[60%]">
                 <CardHeader floated={false} shadow={false} className="rounded-none ">
                     <div className="mb-4 h-fit flex items-center justify-between gap-8">
                         <div>
@@ -176,7 +175,6 @@ const DonationsOverviewTable = () => {
 
             </Card>
 
-        </>
     );
 }
 
