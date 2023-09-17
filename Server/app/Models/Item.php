@@ -41,8 +41,19 @@ class Item extends Model
     }
 
     public function donationItems()
-{
-    return $this->hasMany(DonationItem::class, 'item_id');
-}
+    {
+        return $this->hasMany(DonationItem::class, 'item_id');
+    }
 
+    public function suggestedInDonations()
+    {
+        return $this->belongsToMany(User::class, 'donations_suggestions', 'item_id', 'charity_id')
+            ->withPivot('id', 'quantity', 'approved', 'request_id')
+            ->withTimestamps();
+    }
+
+    public function suggestedDiscount()
+    {
+        return $this->hasMany(DiscountSuggestion::class, 'item_id');
+    }
 }

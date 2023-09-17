@@ -26,12 +26,10 @@ class User extends Authenticatable implements JWTSubject
 
     protected $hidden = [
         'password',
-        
+
     ];
 
-    protected $casts = [
-        
-    ];
+    protected $casts = [];
 
     public function getJWTIdentifier()
     {
@@ -75,7 +73,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function donationDonators()
     {
-    return $this->hasMany(Donation::class, 'donator_id');
+        return $this->hasMany(Donation::class, 'donator_id');
     }
 
     public function donationReceivers()
@@ -96,5 +94,11 @@ class User extends Authenticatable implements JWTSubject
     public function messagesReceived()
     {
         return $this->hasMany(Chat::class, 'receiver_id');
+    }
+
+    public function suggestedItemsToDonate()
+    {
+        return $this->belongsToMany(Item::class, 'donations_suggestions', 'charity_id', 'item_id')
+            ->withPivot('quantity', 'approved');
     }
 }
