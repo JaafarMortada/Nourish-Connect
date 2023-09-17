@@ -3,14 +3,10 @@ import {
     CardHeader,
     Typography,
     CardBody,
-    Avatar,
   } from "@material-tailwind/react";
   import { useEffect, useState } from "react";
   import { useStoreData } from "../../../global/store";
   import { sendRequest } from "../../../config/request";
-  import PrimaryButton from "../../ui/Button";
-  import { default_profile_pic } from "../../../assets";
-  import AddCashierModal from "../../modals/addCashier/AddCashierModal";
   import moment from "moment"
   
   
@@ -123,7 +119,8 @@ import {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {donated_at}
+                            {moment(donated_at).format('LLLL')}
+
                           </Typography>
                         </td>
                         <td className={classes}>
