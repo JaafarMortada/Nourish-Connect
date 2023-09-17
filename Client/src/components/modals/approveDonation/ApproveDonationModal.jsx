@@ -13,7 +13,7 @@ import PrimaryButton from "../../ui/Button";
 import { useState } from "react";
 import { sendRequest } from "../../../config/request";
 
-const ApproveDonation = ({ open, handleOpen }) => {
+const ApproveDonation = ({ open, handleOpen, data }) => {
 
     const [error, setError] = useState(false)
 
@@ -55,16 +55,16 @@ const ApproveDonation = ({ open, handleOpen }) => {
                 </Typography>
                 <Typography className="text-[16px] ml-5 my-5">
                     <li className="truncate">
-                        <span className="font-bold">Charity: </span> food blessed.
+                        <span className="font-bold">Charity: </span> {data.charity_name}
                     </li>
                     <li className="truncate">
-                        <span className="font-bold">Item: </span> Apples.
+                        <span className="font-bold">Item: </span> {data.item_name}
                     </li>
                     <li className="truncate">
-                        <span className="font-bold">Requested Quantity: </span> 21.
+                        <span className="font-bold">Requested Quantity: </span> {data.requested_quantity}
                     </li>
                     <li className="truncate">
-                        <span className="font-bold">Quantity to donate: </span> 21.
+                        <span className="font-bold">Quantity to donate: </span> {data.quantity_to_donate}
                     </li>
                 </Typography>
             </DialogBody>

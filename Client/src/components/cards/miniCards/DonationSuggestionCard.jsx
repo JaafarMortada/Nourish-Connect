@@ -7,14 +7,14 @@ import {
 } from "@material-tailwind/react";
 import ApproveDonation from "../../modals/approveDonation/ApproveDonationModal";
 import { useState } from "react";
-const DonationSuggestionCard = () => {
+const DonationSuggestionCard = ( {data} ) => {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
 
     return (
         <>
-            <ApproveDonation open={open} handleOpen={handleOpen}/>
+            <ApproveDonation open={open} handleOpen={handleOpen} data={data}/>
             <Card color="transparent" className="flex flex-col min-w-[350px] bg-[#E0F8EA] py-0">
                 <CardBody className="flex flex-col h-full justify-between p-5">
 
@@ -24,16 +24,16 @@ const DonationSuggestionCard = () => {
 
                     <Typography className="text-[16px]">
                         <li className="truncate">
-                            <span className="font-bold">Charity: </span> food blessed.
+                            <span className="font-bold">Charity: </span> {data.charity_name}
                         </li>
                         <li className="truncate">
-                            <span className="font-bold">Item: </span> Apples.
+                            <span className="font-bold">Item: </span> {data.item_name}
                         </li>
                         <li className="truncate">
-                            <span className="font-bold">Requested Quantity: </span> 21.
+                            <span className="font-bold">Requested Quantity: </span> {data.requested_quantity}
                         </li>
                         <li className="truncate">
-                            <span className="font-bold">Quantity to donate: </span> 21.
+                            <span className="font-bold">Quantity to donate: </span> {data.quantity_to_donate}
                         </li>
                     </Typography>
                     <Button

@@ -14,6 +14,24 @@ const DonationsSuggestions = () => {
 
     const [suggestionsData, setSuggestionsData] = useState([])
 
+    const getDonationSuggestions = async () => {
+        try {
+            const response = await sendRequest({
+                method: "GET",
+                route: "/api/manager/get_donations_suggestions",
+            });
+            if (response.message === "success") {
+                setSuggestionsData(response.donation_suggestions);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getDonationSuggestions()
+    }, [])
+
     return (
         <>
             <Card className="flex min-h-[350px] w-[95%] ">
@@ -37,8 +55,14 @@ const DonationsSuggestions = () => {
                     :
                     <CardBody className=" px-5 flex  flex-1 ">
                         <div className="w-full h-full flex gap-5 overflow-scroll rounded-sm">
-                            <DonationSuggestionCard />
-                            <DonationSuggestionCard />
+                            {
+                                suggestionsData.map((suggestion, index) => (
+                                    <DonationSuggestionCard
+                                        key={index}
+                                        data={suggestion}
+                                    />
+                                ))
+                            }
 
                         </div>
                     </CardBody>
