@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DiscountSuggestion;
+use App\Models\DonationSuggestion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -27,6 +29,7 @@ class PromptDataController extends Controller
 
                 if ($quantity == 0 || $quantity < intval($request->quantity)) {
                     return [
+                        "id" => $request->id,
                         "title" => $request->title,
                         "description" => $request->description,
                         "category" => $request->category,
@@ -90,6 +93,45 @@ class PromptDataController extends Controller
 
         $responseData = json_decode($response->getBody(), true);
         $decodedValue = json_decode($responseData['user_outputs']['Node_Name_7']['value'], true);
-        return response()->json($decodedValue, 200);
+
+        try {
+            foreach ($decodedValue['response']['donation_suggestions'] as $donationSuggestion) {
+                if(!$donationSuggestion['request_id']) {
+                    continue;
+                }
+                
+                $suggestion = new DonationSuggestion;
+                $suggestion->item_id = $donationSuggestion['item_id'];
+                $suggestion->charity_id = $donationSuggestion['charity_id'];
+                $suggestion->quantity = $donationSuggestion['quantity_to_donate'];
+                $suggestion->request_id = $donationSuggestion['request_id'];
+                $suggestion->save();
+            }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'unable to generate donation suggestions',
+                
+            ], 200);
+        }
+
+        try {
+            foreach ($decodedValue['response']['discount_suggestions'] as $discountSuggestion) {
+                $suggestion = new DiscountSuggestion;
+                $suggestion->item_id = $discountSuggestion['item_id'];
+                $suggestion->percentage = $discountSuggestion['discount_percentage'];
+                $suggestion->until = $discountSuggestion['discount_until'];
+                $suggestion->save();
+            }
+        } catch (\Throwable $e) {
+            return response()->json([
+                'message' => 'unable to generate discount suggestions',
+
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'success',
+
+        ], 200);
     }
 }
