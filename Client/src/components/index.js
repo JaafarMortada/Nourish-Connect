@@ -23,6 +23,7 @@ import DonationsOverviewTable from "./cards/tables/DonationsOverviewTable";
 import Messenger from "./chat/Messenger";
 import ManagersDonationsOverview from "./cards/tables/ManagersDonationsOverview";
 import DiscountsTable from "./cards/tables/DiscountsTable";
+import WeeksRevenue from "./cards/statistics/WeeksRevenue";
 
 export {
     CashiersTable,
@@ -50,5 +51,6 @@ export {
     Messenger,
     ManagersDonationsOverview,
     DiscountsTable,
+    WeeksRevenue,
     
 }
