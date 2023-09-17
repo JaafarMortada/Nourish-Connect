@@ -19,5 +19,9 @@ class CharityRequest extends Model
     {
         return $this->hasMany(Donation::class, "request_id");
     }
+    public function donationsSuggestions()
+    {
+        return $this->hasMany(DonationSuggestion::class, "request_id");
+    }
 
 }

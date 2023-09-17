@@ -12,6 +12,7 @@ use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromptDataController;
+use App\Http\Controllers\SuggestionsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,6 +25,7 @@ Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
     Route::post("add_cashier", [AuthController::class, 'addCashier']);
     Route::get("get_suggestions", [PromptDataController::class, "getAiSuggestions"]);
     Route::get("get_week_days_revenue", [DashboardController::class, "getWeekDaysRevenue"]);
+    Route::get("get_donations_suggestions", [SuggestionsController::class, "getDonationsSuggestions"]);
 
 });
 
