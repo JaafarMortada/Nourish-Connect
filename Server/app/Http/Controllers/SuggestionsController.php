@@ -21,12 +21,25 @@ class SuggestionsController extends Controller
 
             $maxAge = Carbon::now()->subWeeks(2);
 
-            $pendingSuggestions = $item->suggestedInDonations->reject(function ($donation) use ($maxAge){
+            $pendingSuggestions = $item->suggestedInDonations->reject(function ($donation) use ($maxAge) {
                 return $donation->pivot->approved == 1 || Carbon::parse($donation->pivot->created_at)->lt($maxAge);
             });
 
             $donationSuggestions = $pendingSuggestions->map(function ($suggestion) use ($item) {
                 $request = CharityRequest::where('id', $suggestion->pivot->request_id)->first();
+
+                $quantity = 0;
+                $donators = [];
+                foreach ($request->donations as $donation) {
+                    $donators[] = $donation->donator->company_name;
+                    foreach ($donation->donationItems as $item) {
+                        $quantity += $item->quantity;
+                    }
+                }
+                if (!($quantity == 0 || $quantity < intval($request->quantity))) {
+                    return null;
+                }
+
                 return [
                     "item_name" => $item->name,
                     "suggestion_id" => $suggestion->pivot->id,
@@ -39,7 +52,10 @@ class SuggestionsController extends Controller
 
                 ];
             });
-            return $donationSuggestions->toArray();
+            return $donationSuggestions->filter(function ($donation) {
+                return !is_null($donation);
+            })->toArray();
+            
         })->filter(function ($donations) {
             return !empty($donations);
         })->flatten(1);
