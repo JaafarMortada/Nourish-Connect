@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CharityRequest;
+use App\Models\Item;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,7 +53,6 @@ class SuggestionsController extends Controller
             return $donationSuggestions->filter(function ($donation) {
                 return !is_null($donation);
             })->toArray();
-            
         })->filter(function ($donations) {
             return !empty($donations);
         })->flatten(1);
@@ -63,10 +63,11 @@ class SuggestionsController extends Controller
         ], 200);
     }
 
-    public function getDiscountsSuggestions(){
-        $user=Auth::user();
+    public function getDiscountsSuggestions()
+    {
+        $user = Auth::user();
 
-        $items=$user->inventories[0]->items;
+        $items = $user->inventories[0]->items;
 
         $discountsSuggestionsData = $items->map(function ($item) {
             $maxAge = Carbon::now()->subWeeks(2);
@@ -74,29 +75,40 @@ class SuggestionsController extends Controller
             $suggestions = $item->suggestedDiscount->map(function ($suggestion) {
                 $suggestion->item;
                 return $suggestion;
-
             })->reject(function ($suggestion) use ($maxAge) {
                 return $suggestion->approved == 1 || Carbon::parse($suggestion->created_at)->lt($maxAge);
             });
 
             return $suggestions->filter(function ($suggestion) {
                 return !is_null($suggestion);
-
             })->map(function ($suggestion) {
+                $dbItem = Item::where('id', $suggestion->item->id)->first();
+                $dbItemDiscounts = $dbItem->discounts;
+                if ($dbItemDiscounts->count() > 0) {
+                    $initial_discounts_percentage = $dbItemDiscounts->map(function ($dbItemDiscount) use (&$total_discount_percentage) {
+                        $discountUntil = Carbon::parse($dbItemDiscount->until);
+                        if ($discountUntil->isFuture()) {
+                            return $dbItemDiscount->percentage;
+                        }
+                        return 0;
+                    })->sum();
+                } else {
+                    $initial_discounts_percentage = 0;
+                }
+
                 return [
                     "discount_suggestion_id" => $suggestion->id,
                     "suggested_discount_percentage" => $suggestion->percentage,
                     "item_name" => $suggestion->item->name,
                     "initial_quantity" => $suggestion->item->initial_quantity,
                     "available_quantity" => $suggestion->item->available_quantity,
+                    "current_discounts_percentage" => $initial_discounts_percentage,
                     "suggested_end_date" => Carbon::parse($suggestion->until)->subDays(2),
 
                 ];
             })->toArray();
-            
         })->filter(function ($suggestion) {
             return !empty($suggestion);
-
         })->flatten(1);
         return response()->json([
             'message' => 'success',

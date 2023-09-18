@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Item;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\File;
@@ -74,6 +75,24 @@ class ItemsController extends Controller
         }
 
         $items = $query->get();
+
+        foreach($items as $item){
+            $dbItemDiscounts = $item->discounts;
+                if ($dbItemDiscounts->count() > 0) {
+                    $current_discounts_percentage = $dbItemDiscounts->map(function ($dbItemDiscount) use (&$total_discount_percentage) {
+                        $discountUntil = Carbon::parse($dbItemDiscount->until);
+                        if ($discountUntil->isFuture()) {
+                            return $dbItemDiscount->percentage;
+                        }
+                        return 0;
+                    })->sum();
+                } else {
+                    $current_discounts_percentage = 0;
+                }
+                $price = $item->price;
+                $price_with_discounts = $price - $price * $current_discounts_percentage;
+                $item->price = $price_with_discounts;
+        }
 
         return response()->json([
             'message' => 'success',
