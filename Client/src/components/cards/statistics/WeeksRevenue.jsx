@@ -33,7 +33,7 @@ const WeeksRevenue = () => {
     }, [])
     return (
         <Card
-            className={`flex flex-1 flex-col min-h-[400px] max-h-[401px] min-w-[500px] ${loading ? "justify-center items-center" : ""}`}
+            className={`flex flex-1 flex-col min-h-[400px] max-h-[401px] md:min-w-[40%] md:max-w-[40%] min-w-[500px] max-w-[501px] ${loading ? "justify-center items-center" : ""}`}
         >
             <CardHeader floated={false} shadow={false} className=" rounded-none ">
                 <Typography variant="h6" color="blue-gray">
