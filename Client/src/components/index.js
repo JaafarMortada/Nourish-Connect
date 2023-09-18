@@ -25,6 +25,7 @@ import ManagersDonationsOverview from "./cards/tables/ManagersDonationsOverview"
 import DiscountsTable from "./cards/tables/DiscountsTable";
 import WeeksRevenue from "./cards/statistics/WeeksRevenue";
 import DonationsSuggestions from "./cards/DonationsSuggestions/DonationsSuggestions";
+import DiscountSuggestions from "./cards/DiscountSuggestions/DiscountSuggestions";
 
 export {
     CashiersTable,
@@ -54,5 +55,5 @@ export {
     DiscountsTable,
     WeeksRevenue,
     DonationsSuggestions,
-    
+    DiscountSuggestions
 }

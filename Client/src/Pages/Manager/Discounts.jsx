@@ -1,4 +1,4 @@
-import { DiscountsTable, Sidebar } from "../../components"
+import { DiscountSuggestions, DiscountsTable, Sidebar } from "../../components"
 import { styles } from "../../constants"
 const Discounts = () => {
   return (
@@ -12,7 +12,10 @@ const Discounts = () => {
                 <div className={styles.pageHeaderText}>
                   Discounts
                 </div>
-                <DiscountsTable />
+                <div className="w-full flex-1 h-full flex flex-col gap-5 items-center mb-5">
+                  <DiscountSuggestions />
+                  <DiscountsTable />
+                </div>
             </div>
         </div>
     </>
