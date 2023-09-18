@@ -62,4 +62,46 @@ class SuggestionsController extends Controller
 
         ], 200);
     }
+
+    public function getDiscountsSuggestions(){
+        $user=Auth::user();
+
+        $items=$user->inventories[0]->items;
+
+        $discountsSuggestionsData = $items->map(function ($item) {
+            $maxAge = Carbon::now()->subWeeks(2);
+
+            $suggestions = $item->suggestedDiscount->map(function ($suggestion) {
+                $suggestion->item;
+                return $suggestion;
+
+            })->reject(function ($suggestion) use ($maxAge) {
+                return $suggestion->approved == 1 || Carbon::parse($suggestion->created_at)->lt($maxAge);
+            });
+
+            return $suggestions->filter(function ($suggestion) {
+                return !is_null($suggestion);
+
+            })->map(function ($suggestion) {
+                return [
+                    "discount_suggestion_id" => $suggestion->id,
+                    "suggested_discount_percentage" => $suggestion->percentage,
+                    "item_name" => $suggestion->item->name,
+                    "initial_quantity" => $suggestion->item->initial_quantity,
+                    "available_quantity" => $suggestion->item->available_quantity,
+                    "suggested_end_date" => Carbon::parse($suggestion->until)->subDays(2),
+
+                ];
+            })->toArray();
+            
+        })->filter(function ($suggestion) {
+            return !empty($suggestion);
+
+        })->flatten(1);
+        return response()->json([
+            'message' => 'success',
+            'discount_suggestions' => $discountsSuggestionsData,
+
+        ], 200);
+    }
 }

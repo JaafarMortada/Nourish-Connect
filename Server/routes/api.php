@@ -27,6 +27,7 @@ Route::group(["middleware" => "manager", "prefix" => "/manager"], function () {
     Route::get("get_suggestions/{for}", [PromptDataController::class, "getAiSuggestions"]);
     Route::get("get_week_days_revenue", [DashboardController::class, "getWeekDaysRevenue"]);
     Route::get("get_donations_suggestions", [SuggestionsController::class, "getDonationsSuggestions"]);
+    Route::get("get_discounts_suggestions", [SuggestionsController::class, "getDiscountsSuggestions"]);
 
 });
 
