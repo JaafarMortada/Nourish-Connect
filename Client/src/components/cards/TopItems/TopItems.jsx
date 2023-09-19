@@ -4,53 +4,68 @@ import {
     CardBody,
     CardHeader,
     Spinner,
+    Tabs,
+    Tab,
+    TabsHeader,
 
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
+import { sendRequest } from "../../../config/request";
 import PieChart from "../../charts/PieChart";
 
-const TABLE_HEAD = ["Item", "Quantity Sold", "Revenue"];
-
-const TABLE_ROWS = [
-    {
-        name: "Apples",
-        job: "250",
-        date: "120$",
-    },
-    {
-        name: "Banana",
-        job: "200",
-        date: "100$",
-    },
-    {
-        name: "Rice",
-        job: "100",
-        date: "90$",
-    },
-    {
-        name: "Juice",
-        job: "90",
-        date: "80$",
-    },
-    {
-        name: "Canned Corn",
-        job: "90",
-        date: "75$",
-    },
-
-];
+const TABLE_HEAD = ["Item", "Quantity Sold", "Total Value"];
 
 const TopItems = () => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
+    const [topFiveItemsData, setTopFiveItemsData] = useState([])
+    const [topFiveBy, setTopFiveBy] = useState('quantity_sold')
+    const handleTabChange = () => {
+        if (topFiveBy === 'quantity_sold') setTopFiveBy('sold_value')
+        if (topFiveBy === 'sold_value') setTopFiveBy('quantity_sold')
+    }
+
+    const getTopFiveItems = async () => {
+        try {
+            const response = await sendRequest({
+                method: "GET",
+                route: `/api/manager/get_top_five_items/${topFiveBy ? topFiveBy : "quantity_sold"}`,
+            });
+            if (response.message === "success") {
+                setTopFiveItemsData(response.top_five_items);
+                setLoading(false)
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
+    useEffect(() => {
+        getTopFiveItems()
+    }, [topFiveBy])
+
     return (
         <Card
             className={` md:h-full max-h-fit md:w-[58%] w-[500px] ${loading ? "justify-center items-center" : ""}`}
         >
-            <CardHeader floated={false} shadow={false} className="rounded-none ">
+            <CardHeader floated={false} shadow={false} className="rounded-none flex justify-between items-center">
 
                 <Typography variant="h5" color="blue-gray">
                     Top Items
                 </Typography>
+                <div className="flex items-center gap-5">
+                    <span>Sort by: </span>
+                    <Tabs value={'quantity_sold'} className="w-min md:w-max">
+                        <TabsHeader>
+                            <Tab value={'quantity_sold'} onClick={handleTabChange} className="w-[150px]">
+                                Quantity Sold
+                            </Tab>
+                            <Tab value={'sold_value'} onClick={handleTabChange} className="w-[150px]">
+                                Total Value
+                            </Tab>
+                        </TabsHeader>
+                    </Tabs>
+                </div>
 
             </CardHeader>
             {loading ? <Spinner className="w-20 h-20 pt-3" /> :
@@ -73,30 +88,30 @@ const TopItems = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {TABLE_ROWS.map(({ name, job, date }, index) => (
-                                    <tr key={name} className="even:bg-blue-gray-50/50">
+                                {topFiveItemsData.map(({ item_name, quantity_sold, sold_value }, index) => (
+                                    <tr key={item_name} className="even:bg-blue-gray-50/50">
                                         <td className="p-4">
                                             <Typography variant="small" color="blue-gray" className="font-normal">
-                                                {name}
+                                                {item_name}
                                             </Typography>
                                         </td>
                                         <td className="p-4">
                                             <Typography variant="small" color="blue-gray" className="font-normal">
-                                                {job}
+                                                {quantity_sold}
                                             </Typography>
                                         </td>
                                         <td className="p-4">
                                             <Typography variant="small" color="blue-gray" className="font-normal">
-                                                {date}
+                                                {sold_value} $
                                             </Typography>
                                         </td>
-                                        
+
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
-                    <PieChart />
+                    <PieChart data={topFiveItemsData} sortBy={topFiveBy} />
                 </CardBody>
             }
         </Card>
