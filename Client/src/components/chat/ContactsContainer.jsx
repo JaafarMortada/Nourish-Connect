@@ -5,7 +5,7 @@ import { useStoreData } from "../../global/store"
 import { useEffect, useState } from "react"
 import { sendRequest } from "../../config/request"
 const ContactsContainer = ({setReceiverData}) => {
-    const { store } = useStoreData()
+    const { store, setStoreData } = useStoreData()
 
     const [contacts, setContacts] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
@@ -34,11 +34,13 @@ const ContactsContainer = ({setReceiverData}) => {
             try {
                 const response = await sendRequest({
                     method: "GET",
-                    route: `/api/manager_charity/chat/search_users/${debouncedSearchTerm}`,
+                    route: `/api/manager_charity/chat/search_users/${store.receiver_id ? store.receiver_id : debouncedSearchTerm}`,
                     token: store.token,
                 });
                 if (response.message === "success") {
+                    if (store.receiver_id) setReceiverData(store.receiver_id, response.contactFromMap)
                     setContacts(response.contacts);
+                    setStoreData({...store, receiver_id: null})
                 }
             } catch (error) {
                 // console.log(error);
@@ -46,6 +48,7 @@ const ContactsContainer = ({setReceiverData}) => {
         }
         getContactsHandler()
     }, [debouncedSearchTerm, store.token])
+
 
 
     return (

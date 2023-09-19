@@ -13,7 +13,7 @@ export const StoreDataProvider = ({ children }) => {
         username: '',
         company_name: '',
         pic_url: null,
-
+        receiver_id: null,
 
     });
 

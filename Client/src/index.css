@@ -45,3 +45,11 @@ body {
   scroll-behavior: smooth;
   transition: scroll-behavior 0.5s ease-in-out;
 }
+
+.leaflet-popup-content,
+.leaflet-popup-content-wrapper {
+
+  width: 250px;
+  height: 150px;
+  border-radius: 10px;
+}

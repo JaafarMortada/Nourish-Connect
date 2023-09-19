@@ -20,11 +20,14 @@ import { useStoreData } from '../../global/store';
 
 
 const Messenger = () => {
+
+  const { store, setStoreData } = useStoreData()
+
   const [receiverId, setReceiverId] = useState(0)
   const [headerData, setHeaderData] = useState({})
   const [messages, setMessages] = useState([]);
 
-  const { store } = useStoreData()
+ 
   const messagesRef = collection(db, "messages");
   const handleContactClick = (id, data) => {
     setReceiverId(id)
@@ -51,6 +54,7 @@ const Messenger = () => {
         (message.receiver_id === receiverId && message.sender_id === store.user_id)
     )));
     });
+    setStoreData({...store, receiver_id: null})
 
     return () => unSubscribe();
   }, [receiverId]);
