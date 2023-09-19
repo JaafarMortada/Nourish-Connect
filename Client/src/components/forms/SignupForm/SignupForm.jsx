@@ -43,7 +43,7 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
         setError(false)
     }
 
-    const handleLocation = (lng,lat) => {
+    const handleLocation = (lat, lng) => {
         setData({...data, longitude: lng, latitude: lat})
     }
 
