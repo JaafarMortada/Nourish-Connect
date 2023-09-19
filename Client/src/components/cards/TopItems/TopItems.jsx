@@ -54,7 +54,7 @@ const TopItems = () => {
                     Top Items
                 </Typography>
                 <div className="flex items-center gap-5">
-                    <span>Sort by: </span>
+                    {/* <span>Sort by: </span> */}
                     <Tabs value={'quantity_sold'} className="w-min md:w-max">
                         <TabsHeader>
                             <Tab value={'quantity_sold'} onClick={handleTabChange} className="w-[150px]">

@@ -15,7 +15,7 @@ const DonationSuggestionCard = ( {data, removeApproved} ) => {
     return (
         <>
             <ApproveDonation open={open} handleOpen={handleOpen} data={data} removeApproved={removeApproved}/>
-            <Card color="transparent" className="flex flex-col min-w-[350px] bg-[#E0F8EA] py-0">
+            <Card className="flex flex-col min-w-[350px] rounded-none border-[--primary] border-b-4 transition-all bg-blue-gray-50/50 shadow-md py-0">
                 <CardBody className="flex flex-col h-full justify-between p-5">
 
                     <Typography variant="h5" color="blue-gray" className="truncate">
