@@ -49,15 +49,21 @@ class DonationController extends Controller
             return [
                 "total_items" => $items->sum('quantity'),
                 "donated_to" => $donation->toRequest->requestedBy->id,
-
+                "items" => $items->all()
             ];
+        });
+        $item_worth = $donationsData->pluck('items')->flatten()->sum(function ($donationItem) {
+            return $donationItem->item->price * $donationItem->quantity;
         });
 
         return response()->json([
             'message' => 'success',
-            'number_of_donations' => $donations->count(),
-            'number_of_charities' => $donationsData->unique('donated_to')->count(),
-            'number_of_items' => $donationsData->sum('total_items'),
+            'stats' => [
+                'number_of_donations' => ["Made", $donations->count(), "donations"],
+                'number_of_charities' => ["Helped", $donationsData->unique('donated_to')->count(), "charities"],
+                'number_of_items' => ["Saved", $donationsData->sum('total_items'), "items"],
+                'items_worth' => ["Donated", $item_worth, "worth of items"],
+            ],
 
         ], 200);
     }
