@@ -33,7 +33,7 @@ const WeeksRevenue = () => {
     }, [])
     return (
         <Card
-            className={`flex flex-1 flex-col min-h-[400px] max-h-[401px] md:min-w-[40%] md:max-w-[40%] min-w-[500px] max-w-[501px] ${loading ? "justify-center items-center" : ""}`}
+            className={`flex-1  md:min-w-[40%] md:max-w-[40%] min-w-[500px] max-w-[500px] `}
         >
             <CardHeader floated={false} shadow={false} className=" rounded-none ">
                 <Typography variant="h5" color="blue-gray">
@@ -41,14 +41,17 @@ const WeeksRevenue = () => {
                 </Typography>
             </CardHeader>
 
-            {loading ? <Spinner className="w-20 h-20" /> :
-                <CardBody className="flex-1 p-0 box-content">
+            
+                <CardBody className="min-h-[400px] p-0 flex items-center justify-center">
+                {loading ? 
+                <Spinner className="w-20 h-20 pt-3" />
+            :
                     <BarChart 
                         data={WeeklyRevenueData} 
                         keys={"revenue"} 
                         LegendLabel={"Total Sales (in $)"}
-                    />
-                </CardBody>}
+                    />}
+                </CardBody>
         </Card>
     )
 }

@@ -7,7 +7,7 @@ const BarChart = ({data, keys, LegendLabel}) => {
       data={data}
       keys={[keys]}
       indexBy="day"
-      margin={{ top: 50, right: 25, bottom: 50, left: 60 }}
+      margin={{ top: 30, right: 25, bottom: 50, left: 60 }}
       padding={0.4}
       valueScale={{ type: "linear" }}
       colors="#006b44"
