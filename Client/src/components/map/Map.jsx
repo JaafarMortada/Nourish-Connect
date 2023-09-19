@@ -1,7 +1,7 @@
-import { MapContainer, TileLayer, Popup, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, Popup, Marker, useMap } from "react-leaflet";
 import { useMapEvents } from 'react-leaflet/hooks'
 import "leaflet/dist/leaflet.css"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function GetUserLocation({ setClickedPosition, handleLocation = null }) {
     const map = useMapEvents({
@@ -10,6 +10,7 @@ function GetUserLocation({ setClickedPosition, handleLocation = null }) {
         },
         locationfound: (location) => {
             setClickedPosition({ latitude: location.latlng.lat, longitude: location.latlng.lng })
+            map.flyTo(location.latlng, map.getZoom())
             if (handleLocation) handleLocation(location.latlng.lat, location.latlng.lng)
         },
     })
@@ -22,26 +23,37 @@ const Map = ({
     draggable = false,
     showMarkers = null,
     handleLocation = null,
+    zoomIn = false,
+    zoomCenter = null
 
 }) => {
     const [clickedPosition, setClickedPosition] = useState({
         longitude: -0.09,
         latitude: 51.505,
     });
+    const mapRef = useRef()
     const handleMarkerDrag = (e) => {
         setClickedPosition({ latitude: e.target._latlng.lat, longitude: e.target._latlng.lng });
         if (handleLocation) handleLocation(e.target._latlng.lat, e.target._latlng.lng)
     };
 
+    useEffect(() => {
+        if (mapRef.current) {
+            mapRef.current.setView(zoomCenter, 13)
+        }
+    }, [zoomCenter])
 
     return (
         <MapContainer
-            center={[34, 36]}
+            center={zoomCenter ? zoomCenter :[34, 36]}
             zoom={8}
             className={`${styles ? styles : "h-[100vh] w-full"}`}
+            ref={mapRef}
         >
+
             {locateUser ?
-                <GetUserLocation setClickedPosition={setClickedPosition} handleLocation={handleLocation} />
+                <GetUserLocation setClickedPosition={setClickedPosition} handleLocation={handleLocation} zoomIn={zoomIn} zoomTo={zoomCenter}/>
+                
                 : null
             }
             <TileLayer
@@ -60,14 +72,14 @@ const Map = ({
                 showMarkers ?
                     showMarkers.map((marker) => (
                         <Marker position={[marker.latitude, marker.longitude]} key={marker.id} draggable={false}>
-                            <Popup>
+                            <Popup className="aaa">
                                 {marker.company_name}
                             </Popup>
                         </Marker>
                     ))
                     : null
             }
-
+            
         </MapContainer>
     )
 }

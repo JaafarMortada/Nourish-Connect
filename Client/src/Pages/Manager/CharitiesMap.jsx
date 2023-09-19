@@ -7,8 +7,15 @@ import { useState, useEffect } from "react"
 const CharitiesMap = () => {
 
   const [data, setData] = useState([])
+  const [zoomIn, setZoomIn] = useState(false)
+  const [zoomInLocation, setZoomInLocation] = useState(null)
   const {store} = useStoreData()
+  
+  const handleZoomIn = (location) => {
+    setZoomIn(true)
+    setZoomInLocation(location)
 
+  };
     useEffect(()=>{
         const getCharities = async () => {
             try {
@@ -35,8 +42,8 @@ const CharitiesMap = () => {
         </div>
 
         <div className={`${styles.pageContainer} relative`}>
-          <Map showMarkers={data}/>
-          <CharitiesMapList data={data}/>
+          <Map showMarkers={data} zoomIn={zoomIn} zoomCenter={zoomInLocation}/>
+          <CharitiesMapList data={data} handleZoomIn={handleZoomIn}/>
         </div>
       </div>
     </>
