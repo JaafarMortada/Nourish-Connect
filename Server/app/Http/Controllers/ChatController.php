@@ -12,8 +12,10 @@ class ChatController extends Controller
 {
     public function searchUsers($search = null)
     {
-        if (!$search) {
+
+        if (!$search || is_numeric($search)) {
             $user_id = Auth::id();
+
             $chats = Chat::where("sender_id", $user_id)->orWhere("receiver_id", $user_id)->get();
 
             $chatsWith = $chats->map(function ($chat) {
@@ -30,6 +32,20 @@ class ChatController extends Controller
                 ];
             });
 
+
+            $contact = User::where('id', $search)->first();
+            if ($contact) {
+                return response()->json([
+                    'message' => 'success',
+                    'contacts' => collect($chatsWith)->unique('id')->values(),
+                    'contactFromMap' => [
+                        'id' => $contact->id,
+                        'company_name' => $contact->company_name,
+                        'pic_url' => $contact->pic_url,
+                    ],
+
+                ], 200);
+            }
             return response()->json([
                 'message' => 'success',
                 'contacts' => collect($chatsWith)->unique('id')->values(),
@@ -52,6 +68,7 @@ class ChatController extends Controller
                 'pic_url' => $user->pic_url,
             ];
         });
+
 
         return response()->json([
             'message' => 'success',

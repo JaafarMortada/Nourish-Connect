@@ -17,6 +17,7 @@ class CharityController extends Controller
         $responseCharities = $charities->map(function ($charity) {
             $location = $charity->location;
             return [
+                'charity_id' => $charity->id,
                 'company_name' => $charity->company_name,
                 'email' => $charity->email,
                 'pic_url' => $charity->pic_url,
