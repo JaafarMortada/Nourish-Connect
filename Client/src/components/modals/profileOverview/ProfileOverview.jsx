@@ -1,9 +1,13 @@
 import {
     Card,
-    Typography,
     CardBody,
     Avatar,
     Spinner,
+    Dialog,
+    DialogHeader,
+    DialogBody,
+    Typography,
+    DialogFooter,
 } from "@material-tailwind/react";
 import { BiSolidDonateHeart } from 'react-icons/bi'
 import { EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/solid";
@@ -12,11 +16,11 @@ import { useStoreData } from "../../../global/store";
 import { sendRequest } from "../../../config/request";
 import PrimaryButton from "../../ui/Button";
 import { default_profile_pic } from "../../../assets";
-import UserInfoCard from "../miniCards/UserInfoCard";
+import UserInfoCard from "../../cards/miniCards/UserInfoCard";
 import InputField from "../../ui/Input";
 import Unauthorized from "../../../Pages/Unauthorized";
-
-const ProfileCard = () => {
+import Map from "../../map/Map";
+const ProfileOverview = ({ open, handleOpen }) => {
     const { store } = useStoreData()
     const [newLogo, setNewLogo] = useState(null)
     const [existingLogo, setExistingLogo] = useState(null)
@@ -93,13 +97,30 @@ const ProfileCard = () => {
         isUnauthorized ? <Unauthorized /> :
             <>
 
-                <Card
-                    className={`flex flex-col md:min-h-[50%] min-h-[80vh] md:w-[95%] w-[400px] ${loading ? "justify-center items-center" : ""}`}
-                >
+                <Dialog
+                    className={`flex flex-col overflow-scroll min-h-[80vh] relative max-h-[80vh] ${loading ? "justify-center items-center" : ""}`}
+                    size="md"
+                    open={open}
+                    handler={handleOpen}
+                    animate={{
+                        mount: { scale: 1, y: 0 },
+                        unmount: { scale: 0.9, y: -100 },
+                    }}
 
+                >
+                    <DialogHeader floated={false} shadow={false} className="rounded-none absolute top-0 left-0">
+                        <div className="mb-4 h-fit flex items-center justify-between gap-8">
+                            <div>
+                                <Typography variant="h5" color="blue-gray">
+                                    Profile Overview
+                                </Typography>
+                            </div>
+                        </div>
+
+                    </DialogHeader>
                     {loading ? <Spinner className="w-20 h-20" /> :
-                        <CardBody className="overflow-scroll px-5 flex-1 flex md:flex-row flex-col justify-between items-center md:gap-0 gap-10">
-                            <div className="w-[300px] h-fit flex flex-col items-center justify-center gap-10">
+                        <DialogBody className="overflow-scroll px-5 flex-1 mt-10 flex-col justify-center items-center md:gap-0 gap-10">
+                            <div className="min-w-[300px] h-fit relative flex flex-col items-center justify-center gap-10">
                                 <label>
 
                                     <Avatar
@@ -107,8 +128,9 @@ const ProfileCard = () => {
                                             existingLogo ? existingLogo :
                                                 default_profile_pic
                                         }
+                                        title="Click here to edit your profile picture."
                                         withBorder={true}
-                                        className="w-[200px] h-[200px] border-[--primary] cursor-pointer hover:scale-105 transition-all"
+                                        className="w-[200px] h-[200px] border-[--primary] border-4 cursor-pointer hover:scale-105 transition-all"
                                     />
                                     <input type="file" className="hidden" onChange={handleLogoChange} />
 
@@ -117,38 +139,32 @@ const ProfileCard = () => {
 
                                 {
                                     newLogo ?
-                                        <div className="flex gap-5 h-[40px]">
+                                        <div className="flex flex-col absolute right-0 items-center justify-center gap-5 h-full w-[50%]">
                                             <PrimaryButton
                                                 label={"Cancel"}
-                                                classNames={"bg-[--primary] w-[100px] flex justify-center items-center p-0"}
+                                                classNames={"bg-[--primary] w-[100px] min-h-[40px] flex justify-center items-center p-0"}
                                                 onClick={() => setNewLogo(null)}
                                                 disabled={uploading}
                                             />
                                             <PrimaryButton
                                                 label={uploading ? <Spinner /> : "Confirm"}
-                                                classNames={"bg-[--primary] w-[100px] flex justify-center items-center p-0 "}
+                                                classNames={"bg-[--primary] w-[100px] flex min-h-[40px] justify-center items-center p-0 "}
                                                 onClick={handleLogoUpload}
                                                 disabled={uploading}
                                             />
                                         </div>
 
                                         :
-                                        <Typography
-                                            variant="small"
-                                            color="gray"
-                                            className=" flex gap-1 font-normal justify-center w-full h-[40px]"
-                                        >
-                                            Click on Your Profile Picture to edit it.
-                                        </Typography>
+                                        null
                                 }
 
                             </div>
-                            <div className="w-[65%] flex flex-col h-full gap-5">
-                                <div className="w-full">
+                            <div className="w-full flex flex-col items-center h-full gap-5 mt-5">
+                                <div className="w-full text-center">
                                     <Typography variant="h3" color="black">
                                         {profileData.username}
                                     </Typography>
-                                    <Typography color="gray" className="font-normal ">
+                                    <Typography variant="h5" color="gray" className="font-normal ">
                                         {`${store.usertype === 'manager' ? "Manager" : store.usertype === 'charity' ? 'Coordinator' : ''}`} at a {profileData.company_name}
                                     </Typography>
                                 </div>
@@ -172,11 +188,28 @@ const ProfileCard = () => {
                                         />
                                     </div>
                                 </div>
+
+                                <div className="border-b-4 border-[--primary] rounded-t-lg max-w-[70%] min-w-[70%] self-center">
+                                    <Typography className="my-2 text-[16px]">
+                                        Location
+                                    </Typography>
+                                    <Map
+                                        styles={" !min-h-[250px] rounded-t-lg"}
+                                        draggable={true}
+                                        locateUser={true}
+                                        zoomCenter={[profileData.latitude, profileData.longitude]}
+                                        profile={profileData}
+                                    />
+                                </div>
                             </div>
-                        </CardBody>}
-                </Card>
+                            {/* <div className="h-[500px] w-[500px]">
+                                <Map profile={profileData} zoomCenter={[profileData.latitude, profileData.longitude]} />
+                            </div> */}
+
+                        </DialogBody>}
+                </Dialog>
             </>
     )
 }
 
-export default ProfileCard
+export default ProfileOverview

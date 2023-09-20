@@ -1,7 +1,7 @@
 
 const UserInfoCard = ({ icon, title, info = [] }) => {
     return (
-        <div className="flex min-w-[300px] items-center gap-5">
+        <div className="flex min-w-max items-center gap-5">
             <div className="w-8">
                 <span className="text-[--primary]">{icon}</span>
             </div>

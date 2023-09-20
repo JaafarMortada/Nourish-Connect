@@ -8,7 +8,6 @@ import {
 } from '../../Pages/Manager';
 import ChatsPage from '../../Pages/ChatsPage';
 import CharitiesMap from '../../Pages/Manager/CharitiesMap';
-import Profile from '../../Pages/Profile';
 
 const ManagerRoutes = () => {
     return ( 
@@ -19,7 +18,6 @@ const ManagerRoutes = () => {
             <Route path="/discounts" element={<Discounts />} />
             <Route path="/chats" element={<ChatsPage />} />
             <Route path="/map" element={<CharitiesMap />} />
-            <Route path="/profile" element={<Profile />} />
 
         </Routes>
      );

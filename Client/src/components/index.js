@@ -13,7 +13,7 @@ import FileDragInput from "./ui/FileDragInput";
 import UploadSalesData from "./modals/uploadSalesData/UploadSalesData";
 import ErrorDialog from "./ui/ErrorDialog";
 import AddCashierModal from "./modals/addCashier/AddCashierModal";
-import ProfileCard from "./cards/profileCard/ProfileCard";
+// import ProfileCard from "./cards/profileCard/ProfileCard";
 import UserInfoCard from "./cards/miniCards/UserInfoCard";
 import Map from "./map/Map";
 import CharitiesMapList from "./charitiesMapList/CharitiesMapList";
@@ -28,6 +28,7 @@ import DonationsSuggestions from "./cards/DonationsSuggestions/DonationsSuggesti
 import DiscountSuggestions from "./cards/DiscountSuggestions/DiscountSuggestions";
 import DonationsStatsCard from "./cards/donationsStats/DonationsStatsCard";
 import TopItems from "./cards/TopItems/TopItems";
+import ProfileOverview from "./modals/profileOverview/ProfileOverview";
 
 export {
     CashiersTable,
@@ -45,7 +46,7 @@ export {
     UploadSalesData,
     ErrorDialog,
     AddCashierModal,
-    ProfileCard,
+    // ProfileCard,
     UserInfoCard,
     Map,
     CharitiesMapList,
@@ -60,5 +61,6 @@ export {
     DiscountSuggestions,
     DonationsStatsCard,
     TopItems,
+    ProfileOverview,
 
 }

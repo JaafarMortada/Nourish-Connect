@@ -28,8 +28,8 @@ const Map = ({
     showMarkers = null,
     handleLocation = null,
     zoomIn = false,
-    zoomCenter = null
-
+    zoomCenter = null,
+    profile = null,
 }) => {
     const { store, setStoreData } = useStoreData()
     const navigate = useNavigate()
@@ -50,8 +50,10 @@ const Map = ({
     useEffect(() => {
         if (mapRef.current) {
             mapRef.current.flyTo(zoomCenter, 13)
+            // if (profile) mapRef.current.flyTo([profile.latitude, profile.longitude], 13)
         }
-    }, [zoomCenter])
+        
+    }, [zoomCenter, profile])
 
     return (
         <MapContainer
@@ -77,7 +79,12 @@ const Map = ({
                 </Marker>
                 : null
             }
-
+            {
+                profile ? 
+                <Marker position={[profile.latitude, profile.longitude]}>
+                </Marker>
+                : null
+            }
             {
                 showMarkers ?
                     showMarkers.map((marker) => (

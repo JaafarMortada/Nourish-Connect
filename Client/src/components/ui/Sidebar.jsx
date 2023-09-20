@@ -21,14 +21,16 @@ import {
     sidebarManagerLinks,
     sidebarProfileLinks,
 } from "../../constants";
-
+import ProfileOverview from "../modals/profileOverview/ProfileOverview";
 import { useStoreData } from "../../global/store";
 
 const Sidebar = () => {
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(0);
-
+    const [openProfile, setOpenProfile] = useState(false);
+ 
+    const handleOpenProfile = () => setOpenProfile(!openProfile);
     const { store, setStoreData } = useStoreData();
 
     const sidebarLinks =
@@ -51,6 +53,8 @@ const Sidebar = () => {
     }   
 
     return (
+        <> 
+        <ProfileOverview open={openProfile} handleOpen={handleOpenProfile} />
         <Card className="h-[100vh] rounded-none w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 bg-[--background-black] overflow-auto">
             <div className="mb-2 p-4">
                 <img src={logoWhite} />
@@ -127,7 +131,7 @@ const Sidebar = () => {
                                 {sidebarProfileLinks.map((Link, index) => (
                                     <ListItem
                                         key={`${Link.id}-${index}`}
-                                        onClick={Link.id === "logout" ? handleLogout : () => navigate(`/${store.usertype}/${Link.id}`)}
+                                        onClick={Link.id === "logout" ? handleLogout : handleOpenProfile}
                                         className="text-[--text-gray]"
                                     >
                                         <ListItemPrefix>
@@ -144,6 +148,7 @@ const Sidebar = () => {
                 </Accordion>
             </div>
         </Card>
+        </>
     );
 };
 
