@@ -116,6 +116,9 @@ export const styles = {
     pageContainer: "flex flex-col flex-1 h-[100vh] overflow-auto min-w-[500px] items-center ",
     boxWidth: "xl:max-w-[1280px] w-full",
     paddingX: "sm:px-16 px-6",
+    flexCenter: "flex justify-center items-center",
+    flexStart: "flex justify-center items-start",
+
   };
 
 
@@ -184,4 +187,17 @@ export const navLinks = [
       id: "signin",
       title: "Sign in",
     },
+  ];
+
+  export const foodWasteFacts = [
+    "Food waste is a staggering global challenge, with more than one-third of all food produced worldwide going to waste annually. This widespread issue not only results in significant economic losses but also poses severe environmental threats.",
+    "One of the most concerning consequences of food waste is its role in climate change. The food discarded contributes to 8% of the world's greenhouse gas emissions, making it a critical factor in the ongoing battle against global warming.",
+    "In developed countries, consumers are responsible for discarding nearly 40% of perfectly edible food, which compounds food insecurity problems and exacerbates the broader waste-related issues.",
+    "The wasteful disposal of food places enormous pressure on essential resources such as water, land, and energy. This overuse of resources intensifies ecological challenges and threatens the sustainability of our planet.",
+    "Each year, an astonishing 1.3 billion tons of food are wasted worldwide, equivalent to one-third of the world's total food production. These numbers underscore the urgency of addressing food waste on a global scale.",
+    "Another concerning aspect of food waste is its link to deforestation. Often, land is cleared for agricultural purposes, yet the resulting food is never consumed, contributing to the loss of vital forests.",
+    "The decomposition of food waste in landfills releases methane, a potent greenhouse gas that significantly contributes to global warming. This process underscores the urgency of tackling food waste on multiple fronts.",
+    "On a global scale, nearly one-third of food produced for human consumption is either lost or wasted, even as millions of people go hungry every day. This stark disparity highlights the need for more sustainable food management.",
+    "Food waste also represents a substantial economic loss, estimated at over $1 trillion annually, affecting businesses and economies worldwide. Reducing food waste is not just an ethical choice; it's a sound economic decision.",
+    "A modest reduction of just 25% in food waste could provide enough food to feed the entire global population. This reduction would not only help address hunger but also make a significant impact on waste-related challenges."
   ];

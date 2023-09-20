@@ -7,6 +7,8 @@ import hands_purple from './SVGs/hands/hands_purple.svg'
 import default_profile_pic from './SVGs/Default_pfp.svg'
 import notFound from './SVGs/notFound.svg'
 import profile_pic_no_cover from './SVGs/user-tie-solid.svg'
+import close from './SVGs/close.svg'
+import menu from './SVGs/menu.svg'
 
 export {
     logoBlack,
@@ -18,5 +20,7 @@ export {
     default_profile_pic,
     notFound,
     profile_pic_no_cover,
-
+    close,
+    menu,
+    
 }
