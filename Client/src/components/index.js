@@ -29,6 +29,11 @@ import DiscountSuggestions from "./cards/DiscountSuggestions/DiscountSuggestions
 import DonationsStatsCard from "./cards/donationsStats/DonationsStatsCard";
 import TopItems from "./cards/TopItems/TopItems";
 import ProfileOverview from "./modals/profileOverview/ProfileOverview";
+import FeaturesSection from "./landingPage/FeaturesSection";
+import Footer from "./landingPage/Footer";
+import HeroSection from "./landingPage/HeroSection";
+import Navbar from "./landingPage/Navbar";
+import Testimonials from "./landingPage/Testimonials";
 
 export {
     CashiersTable,
@@ -62,5 +67,10 @@ export {
     DonationsStatsCard,
     TopItems,
     ProfileOverview,
-
+    FeaturesSection,
+    Footer,
+    HeroSection,
+    Navbar,
+    Testimonials,
+    
 }

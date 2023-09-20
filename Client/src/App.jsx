@@ -8,7 +8,7 @@ import {
   ManagerRoutes,
 
 } from './routes';
-import Unauthorized from './Pages/Unauthorized';
+import { Unauthorized, LandingPage } from './Pages';
 import { useState } from 'react';
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<LandingPage />} />
         <Route path="/auth/*" element={<AuthRoutes />} />
         <Route path="/manager/*" element={authorized ? <ManagerRoutes /> : <Unauthorized />} />
         <Route path="/cashier/*" element={authorized ? <CashierRoutes /> : <Unauthorized />} />

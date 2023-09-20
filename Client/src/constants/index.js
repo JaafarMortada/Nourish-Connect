@@ -113,8 +113,9 @@ export const sidebarProfileLinks = [
 
 export const styles = {
     pageHeaderText: "w-[95%] text-[27px] font-semibold my-5 flex justify-between",
-    pageContainer: "flex flex-col flex-1 h-[100vh] overflow-auto min-w-[500px] items-center "
-
+    pageContainer: "flex flex-col flex-1 h-[100vh] overflow-auto min-w-[500px] items-center ",
+    boxWidth: "xl:max-w-[1280px] w-full",
+    paddingX: "sm:px-16 px-6",
   };
 
 
@@ -165,3 +166,22 @@ export const POSuploadConditions = [
     },
     
 ]
+
+export const navLinks = [
+    {
+      id: "home",
+      title: "Home",
+    },
+    {
+      id: "features",
+      title: "Features",
+    },
+    {
+      id: "testimonials",
+      title: "Testimonials",
+    },
+    {
+      id: "signin",
+      title: "Sign in",
+    },
+  ];
