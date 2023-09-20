@@ -2,7 +2,13 @@ import { MapContainer, TileLayer, Popup, Marker, useMap } from "react-leaflet";
 import { useMapEvents } from 'react-leaflet/hooks'
 import "leaflet/dist/leaflet.css"
 import { useEffect, useRef, useState } from "react";
-import PrimaryButton from "../ui/Button";
+import {
+    Avatar,
+    Tooltip,
+    Typography,
+
+} from "@material-tailwind/react";
+import { default_profile_pic } from "../../assets";
 import { useStoreData } from "../../global/store";
 import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +49,7 @@ const Map = ({
         if (handleLocation) handleLocation(e.target._latlng.lat, e.target._latlng.lng)
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         if (store.receiver_id) navigate("/manager/chats")
     }, [store.receiver_id])
 
@@ -52,7 +58,7 @@ const Map = ({
             mapRef.current.flyTo(zoomCenter, 13)
             // if (profile) mapRef.current.flyTo([profile.latitude, profile.longitude], 13)
         }
-        
+
     }, [zoomCenter, profile])
 
     return (
@@ -80,42 +86,52 @@ const Map = ({
                 : null
             }
             {
-                profile ? 
-                <Marker position={[profile.latitude, profile.longitude]}>
-                </Marker>
-                : null
+                profile ?
+                    <Marker position={[profile.latitude, profile.longitude]}>
+                    </Marker>
+                    : null
             }
             {
                 showMarkers ?
                     showMarkers.map((marker) => (
                         <Marker position={[marker.latitude, marker.longitude]} key={marker.id} draggable={false}>
                             <Popup >
-                                <div className="w-[80%] h-[120px] flex flex-col justify-between items-center mr-5">
-                                    <span className="mt-3 text-[16px]">{marker.company_name}</span>
-                                    <Button
-                                        size="sm"
-                                        variant="text"
-                                        className="flex items-center gap-2 w-fit text-[14px] px-5 mt-2"
-                                        onClick={() => {
-                                            setStoreData({...store, receiver_id: marker.charity_id})
-                                        }}
-                                    >
-                                        Open Chat
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth={2}
-                                            stroke="currentColor"
-                                            className="h-4 w-4"
+                                <div className="w-[80%] h-[90px] flex flex-col justify-between items-center mr-5 ">
+                                    <div className="flex gap-5 w-full items-center">
+                                        <Avatar withBorder={true} src={marker && marker.pic_url ? `http://127.0.0.1:8000/storage/${marker.pic_url}` : default_profile_pic} alt="avatar" />
+                                        <Tooltip content={`${marker.company_name}`}>
+                                            <Typography variant="h5" color="blue-gray" className="max-w-[250px] truncate">
+                                                {marker.company_name}
+                                            </Typography>
+                                        </Tooltip>
+                                    </div>
+                                    <div className="w-[350px] flex justify-end">
+                                        <Button
+                                            size="sm"
+                                            variant="text"
+                                            className="flex items-center gap-2 w-fit text-[14px] px-5 mt-2 "
+                                            onClick={() => {
+                                                setStoreData({ ...store, receiver_id: marker.charity_id })
+                                            }}
                                         >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                                            />
-                                        </svg>
-                                    </Button>
+                                            Open Chat
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth={2}
+                                                stroke="currentColor"
+                                                className="h-4 w-4"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+                                                />
+                                            </svg>
+                                        </Button>
+                                    </div>
+
                                 </div>
 
                             </Popup>
