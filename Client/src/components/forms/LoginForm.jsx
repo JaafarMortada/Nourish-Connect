@@ -6,15 +6,22 @@ import { sendRequest } from "../../config/request";
 import { useStoreData } from "../../global/store";
 import PrimaryButton from "../ui/Button";
 import InputField from "../ui/Input";
+import { emptyStore } from "../../constants";
 
 const LoginForm = () => {
 
     const { store, setStoreData } = useStoreData()
 
+    
+    useEffect(()=>{
+        localStorage.clear()
+        setStoreData(emptyStore)
+    },[])
+
     const [error, setError] = useState(false)
 
     const navigate = useNavigate()
-    
+
     const [signingIn, setSigningIn] = useState(false)
 
     const [data, setData] = useState({
@@ -31,14 +38,17 @@ const LoginForm = () => {
         navigate("/auth/signup")
     }
 
-    useEffect(()=>{
-        if (store.usertype === "manager"){
-            navigate(`/${store.usertype}/dashboard`)
-        } else if (store.usertype === "cashier"){
-            navigate(`/${store.usertype}/point-of-sales`)
-        } else if (store.usertype === "charity"){
-            navigate(`/${store.usertype}/donations`)
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            if (store.usertype === "manager") {
+                navigate(`/${store.usertype}/dashboard`)
+            } else if (store.usertype === "cashier") {
+                navigate(`/${store.usertype}/point-of-sales`)
+            } else if (store.usertype === "charity") {
+                navigate(`/${store.usertype}/donations`)
+            }
         }
+
     }, [store])
 
     const handleSignIn = async () => {
@@ -54,18 +64,18 @@ const LoginForm = () => {
                 localStorage.setItem('token', response.user.token);
 
                 setStoreData({
-                        ...store,
-                        token: response.user.token,
-                        usertype: response.user.usertype_id === 1 ? "manager" : response.user.usertype_id === 2 ? "cashier" : response.user.usertype_id === 3 ? "charity" : "",
-                        usertype_id: response.user.usertype_id,
-                        email: response.user.email,
-                        user_id: response.user.id,
-                        username: response.user.username,
-                        company_name: response.user.company_name,
-                        pic_url: response.user.pic_url,
+                    ...store,
+                    token: response.user.token,
+                    usertype: response.user.usertype_id === 1 ? "manager" : response.user.usertype_id === 2 ? "cashier" : response.user.usertype_id === 3 ? "charity" : "",
+                    usertype_id: response.user.usertype_id,
+                    email: response.user.email,
+                    user_id: response.user.id,
+                    username: response.user.username,
+                    company_name: response.user.company_name,
+                    pic_url: response.user.pic_url,
 
-                      });
-                  setSigningIn(false)
+                });
+                setSigningIn(false)
 
             } else {
                 setSigningIn(false)
@@ -82,30 +92,30 @@ const LoginForm = () => {
                 <span className="text-[21px] text-[--text-black] ">
                     Sign in to
                 </span>
-                <img src={logoBlack} className="w-[50%]" />
+                <img src={logoBlack} className="w-[50%] cursor-pointer" onClick={()=>navigate('/')}/>
                 <span className="text-[16px] text-gray-700">
                     To help the word and reduce food waste
                 </span>
             </div>
             <div className="ss:w-[500px] w-[300px] flex flex-col gap-5 " >
-                <InputField 
+                <InputField
                     error={error}
-                    label={'Enter your Email'} 
+                    label={'Enter your Email'}
                     name={'email'}
                     value={data.email}
                     onChange={handleDataChange}
                 />
-                <InputField 
+                <InputField
                     error={error}
                     type={'password'}
-                    label={'Enter your password'} 
+                    label={'Enter your password'}
                     name={'password'}
                     value={data.password}
                     onChange={handleDataChange}
                 />
                 <div className="flex justify-center ">
                     <PrimaryButton classNames='w-[75%] bg-[--primary] h-[40px] flex justify-center items-center p-0'
-                        label={signingIn ? <Spinner /> : "Sign in"} 
+                        label={signingIn ? <Spinner /> : "Sign in"}
                         onClick={handleSignIn}
                         disabled={signingIn}
                     />
@@ -113,11 +123,11 @@ const LoginForm = () => {
             </div>
             <div className="flex justify-center items-center gap-2">
                 <span className="text-[18px] pt-1">
-                    Don’t have an account? 
+                    Don’t have an account?
                 </span>
-                <span 
+                <span
                     className="text-[21px] font-semibold hover:text-[--primary] cursor-pointer"
-                    onClick={NavigateToSignUp}    
+                    onClick={NavigateToSignUp}
                 >
                     Sign Up
                 </span>

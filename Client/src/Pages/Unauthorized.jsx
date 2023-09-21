@@ -25,7 +25,7 @@ const Unauthorized = () => {
                 </CardBody>
                 <CardFooter className="pt-0 flex justify-center">
                     <ButtonGroup variant="text" color="red" className="w-full justify-center">
-                        <Button onClick={() => navigate("/home")}>Home</Button>
+                        <Button onClick={() => navigate("/")}>Home</Button>
                         <Button onClick={() => navigate("/auth/login")}>Sign in</Button>
                         <Button onClick={() => navigate("/auth/signup")}>Sign up</Button>
                     </ButtonGroup>

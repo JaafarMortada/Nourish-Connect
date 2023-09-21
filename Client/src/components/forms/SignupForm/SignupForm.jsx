@@ -13,11 +13,17 @@ import PrimaryButton from "../../ui/Button";
 import SignupStepOne from "./SignupSteps/SignupStepOne";
 import SignupStepTwo from "./SignupSteps/SignupStepTwo";
 import SignupStepThree from "./SignupSteps/SignupStepThree";
+import { emptyStore } from "../../../constants";
 
 const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastStep, isFirstStep, setIsFirstStep, setIsLastStep }) => {
 
     const { store, setStoreData } = useStoreData()
     
+    useEffect(()=>{
+        localStorage.clear()
+        setStoreData(emptyStore)
+    },[])
+
     const [error, setError] = useState(false)
 
     const navigate = useNavigate()
@@ -47,14 +53,17 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
         setData({...data, longitude: lng, latitude: lat})
     }
 
-    useEffect(()=>{
-        if (store.usertype === "manager"){
-            navigate(`/${store.usertype}/dashboard`)
-        } else if (store.usertype === "cashier"){
-            navigate(`/${store.usertype}/point-of-sales`)
-        } else if (store.usertype === "charity"){
-            navigate(`/${store.usertype}/donations`)
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            if (store.usertype === "manager") {
+                navigate(`/${store.usertype}/dashboard`)
+            } else if (store.usertype === "cashier") {
+                navigate(`/${store.usertype}/point-of-sales`)
+            } else if (store.usertype === "charity") {
+                navigate(`/${store.usertype}/donations`)
+            }
         }
+
     }, [store])
 
     const handleSignUp = async () => {
@@ -99,7 +108,7 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                 <span className="text-[21px] text-[--text-black] ">
                     Sign Up to
                 </span>
-                <img src={logoBlack} className="w-[50%]" />
+                <img src={logoBlack} className="w-[50%] cursor-pointer" onClick={()=>navigate('/')} />
                 <span className="text-[16px] text-gray-700">
                     To help the word and reduce food waste
                 </span>
