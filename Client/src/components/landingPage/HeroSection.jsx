@@ -29,8 +29,8 @@ const HeroSection = () => {
     }, []);
 
     return (
-        <section id="home" className="flex md:flex-row flex-col md:gap-0 gap-10 sm:pb-16 pb-6 relative min-h-[750px]">
-            <div className="flex-1 flex text-right justify-center items-end flex-col xl:px-0 sm:px-16 px-6">
+        <section id="home" className="flex md:flex-row flex-col md:gap-0 xl:gap-5 gap-10 sm:pb-16 pb-6 relative min-h-[750px]">
+            <div className="flex-1 flex text-right justify-center items-end flex-col xl:px-2  sm:px-16 px-6">
                 <h1 className="font-semibold ss:text-[72px] text-[52px] text-[--primary] ss:leading-[100px] leading-[75px]">
                     Saving Food Has  <br className='sm:block hidden' /> {" "}
                     <span className='text-gradient'>Never Been Easier</span> {" "}
@@ -46,7 +46,7 @@ const HeroSection = () => {
                 </div>
             </div>
 
-            <div className="flex-1 flex justify-center items-start flex-col md:pb-0 pb-10 xl:px-0 sm:px-16 px-6 bg-[--primary] ">
+            <div className="flex-1 flex justify-center items-start flex-col md:pb-0 pb-10 xl:px-2 sm:px-16 px-6 bg-[--primary] ">
                 <h1 className="font-semibold ss:text-[72px] text-[52px] text-[--primary] ss:leading-[100px] leading-[75px] mt-20 text-white">
                     Did You Know?
                 </h1>

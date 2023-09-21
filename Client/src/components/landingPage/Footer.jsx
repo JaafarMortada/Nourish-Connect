@@ -36,7 +36,7 @@ const Footer = () => {
 
               </ul>
             </div>
-            <div className="flex flex-col items-center justify-center gap-10">
+            <div className="flex flex-col items-center justify-center gap-10 mt-10 md:mt-0">
               <h1 className="font-semibold ss:text-[24px] text-[--primary]">
                 Ready to make a positive impact and reduce food waste <br className='sm:block hidden' /> {" "}
                 <span className='text-gradient'>while boosting your business? Join us today!</span> {" "}

@@ -10,7 +10,7 @@ import RevealOnScroll from "../ui/RevealOnScroll";
 
 export function TestimonialCard({ name, title, image, company, content, index }) {
   return (
-    <Card color="transparent" className="w-full h-full shadow-md p-10 max-w-[26rem]">
+    <Card color="transparent" className="lg:h-full max-h-fit shadow-md p-10 max-w-full md:max-w-[26rem] min-w-[20rem]">
       <CardHeader
         color="transparent"
         floated={false}
@@ -45,12 +45,12 @@ export function TestimonialCard({ name, title, image, company, content, index })
 
 const Testimonials = () => {
   return (
-    <section id="testimonials" className="flex flex-col md:gap-0 gap-10 sm:pb-24 pb-6  relative min-h-max">
+    <section id="testimonials" className="flex flex-col md:gap-0 gap-10 sm:pb-24 pb-6 relative h-fit">
       <h1 className="font-semibold ss:text-[62px] text-[52px] text-[--primary] ss:leading-[100px] leading-[75px] w-full">
         Testimonials
       </h1>
       <RevealOnScroll index={0}>
-        <div className="flex gap-10 w-full items-center justify-around translate-x-[200px]">
+        <div className="flex gap-10 w-full md:flex-row flex-col items-center justify-around translate-x-[200px]">
           {testimonials.map((testimonial, index) => (
             <TestimonialCard key={index} {...testimonial} index={index} />
           ))}
