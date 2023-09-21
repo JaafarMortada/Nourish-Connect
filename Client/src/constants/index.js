@@ -17,6 +17,9 @@ import {
     shoppingBag,
     chart,
     inbox,
+    testimonial1,
+    testimonial3,
+    testimonial2,
 
 } from "../assets";
 
@@ -240,3 +243,27 @@ export const features = [
 
 
 ]
+
+export const testimonials = [
+    {
+        name: "Sarah Johnson",
+        title: "Store Manager",
+        company: "FreshGroceries Supermarket",
+        image: testimonial1,
+        content: "Using this platform has been a game-changer for our supermarket. We've significantly reduced food waste and made a meaningful impact in our community by easily donating surplus items. The AI suggestions have been incredibly accurate, and the charity collaboration feature has streamlined the donation process. Plus, the dashboard insights provide us with valuable data for optimizing our operations. It's a win-win!"
+    },
+    {
+        name: "David Rodriguez",
+        title: "Executive Director",
+        company: "Helping Hands Foundation",
+        image: testimonial2,
+        content: "Partnering with supermarkets through this platform has been a blessing for our charity. It's simplified the way we connect with supermarkets and receive donations. The system is user-friendly, and the communication channels are efficient. We can now ensure that nutritious food reaches those in need promptly. Kudos to the team behind this fantastic initiative!"
+    },
+    {
+        name: "Mark Turner",
+        title: "Head Cashier",
+        company: "ValueMart Superstore",
+        image: testimonial3,
+        content: "As a cashier, I appreciate the simplicity of the platform's cashier integration. Uploading inventory data is a breeze, and the point-of-sale system is intuitive. It's made my job smoother and more accurate. Our store's commitment to reducing food waste is evident, and it feels great to be a part of it."
+    }
+];

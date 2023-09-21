@@ -14,7 +14,9 @@ import gift from './SVGs/gift.svg'
 import chart from './SVGs/chart.svg'
 import inbox from './SVGs/inbox.svg'
 import shoppingBag from './SVGs/shoppingBag.svg'
-
+import testimonial1 from './images/testimonial-1.jpg'
+import testimonial2 from './images/testimonial-2.jpg'
+import testimonial3 from './images/testimonial-3.png'
 export {
     logoBlack,
     logoWhite,
@@ -32,5 +34,8 @@ export {
     chart,
     inbox,
     shoppingBag,
+    testimonial1,
+    testimonial2,
+    testimonial3,
 
 }
