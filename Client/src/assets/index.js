@@ -9,6 +9,11 @@ import notFound from './SVGs/notFound.svg'
 import profile_pic_no_cover from './SVGs/user-tie-solid.svg'
 import close from './SVGs/close.svg'
 import menu from './SVGs/menu.svg'
+import gpt from './SVGs/gpt.svg'
+import gift from './SVGs/gift.svg'
+import chart from './SVGs/chart.svg'
+import inbox from './SVGs/inbox.svg'
+import shoppingBag from './SVGs/shoppingBag.svg'
 
 export {
     logoBlack,
@@ -22,5 +27,10 @@ export {
     profile_pic_no_cover,
     close,
     menu,
-    
+    gpt,
+    gift,
+    chart,
+    inbox,
+    shoppingBag,
+
 }
