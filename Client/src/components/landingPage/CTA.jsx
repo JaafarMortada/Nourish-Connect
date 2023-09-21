@@ -6,7 +6,7 @@ const CTA = ({ label }) => {
     return (
         <PrimaryButton
             label={label}
-            classNames={"bg-[--primary] min-w-[150px] min-h-16 text-[21px] font-normal"}
+            classNames={"bg-[--primary] min-w-[150px] max-w-[200px] min-h-16 text-[21px] font-normal"}
             onClick={() => navigate('/auth/signup')}
         />
     )

@@ -6,17 +6,22 @@ const Navbar = () => {
 
   const [toggle, setToggle] = useState(false)
   return (
-    <nav className='w-full flex py-6 justify-between items-center navbar '>
+    <nav className='w-full flex py-6 justify-between items-center'>
       <img src={logoBlack} alt='nourish connect' className='' />
       <ul className='list-none sm:flex hidden justify-end items-center flex-1'>
         {navLinks.map((navLink, index) => (
           <li
             key={navLink.id}
-            className={`font-normal cursor-pointer text-[16px] ${index === navLinks.length - 1 ? "mr-0" : "mr-10"} text-black`}
+            className={`font-semibold cursor-pointer text-[16px] ${index === navLinks.length - 1 ? "mr-0" : "mr-10"} text-black hover:text-[--primary] transition-all`}
           >
-            <a href={`#${navLink.id}`}>
-              {navLink.title}
-            </a>
+            {
+              navLink.id === 'signin' ?
+                <span onClick={() => navigate('/auth/login')}>Sign in</span>
+
+                : <a href={`#${navLink.id}`}>
+                  {navLink.title}
+                </a>
+            }
 
           </li>
         ))}
