@@ -11,11 +11,15 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { sendRequest } from "../../../config/request";
+import { usePusher } from "../../../global/PusherContext";
+import { useStoreData } from "../../../global/store";
 import PieChart from "../../charts/PieChart";
 
 const TABLE_HEAD = ["Item", "Quantity Sold", "Total Value"];
 
 const TopItems = () => {
+
+    const { store } = useStoreData()
     const [loading, setLoading] = useState(true)
     const [topFiveItemsData, setTopFiveItemsData] = useState([])
     const [topFiveBy, setTopFiveBy] = useState('quantity_sold')
@@ -44,6 +48,23 @@ const TopItems = () => {
         getTopFiveItems()
     }, [topFiveBy])
 
+    const pusher = usePusher();
+    const pusherEvent = () => {
+
+        const channel = pusher.subscribe(`inventory-${store.inventory_id}`);
+        channel.bind('items-data-updated', () => {
+            getTopFiveItems()
+        })
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }
+
+    useEffect(() => {
+        pusherEvent()
+    }, [])
     return (
         <Card
             className={` md:h-full max-h-fit md:w-[58%] w-[500px] ${loading ? "justify-center items-center" : ""}`}

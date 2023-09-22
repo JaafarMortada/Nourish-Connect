@@ -7,29 +7,52 @@ import {
 } from "@material-tailwind/react"
 import { useState, useEffect } from "react"
 import { sendRequest } from "../../../config/request"
+import { usePusher } from "../../../global/PusherContext"
+import { useStoreData } from "../../../global/store"
 import BarChart from "../../charts/BarChart"
 
 const WeeksRevenue = () => {
 
+    const { store } = useStoreData()
     const [loading, setLoading] = useState(true)
     const [WeeklyRevenueData, setWeeklyRevenueData] = useState([])
-    useEffect(() => {
-        const getWeeklyRevenueData = async () => {
-            try {
-                const response = await sendRequest({
-                    method: "GET",
-                    route: "/api/manager/get_week_days_revenue",
-                });
-                if (response.message === "success") {
-                    setWeeklyRevenueData(response.weekData);
-                    setLoading(false)
-                } 
-            } catch (error) {
-                console.log(error);
 
+    const getWeeklyRevenueData = async () => {
+        try {
+            const response = await sendRequest({
+                method: "GET",
+                route: "/api/manager/get_week_days_revenue",
+            });
+            if (response.message === "success") {
+                setWeeklyRevenueData(response.weekData);
+                setLoading(false)
             }
+        } catch (error) {
+            console.log(error);
+
         }
+    }
+
+    useEffect(() => {
         getWeeklyRevenueData()
+    }, [])
+
+    const pusher = usePusher();
+    const pusherEvent = () => {
+
+        const channel = pusher.subscribe(`inventory-${store.inventory_id}`);
+        channel.bind('items-data-updated', () => {
+            getWeeklyRevenueData()
+        })
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }
+
+    useEffect(() => {
+        pusherEvent()
     }, [])
     return (
         <Card
@@ -41,17 +64,17 @@ const WeeksRevenue = () => {
                 </Typography>
             </CardHeader>
 
-            
-                <CardBody className="h-[400px] p-0 flex items-center justify-center">
-                {loading ? 
-                <Spinner className="w-20 h-20 pt-3" />
-            :
-                    <BarChart 
-                        data={WeeklyRevenueData} 
-                        keys={"revenue"} 
+
+            <CardBody className="h-[400px] p-0 flex items-center justify-center">
+                {loading ?
+                    <Spinner className="w-20 h-20 pt-3" />
+                    :
+                    <BarChart
+                        data={WeeklyRevenueData}
+                        keys={"revenue"}
                         LegendLabel={"Total Sales (in $)"}
                     />}
-                </CardBody>
+            </CardBody>
         </Card>
     )
 }
