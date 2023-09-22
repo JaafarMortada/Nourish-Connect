@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { useStoreData } from "../../../global/store";
 import { sendRequest } from "../../../config/request";
-
+import { usePusher } from "../../../global/PusherContext";
 
 const TABLE_HEAD = ["Title", "Category", "Quantity", "Donated By", "Status"];
 
@@ -21,22 +21,41 @@ const DonationsOverviewTable = () => {
 
     const [donationsData, setDonationsData] = useState([])
 
-    useEffect(() => {
-        const getDonations = async () => {
-            try {
-                const response = await sendRequest({
-                    method: "GET",
-                    route: "/api/charity/get_requests",
-                    token: store.token,
-                });
-                if (response.message === "success") {
-                    setDonationsData(response.donations);
-                }
-            } catch (error) {
-                console.log(error);
+    const getDonations = async () => {
+        try {
+            const response = await sendRequest({
+                method: "GET",
+                route: "/api/charity/get_requests",
+                token: store.token,
+            });
+            if (response.message === "success") {
+                setDonationsData(response.donations);
             }
+        } catch (error) {
+            console.log(error);
         }
+    }
+
+    useEffect(() => {
         getDonations()
+    }, [])
+
+    const pusher = usePusher();
+    const pusherEvent = () => {
+
+        const channel = pusher.subscribe(`donation-${store.user_id}`);
+        channel.bind('donation-data-updated', () => {
+            getDonations()
+        })
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }
+
+    useEffect(() => {
+        pusherEvent()
     }, [])
 
     return (

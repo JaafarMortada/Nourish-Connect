@@ -10,10 +10,13 @@ import {
 import TextAreaField from "../../ui/TextAreaField";
 import PrimaryButton from "../../ui/Button";
 import { useState } from "react";
+import { useStoreData } from "../../../global/store";
 import { sendRequest } from "../../../config/request";
+import { websocketRequest } from "../../../config/websocketRequest";
 import moment from "moment";
 const ApproveDiscount = ({ open, handleOpen, data, removeApproved }) => {
 
+    const { store } = useStoreData()
     const [error, setError] = useState(false)
     const [approving, setApproving] = useState(false)
 
@@ -40,6 +43,10 @@ const ApproveDiscount = ({ open, handleOpen, data, removeApproved }) => {
                 setApproving(false)
                 removeApproved(data.discount_suggestion_id)
                 handleOpen()
+                websocketRequest({
+                    inventoryId: store.inventory_id,
+                    WSevent: "items"
+                })
             } else {
                 handleError()
             }

@@ -10,9 +10,12 @@ import {
 import PrimaryButton from "../../ui/Button";
 import { useState } from "react";
 import { sendRequest } from "../../../config/request";
+import { websocketRequest } from "../../../config/websocketRequest";
+import { useStoreData } from "../../../global/store";
 
 const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
 
+    const { store } = useStoreData()
     const [error, setError] = useState(false)
     const [approving, setApproving] = useState(false)
 
@@ -34,6 +37,14 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
             if (response.message === "success") {
                 setApproving(false)
                 removeApproved(data.suggestion_id)
+                websocketRequest({
+                    receiver_id: response.test.receiver_id,
+                    WSevent: "donation"
+                })
+                websocketRequest({
+                    inventoryId: store.inventory_id,
+                    WSevent: "items"
+                })
                 handleOpen()
             } else {
                 handleError()
@@ -56,7 +67,7 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
                 unmount: { scale: 0.9, y: -100 },
             }}
         >
-            <DialogHeader floated={false} shadow={false} className="rounded-none border-b-2">
+            <DialogHeader floated={false} className="rounded-none border-b-2">
                 <div className="h-fit flex items-center justify-between gap-8">
                     <div>
                         <Typography variant="h5" color="blue-gray">
@@ -78,10 +89,10 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
                     </li>
                     <li className="truncate">
                         <span className="font-bold">Description (Context written by the charity):<br /> </span>
-                        <div className="max-w-full max-h-40 whitespace-normal truncate my-2 mx-10">
+                        <span className="max-w-full max-h-40 whitespace-normal truncate py-10 mx-10">
                             {data.request_description}
 
-                        </div>
+                        </span>
 
                     </li>
 
