@@ -14,6 +14,7 @@ export const StoreDataProvider = ({ children }) => {
         company_name: '',
         pic_url: null,
         receiver_id: null,
+        inventory_id: null,
 
     });
 
@@ -37,7 +38,8 @@ export const StoreDataProvider = ({ children }) => {
                         username: response.user.username,
                         company_name: response.user.company_name,
                         pic_url: response.user.pic_url,
-
+                        inventory_id: response.user.inventory_id,
+                        
                       });
     
                 } else {

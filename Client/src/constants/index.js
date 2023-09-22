@@ -31,7 +31,8 @@ export const emptyStore = {
     user_id: '',
     username: '',
     pic_url: null,
-
+    inventory_id: null,
+    
 }
 
 export const sidebarManagerLinks = [
