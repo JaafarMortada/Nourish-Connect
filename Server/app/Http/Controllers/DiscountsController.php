@@ -39,7 +39,7 @@ class DiscountsController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'discounts' => $responseDiscounts
+            'discounts' => $responseDiscounts->sortByDesc('started_at')->values()
         ], 200);
     }
 

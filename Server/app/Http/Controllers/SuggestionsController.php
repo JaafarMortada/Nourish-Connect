@@ -47,6 +47,7 @@ class SuggestionsController extends Controller
                     "request_description" => $request->description,
                     "request_category" => $request->category,
                     "requested_quantity" => intval($request->quantity),
+                    "created_at" => $suggestion->pivot->created_at,
 
                 ];
             });
@@ -58,7 +59,7 @@ class SuggestionsController extends Controller
         })->flatten(1);
         return response()->json([
             'message' => 'success',
-            'donation_suggestions' => $donationSuggestionsData,
+            'donation_suggestions' => $donationSuggestionsData->sortByDesc('created_at')->values(),
 
         ], 200);
     }
@@ -104,6 +105,7 @@ class SuggestionsController extends Controller
                     "available_quantity" => $suggestion->item->available_quantity,
                     "current_discounts_percentage" => $initial_discounts_percentage,
                     "suggested_end_date" => Carbon::parse($suggestion->until)->subDays(2),
+                    "created_at" => $suggestion->created_at,
 
                 ];
             })->toArray();
@@ -112,7 +114,7 @@ class SuggestionsController extends Controller
         })->flatten(1);
         return response()->json([
             'message' => 'success',
-            'discount_suggestions' => $discountsSuggestionsData,
+            'discount_suggestions' => $discountsSuggestionsData->sortByDesc('created_at')->values(),
 
         ], 200);
     }

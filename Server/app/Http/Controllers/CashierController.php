@@ -29,7 +29,7 @@ class CashierController extends Controller
     
         return response()->json([
             'message' => 'success',
-            'cashiers' => $responseCashiers,
+            'cashiers' => $responseCashiers->sortByDesc('created_at')->values(),
         ], 200);
     }
         

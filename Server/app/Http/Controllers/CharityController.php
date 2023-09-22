@@ -85,13 +85,13 @@ class CharityController extends Controller
                 "received_quantity" => $quantity,
                 "donated_by" => $donators,
                 "status" => $status,
-
+                "created_at" => $request->created_at
             ];
         });
 
         return response()->json([
             'message' => 'success',
-            'donations' => $responseRequests
+            'donations' => $responseRequests->sortByDesc('created_at')->values()
         ], 200);
     }
 }

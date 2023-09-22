@@ -65,7 +65,9 @@ class ItemsController extends Controller
     public function getItems($search = null){
 
         $inventory_id = Auth::user()->cashiers[0]->company->inventories[0]->id;
-        $query = Item::where('inventory_id', $inventory_id);
+        $query = Item::where('inventory_id', $inventory_id)->where('available_quantity', '>', 0)
+        ->whereDate('expiry_date', '>=', now());
+
         if ($search) {
             $query->where(function ($innerQuery) use ($search) {
                 $innerQuery->where('name', 'like', '%' . $search . '%')
@@ -74,7 +76,7 @@ class ItemsController extends Controller
             });
         }
 
-        $items = $query->get();
+        $items = $query->orderBy('created_at', 'desc')->get();
 
         foreach($items as $item){
             $dbItemDiscounts = $item->discounts;
@@ -145,7 +147,7 @@ class ItemsController extends Controller
             });
         }
 
-        $carts = $query->get();
+        $carts = $query->orderBy('created_at', 'desc')->get();
         $cartsData = $carts->map(function ($cart) {
             return [
                 'id' => $cart->id,

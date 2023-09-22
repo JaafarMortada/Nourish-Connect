@@ -35,7 +35,7 @@ class DonationController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'donations' => $responseDonations
+            'donations' => $responseDonations->sortByDesc('donated_at')->values()
         ], 200);
     }
 

@@ -52,14 +52,21 @@ class DashboardController extends Controller
     public function getTopFiveItems($by = '')
     {
         $carts = Auth::user()->inventories[0]->carts;
-    
+
         $itemsSalesData = [];
+
+        $thisMonthStart = Carbon::now()->startOfMonth();
+        $thisMonthEnd = Carbon::now()->endOfMonth();
+
         foreach ($carts as $cart) {
-            foreach ($cart->items as $item) {
+            $thisMonthsItems = $cart->items->reject(function ($item) use ($thisMonthStart, $thisMonthEnd) {
+                return Carbon::parse($item->pivot->created_at)->lt($thisMonthStart) || Carbon::parse($item->pivot->created_at)->gt($thisMonthEnd);
+            });
+            foreach ($thisMonthsItems as $item) {
                 $item_name = $item->name;
                 $quantity_sold = $item->pivot->quantity;
                 $sold_value = $item->price * $quantity_sold;
-    
+
                 if (isset($itemsSalesData[$item_name])) {
                     $itemsSalesData[$item_name]['sold_value'] += $sold_value;
                     $itemsSalesData[$item_name]['quantity_sold'] += $quantity_sold;
@@ -73,18 +80,16 @@ class DashboardController extends Controller
                 }
             }
         }
-        
+
         uasort($itemsSalesData, function ($a, $b) use ($by) {
             return ceil($b[$by]) - ceil($a[$by]);
         });
-    
+
         $topFiveItems = array_slice($itemsSalesData, 0, 5);
-    
+
         return response()->json([
             'message' => 'success',
             'top_five_items' => array_values($topFiveItems),
         ], 200);
     }
-    
-    
 }
