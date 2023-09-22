@@ -4,6 +4,8 @@ import { useState } from "react"
 import { v4 as uuidv4 } from 'uuid';
 import { sendRequest } from "../../config/request";
 import { useStoreData } from "../../global/store";
+import axios from "axios";
+import { websocketRequest } from "../../config/websocketRequest";
 const PointOfSales = () => {
 
   const [checkoutItems, setCheckoutItems] = useState([])
@@ -58,6 +60,10 @@ const PointOfSales = () => {
         });
         if (response.message === "success") {
           setCheckoutItems([])
+          websocketRequest({
+            inventoryId: store.inventory_id,
+            WSevent: "items"
+          })
         } else {
           handleError()
         }

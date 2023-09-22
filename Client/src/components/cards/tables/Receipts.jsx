@@ -7,6 +7,7 @@ import {
 import { useState, useEffect } from "react";
 import { sendRequest } from '../../../config/request'
 import { useStoreData } from "../../../global/store";
+import { usePusher } from "../../../global/PusherContext";
 import moment from "moment"
 
 const TABLE_HEAD = ["ID", "barcode", "Time", "Number of items", "Total"];
@@ -17,24 +18,43 @@ const ReceiptsTable = () => {
 
     const [receiptsData, setReceiptsData] = useState([])
 
-    useEffect(()=>{
-        const getReceiptsHandler = async ()=>{
-            try {
-                const response = await sendRequest({
-                    method: "GET",
-                    route: "/api/cashier/items/get_receipts",
-                    token: store.token,
+    const getReceiptsHandler = async () => {
+        try {
+            const response = await sendRequest({
+                method: "GET",
+                route: "/api/cashier/items/get_receipts",
+                token: store.token,
 
-                });
-                if(response.carts){
-                    setReceiptsData(response.carts);
-                }
-            } catch (error) {
-                console.log(error);
+            });
+            if (response.carts) {
+                setReceiptsData(response.carts);
             }
+        } catch (error) {
+            console.log(error);
         }
+    }
+
+    useEffect(() => {
         getReceiptsHandler()
     }, [])
+
+    const pusher = usePusher();
+    const pusherEvent = () => {
+
+        const channel = pusher.subscribe(`inventory-${store.inventory_id}`);
+        channel.bind('items-data-updated', () => {
+            getReceiptsHandler()
+        })
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }
+    useEffect(() => {
+        pusherEvent()
+    }, [])
+
     return (
 
         <Card className="flex flex-col max-h-[35%] w-full">

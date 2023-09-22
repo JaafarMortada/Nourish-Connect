@@ -12,6 +12,8 @@ import ItemCard from "../miniCards/ItemCard";
 import { sendRequest } from "../../../config/request";
 import { useEffect, useState } from "react";
 import { useStoreData } from "../../../global/store";
+import { usePusher } from "../../../global/PusherContext";
+
 const ItemsList = ({ setCheckoutItems }) => {
 
   const { store, setStoreData } = useStoreData()
@@ -37,23 +39,42 @@ const ItemsList = ({ setCheckoutItems }) => {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  useEffect(() => {
-    const getItemsHandler = async () => {
-      try {
-        const response = await sendRequest({
-          method: "GET",
-          route: `/api/cashier/items/get_items/${debouncedSearchTerm}`,
-          token: store.token,
-        });
-        if (response.item) {
-          setItemsData(response.item);
-        }
-      } catch (error) {
-        console.log(error);
+  const getItemsHandler = async () => {
+    try {
+      const response = await sendRequest({
+        method: "GET",
+        route: `/api/cashier/items/get_items/${debouncedSearchTerm}`,
+        token: store.token,
+      });
+      if (response.item) {
+        setItemsData(response.item);
       }
+    } catch (error) {
+      console.log(error);
     }
+  }
+
+  useEffect(() => {
     getItemsHandler()
   }, [debouncedSearchTerm])
+
+  const pusher = usePusher();
+  const pusherEvent = () => {
+
+    const channel = pusher.subscribe(`inventory-${store.inventory_id}`);
+    channel.bind('items-data-updated', () => {
+      getItemsHandler()
+    })
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }
+
+  useEffect(() => {
+    pusherEvent()
+  }, [])
 
   return (
     <Card className="h-[60%] w-full flex flex-col">
@@ -83,8 +104,8 @@ const ItemsList = ({ setCheckoutItems }) => {
       <CardBody className="overflow-scroll flex flex-wrap gap-x-10 gap-y-5 justify-around flex-1">
         {
           itemsData.map((item) => (
-            <ItemCard 
-              key={item.id} 
+            <ItemCard
+              key={item.id}
               data={item}
               setCheckoutItems={setCheckoutItems}
             />
