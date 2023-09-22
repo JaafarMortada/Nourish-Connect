@@ -16,7 +16,15 @@ const itemsEvents = (req, res) => {
     res.json({ message: "websocket sent" })
 }
 
+
+const donationsEvents = (req, res) => {
+    const receiver_id = req.query.receiver_id;
+    pusher.trigger(`donation-${receiver_id}`, "donation-data-updated", {});
+    res.json({ message: "websocket sent" })
+}
+
 module.exports = {
     itemsEvents,
+    donationsEvents,
 
 }
