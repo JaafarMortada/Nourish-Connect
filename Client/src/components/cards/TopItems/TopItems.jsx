@@ -48,7 +48,7 @@ const TopItems = () => {
         <Card
             className={` md:h-full max-h-fit md:w-[58%] w-[500px] ${loading ? "justify-center items-center" : ""}`}
         >
-            <CardHeader floated={false} shadow={false} className="rounded-none flex justify-between items-center min-w-max">
+            <CardHeader floated={false} shadow={false} className="rounded-none flex justify-between items-center min-w-[95%]">
 
                 <Typography variant="h5" color="blue-gray">
                     Top Items

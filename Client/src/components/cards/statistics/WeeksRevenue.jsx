@@ -42,7 +42,7 @@ const WeeksRevenue = () => {
             </CardHeader>
 
             
-                <CardBody className="min-h-[400px] p-0 flex items-center justify-center">
+                <CardBody className="h-[400px] p-0 flex items-center justify-center">
                 {loading ? 
                 <Spinner className="w-20 h-20 pt-3" />
             :

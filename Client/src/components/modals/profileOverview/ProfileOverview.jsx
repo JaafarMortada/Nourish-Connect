@@ -64,7 +64,7 @@ const ProfileOverview = ({ open, handleOpen }) => {
 
             }
         }
-        getProfile()
+        if(store.usertype !== "cashier" && store.usertype !== '') getProfile()
     }, [])
 
     const handleLogoUpload = async () => {
