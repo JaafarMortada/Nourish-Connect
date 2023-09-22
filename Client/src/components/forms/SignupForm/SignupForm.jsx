@@ -88,6 +88,8 @@ const SignUpForm = ({ activeStep, handleNext, handlePrev, setActiveStep, isLastS
                     username: response.user.username,
                     company_name: response.user.company_name,
                     pic_url: response.user.pic_url,
+                    inventory_id: response.user.inventory_id,
+                    
 
                   });
                 

@@ -14,11 +14,11 @@ const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <StoreDataProvider>
       <PusherProvider pusher={pusher}>
         <App />
       </PusherProvider>
     </StoreDataProvider>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )
