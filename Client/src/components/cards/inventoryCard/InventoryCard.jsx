@@ -13,6 +13,7 @@ import FileDragInput from "../../ui/FileDragInput";
 import { useState } from "react";
 import { inventoryUploadConditions } from "../../../constants";
 import { sendRequest } from "../../../config/request";
+import { websocketRequest } from "../../../config/websocketRequest";
 import { useStoreData } from "../../../global/store";
 
 const InventoryCard = () => {
@@ -100,6 +101,10 @@ const InventoryCard = () => {
           barcode: "",
           inventoryFile: "",
         })
+        websocketRequest({
+          inventoryId: store.inventory_id,
+          WSevent: "items"
+        })
       } else {
         handleError()
       }
@@ -129,7 +134,10 @@ const InventoryCard = () => {
           inventoryFile: "",
         })
         setUploading(false)
-
+        websocketRequest({
+          inventoryId: store.inventory_id,
+          WSevent: "items"
+        })
       } else {
         handleFileError()
       }

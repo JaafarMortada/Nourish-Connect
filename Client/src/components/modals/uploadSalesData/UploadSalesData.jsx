@@ -13,6 +13,7 @@ import PrimaryButton from "../../ui/Button";
 import FileDragInput from "../../ui/FileDragInput";
 import { useState } from "react";
 import { sendRequest } from "../../../config/request";
+import { websocketRequest } from "../../../config/websocketRequest";
 
 const UploadSalesData = ({ open, handleOpen }) => {
     const [data, setData] = useState({
@@ -59,6 +60,10 @@ const UploadSalesData = ({ open, handleOpen }) => {
                     inventoryFile: "",
                 })
                 setUploading(false)
+                websocketRequest({
+                    inventoryId: store.inventory_id,
+                    WSevent: "items"
+                })
             } else {
                 handleError()
             }
