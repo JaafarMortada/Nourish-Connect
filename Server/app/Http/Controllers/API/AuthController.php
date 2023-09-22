@@ -54,8 +54,18 @@ class AuthController extends Controller
             $cashier_login = new CashierLogin;
             $cashier_login->cashier_id = $cashier->id;
             $cashier_login->save();
+            $inventory_id = Auth::user()->cashiers[0]->company->inventories[0]->id;
+        }
+        $inventory_id = null;
+        if ($user->usertype_id === 2) {
+            $inventory_id = $user->cashiers[0]->company->inventories[0]->id;
+            unset($user->cashiers);
+        } elseif ($user->usertype_id === 1) {
+            $inventory_id = $user->inventories[0]->id;
+            unset($user->inventories);
         }
 
+        $user->inventory_id = $inventory_id;
         unset($user->created_at);
         unset($user->updated_at);
         unset($user->location_id);
@@ -97,22 +107,24 @@ class AuthController extends Controller
         $user->location_id = $location->id;
         $user->password = Hash::make($request->password);
         $user->save();
-
+        $inventory_id = null;
         if ($role->id === 1) {
             $inventory = new Inventory();
             $inventory->company_id = $user->id;
             $inventory->location_id = $location->id;
             $inventory->description = "This is " . $request->company_name . "'s inventory.";
             $inventory->save();
+            $inventory_id = $inventory->id;
         }
 
         $token = Auth::login($user);
         $user->token = $token;
 
+
         unset($user->created_at);
         unset($user->updated_at);
         unset($user->location_id);
-
+        $user->inventory_id = $inventory_id;
         return response()->json([
             'message' => 'User created successfully',
             'user' => $user
