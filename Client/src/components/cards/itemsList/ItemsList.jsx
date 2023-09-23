@@ -79,8 +79,8 @@ const ItemsList = ({ setCheckoutItems }) => {
   }
 
   useEffect(() => {
-    pusherEvent()
-  }, [])
+    if (store.inventory_id) pusherEvent()
+  }, [store])
 
   return (
     <Card className="h-[60%] w-full flex flex-col">

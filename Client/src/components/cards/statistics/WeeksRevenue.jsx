@@ -52,8 +52,8 @@ const WeeksRevenue = () => {
     }
 
     useEffect(() => {
-        pusherEvent()
-    }, [])
+        if (store.inventory_id) pusherEvent()
+      }, [store])
     return (
         <Card
             className={`flex-1  md:min-w-[40%] md:max-w-[40%] min-w-[500px] max-w-[500px] `}

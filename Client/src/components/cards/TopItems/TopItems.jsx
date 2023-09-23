@@ -65,8 +65,8 @@ const TopItems = () => {
     }
 
     useEffect(() => {
-        pusherEvent()
-    }, [])
+        if (store.inventory_id) pusherEvent()
+    }, [store])
     return (
         <Card
             className={` md:h-full max-h-fit md:w-[58%] w-[500px] ${loading ? "justify-center items-center" : ""}`}

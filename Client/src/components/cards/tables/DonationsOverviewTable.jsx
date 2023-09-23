@@ -60,8 +60,8 @@ const DonationsOverviewTable = () => {
     }
 
     useEffect(() => {
-        pusherEvent()
-    }, [])
+        if (store.inventory_id) pusherEvent()
+      }, [store])
 
     return (
 

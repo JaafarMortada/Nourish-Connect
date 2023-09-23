@@ -11,7 +11,7 @@ const BarChart = ({data, keys, LegendLabel}) => {
       padding={0.4}
       valueScale={{ type: "linear" }}
       colors="#006b44"
-      animate={false}
+      animate={true}
       enableLabel={false}
       axisTop={null}
       axisRight={null}

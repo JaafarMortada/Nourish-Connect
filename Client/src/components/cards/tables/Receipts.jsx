@@ -58,8 +58,8 @@ const ReceiptsTable = () => {
         };
     }
     useEffect(() => {
-        pusherEvent()
-    }, [])
+        if (store.inventory_id) pusherEvent()
+      }, [store])
 
     return (
 
