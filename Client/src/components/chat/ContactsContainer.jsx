@@ -1,15 +1,18 @@
-import { Input } from "@material-tailwind/react"
+import {
+    Input,
+    Spinner,
+} from "@material-tailwind/react"
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import ContactCard from "./ContactCard"
 import { useStoreData } from "../../global/store"
 import { useEffect, useState } from "react"
 import { sendRequest } from "../../config/request"
-const ContactsContainer = ({setReceiverData}) => {
+const ContactsContainer = ({ setReceiverData }) => {
     const { store, setStoreData } = useStoreData()
 
     const [contacts, setContacts] = useState([])
     const [searchTerm, setSearchTerm] = useState('');
-
+    const [loading, setLoading] = useState(false)
     const useDebounce = (value, delay) => {
         const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -31,20 +34,24 @@ const ContactsContainer = ({setReceiverData}) => {
     useEffect(() => {
         const getContactsHandler = async () => {
             if (store.token !== '')
-            try {
-                const response = await sendRequest({
-                    method: "GET",
-                    route: `/api/manager_charity/chat/search_users/${store.receiver_id ? store.receiver_id : debouncedSearchTerm}`,
-                    token: store.token,
-                });
-                if (response.message === "success") {
-                    if (store.receiver_id) setReceiverData(store.receiver_id, response.contactFromMap)
-                    setContacts(response.contacts);
-                    setStoreData({...store, receiver_id: null})
+                try {
+                    setLoading(true)
+                    const response = await sendRequest({
+                        method: "GET",
+                        route: `/api/manager_charity/chat/search_users/${store.receiver_id ? store.receiver_id : debouncedSearchTerm}`,
+                        token: store.token,
+                    });
+                    if (response.message === "success") {
+                        if (store.receiver_id) setReceiverData(store.receiver_id, response.contactFromMap)
+                        setContacts(response.contacts);
+                        setStoreData({ ...store, receiver_id: null })
+                        setLoading(false)
+                    } else {
+                        setLoading(false)
+                    }
+                } catch (error) {
+                    setLoading(false)
                 }
-            } catch (error) {
-                // console.log(error);
-            }
         }
         getContactsHandler()
     }, [debouncedSearchTerm, store.token])
@@ -69,14 +76,15 @@ const ContactsContainer = ({setReceiverData}) => {
                 />
             </div>
             <hr className="my-2 border-[--text-gray]" />
-            <div className="flex flex-col gap-2 max-h-full overflow-scroll justify-start">
-                {contacts.length > 0 ?
+            <div className={`flex flex-col gap-2  overflow-scroll justify-start ${loading ? "h-full items-center justify-center" : "max-h-full"}`}>
+                {contacts.length > 0 && !loading ?
                     contacts.map((contact) => (
-                        <ContactCard data={contact} key={contact.id} handleContactClick={setReceiverData}/>
+                        <ContactCard data={contact} key={contact.id} handleContactClick={setReceiverData} />
 
                     )) :
-                    <span className="text-[--text-gray] text-center">You have no chats, search users and start a new chat </span>}
-
+                    loading ? <Spinner className="w-20 h-20 pt-3" />
+                        : <span className="text-[--text-gray] text-center">You have no chats, search users and start a new chat </span>
+                }
             </div>
         </div>
     )

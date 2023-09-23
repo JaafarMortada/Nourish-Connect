@@ -7,6 +7,8 @@ import {
   Input,
   Typography,
   CardBody,
+  Spinner,
+
 } from "@material-tailwind/react";
 import ItemCard from "../miniCards/ItemCard";
 import { sendRequest } from "../../../config/request";
@@ -20,7 +22,7 @@ const ItemsList = ({ setCheckoutItems }) => {
 
   const [itemsData, setItemsData] = useState([])
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [loading, setLoading] = useState(true)
   const useDebounce = (value, delay) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -48,9 +50,13 @@ const ItemsList = ({ setCheckoutItems }) => {
       });
       if (response.item) {
         setItemsData(response.item);
+        setLoading(false)
+      } else {
+        setLoading(false)
       }
     } catch (error) {
       console.log(error);
+      setLoading(false)
     }
   }
 
@@ -101,17 +107,27 @@ const ItemsList = ({ setCheckoutItems }) => {
         </div>
 
       </CardHeader>
-      <CardBody className="overflow-scroll flex flex-wrap gap-x-10 gap-y-5 justify-around flex-1">
-        {
-          itemsData.map((item) => (
-            <ItemCard
-              key={item.id}
-              data={item}
-              setCheckoutItems={setCheckoutItems}
-            />
-          ))
-        }
-      </CardBody>
+      {itemsData.length === 0 && !loading
+        ?
+        <div className="flex flex-1 h-full justify-center items-center">
+          <Typography color="gray" className="mt-1 font-normal text-center">
+            No items available for sale. <br className='block' /> To add items, kindly navigate to your inventory page.
+          </Typography>
+        </div>
+        :
+        <CardBody className={`overflow-scroll flex flex-wrap gap-x-10 gap-y-5 flex-1 ${loading ? "h-full justify-center items-center" : "justify-around"}`}>
+          {loading ? <Spinner className="w-20 h-20 pt-3" />
+            :
+            itemsData.map((item) => (
+              <ItemCard
+                key={item.id}
+                data={item}
+                setCheckoutItems={setCheckoutItems}
+              />
+            ))
+          }
+        </CardBody>
+      }
 
     </Card>
   );

@@ -5,7 +5,7 @@ import {
     CardBody,
     Chip,
     Tooltip,
-
+    Spinner,
 
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
@@ -20,6 +20,7 @@ const DonationsOverviewTable = () => {
     const { store } = useStoreData()
 
     const [donationsData, setDonationsData] = useState([])
+    const [loading, setLoading] = useState(true);
 
     const getDonations = async () => {
         try {
@@ -30,9 +31,13 @@ const DonationsOverviewTable = () => {
             });
             if (response.message === "success") {
                 setDonationsData(response.donations);
+                setLoading(false)
+            } else {
+                setLoading(false)
             }
         } catch (error) {
             console.log(error);
+            setLoading(false)
         }
     }
 
@@ -60,26 +65,28 @@ const DonationsOverviewTable = () => {
 
     return (
 
-            <Card className="flex flex-col flex-1 w-[95%] min-h-[60%]">
-                <CardHeader floated={false} shadow={false} className="rounded-none ">
-                    <div className="mb-4 h-fit flex items-center justify-between gap-8">
-                        <div>
-                            <Typography variant="h5" color="blue-gray">
-                                Donations Overview
-                            </Typography>
-                        </div>
-                    </div>
-
-                </CardHeader>
-                {donationsData.length === 0
-                    ?
-                    <div className="flex flex-1 h-full justify-center items-center">
-                        <Typography color="gray" className="mt-1 font-normal text-center">
-                            You have no donations.<br />You can send a request using the above form.
+        <Card className="flex flex-col flex-1 w-[95%] min-h-[60%]">
+            <CardHeader floated={false} shadow={false} className="rounded-none ">
+                <div className="mb-4 h-fit flex items-center justify-between gap-8">
+                    <div>
+                        <Typography variant="h5" color="blue-gray">
+                            Donations Overview
                         </Typography>
                     </div>
-                    :
-                    <CardBody className="overflow-scroll px-0 flex-1">
+                </div>
+
+            </CardHeader>
+            {donationsData.length === 0 && !loading
+                ?
+                <div className="flex flex-1 h-full justify-center items-center">
+                    <Typography color="gray" className="mt-1 font-normal text-center">
+                        You have no donations.<br />You can send a request using the above form.
+                    </Typography>
+                </div>
+                :
+                <CardBody className={`overflow-scroll px-0 flex-1 ${loading ? "flex w-full h-full items-center justify-center" : ""} `}>
+                    {loading ? <Spinner className="w-20 h-20 pt-3" />
+                        :
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
                                 <tr>
@@ -189,10 +196,10 @@ const DonationsOverviewTable = () => {
                                     },
                                 )}
                             </tbody>
-                        </table>
-                    </CardBody>}
+                        </table>}
+                </CardBody>}
 
-            </Card>
+        </Card>
 
     );
 }

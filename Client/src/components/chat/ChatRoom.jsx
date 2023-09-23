@@ -78,10 +78,9 @@ const ChatRoom = ({ messages, receiverId, receiverData }) => {
             <div className="flex items-center  bg-[--background-black] w-full text-white min-h-[83px] border-l-4 border-black pl-3 shadow-xl ">
                 {
                     receiverId !== 0 && <ContactCard headerCard={true} data={receiverData} />
-
                 }
             </div>
-            <div className="flex flex-col max-h-[90%] flex-1 justify-end w-full">
+            <div className={`flex flex-col max-h-[90%] flex-1 w-full ${receiverId === 0 ? "justify-center" : "justify-end"}`}>
 
 
                 <div className="  overflow-y-auto pb-4 transition-all flex flex-col scroll-transition px-5" ref={chatContainerRef}>
@@ -89,7 +88,7 @@ const ChatRoom = ({ messages, receiverId, receiverData }) => {
                     {
                     receiverId === 0 ?
 
-                    <span className="text-[--text-gray] text-center">Start or continue conversation by selecting a contact. </span> 
+                    <span className="text-gray-600 text-center">Start or continue conversation by selecting a contact. </span> 
                     
                     : messages.length > 0 ?
                         messages.map((message) => (
@@ -98,7 +97,7 @@ const ChatRoom = ({ messages, receiverId, receiverData }) => {
                           
                         )) :
                         
-                        <span className="text-[--text-gray] text-center">Its so quite here... </span>                            
+                        <span className="text-gray-600 text-center">Its so quite here... </span>                            
                     }
                 </div>
                 <div className="px-5 mb-5">
@@ -120,14 +119,7 @@ const ChatRoom = ({ messages, receiverId, receiverData }) => {
                     />}
                 </div>
             </div>
-
-
-
-
         </div>
-
-
-
     )
 }
 

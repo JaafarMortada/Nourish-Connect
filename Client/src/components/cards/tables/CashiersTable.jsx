@@ -4,6 +4,8 @@ import {
   Typography,
   CardBody,
   Avatar,
+  Spinner,
+
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useStoreData } from "../../../global/store";
@@ -20,7 +22,7 @@ const CashiersTable = () => {
   const { store } = useStoreData()
   const [open, setOpen] = useState(false);
   const [cashiersData, setCashiersData] = useState([])
-
+  const [loading, setLoading] = useState(true)
   const handleOpen = () => setOpen(!open);
 
   const getCashiers = async () => {
@@ -32,9 +34,13 @@ const CashiersTable = () => {
       });
       if (response.message === "success") {
         setCashiersData(response.cashiers);
+        setLoading(false)
+      } else {
+        setLoading(false)
       }
     } catch (error) {
       console.log(error);
+      setLoading(false)
     }
   }
 
@@ -89,7 +95,7 @@ const CashiersTable = () => {
         </div>
 
       </CardHeader>
-      {cashiersData.length === 0
+      {cashiersData.length === 0 && !loading
         ?
         <div className="flex flex-1 h-full justify-center items-center">
           <Typography color="gray" className="mt-1 font-normal text-center">
@@ -97,94 +103,96 @@ const CashiersTable = () => {
           </Typography>
         </div>
         :
-        <CardBody className="overflow-scroll px-0 flex-1">
-          <table className="w-full min-w-max table-auto text-left">
-            <thead>
-              <tr>
-                {TABLE_HEAD.map((head) => (
-                  <th
-                    key={head}
-                    className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
-                  >
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal leading-none opacity-70"
+        <CardBody className={`overflow-scroll px-0 flex-1 ${loading ? "flex w-full h-full items-center justify-center" : ""} `}>
+          {loading ? <Spinner className="w-20 h-20 pt-3" />
+            :
+            <table className="w-full min-w-max table-auto text-left">
+              <thead>
+                <tr>
+                  {TABLE_HEAD.map((head) => (
+                    <th
+                      key={head}
+                      className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
                     >
-                      {head}
-                    </Typography>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {cashiersData.map(
-                ({ pic_url, username, email, login_count, most_recent_login, created_at }, index) => {
-                  const isLast = index === cashiersData.length - 1;
-                  const classes = isLast
-                    ? "px-4"
-                    : "px-4 border-b border-blue-gray-50";
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal leading-none opacity-70"
+                      >
+                        {head}
+                      </Typography>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {cashiersData.map(
+                  ({ pic_url, username, email, login_count, most_recent_login, created_at }, index) => {
+                    const isLast = index === cashiersData.length - 1;
+                    const classes = isLast
+                      ? "px-4"
+                      : "px-4 border-b border-blue-gray-50";
 
-                  return (
-                    <tr key={email} className={`${index % 2 === 0 ? "" : "bg-blue-gray-50/50"}`}>
-                      <td className={classes}>
-                        <div className="flex items-center gap-3">
-                          <Avatar src={pic_url ? `http://127.0.0.1:8000/storage/${pic_url}` : default_profile_pic} alt={username} size="sm" />
-                          <div className="flex flex-col">
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal"
-                            >
-                              {username}
-                            </Typography>
-                            <Typography
-                              variant="small"
-                              color="blue-gray"
-                              className="font-normal opacity-70"
-                            >
-                              {email}
-                            </Typography>
+                    return (
+                      <tr key={email} className={`${index % 2 === 0 ? "" : "bg-blue-gray-50/50"}`}>
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            <Avatar src={pic_url ? `http://127.0.0.1:8000/storage/${pic_url}` : default_profile_pic} alt={username} size="sm" />
+                            <div className="flex flex-col">
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {username}
+                              </Typography>
+                              <Typography
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal opacity-70"
+                              >
+                                {email}
+                              </Typography>
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
 
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {moment(created_at).format('LLLL')}
-                        </Typography>
-                      </td>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {moment(created_at).format('LLLL')}
+                          </Typography>
+                        </td>
 
-                      <td className={classes}>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {most_recent_login ? moment(most_recent_login).format('LLLL') : "No recent logins"}
-                        </Typography>
-                      </td>
-                      <td className={classes}>
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {most_recent_login ? moment(most_recent_login).format('LLLL') : "No recent logins"}
+                          </Typography>
+                        </td>
+                        <td className={classes}>
 
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {login_count}
-                        </Typography>
-                      </td>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {login_count}
+                          </Typography>
+                        </td>
 
-                    </tr>
-                  );
-                },
-              )}
-            </tbody>
-          </table>
+                      </tr>
+                    );
+                  },
+                )}
+              </tbody>
+            </table>}
         </CardBody>}
 
     </Card>
