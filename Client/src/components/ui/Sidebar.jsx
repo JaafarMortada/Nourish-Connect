@@ -23,13 +23,14 @@ import {
 } from "../../constants";
 import ProfileOverview from "../modals/profileOverview/ProfileOverview";
 import { useStoreData } from "../../global/store";
+import { sendRequest } from "../../config/request";
 
 const Sidebar = () => {
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(0);
     const [openProfile, setOpenProfile] = useState(false);
- 
+
     const handleOpenProfile = () => setOpenProfile(!openProfile);
     const { store, setStoreData } = useStoreData();
 
@@ -39,99 +40,48 @@ const Sidebar = () => {
             : store.usertype === "cashier"
                 ? sidebarCashierLinks
                 : store.usertype === "charity" ?
-                    sidebarCharityLinks 
+                    sidebarCharityLinks
                     : [];
 
     const handleOpen = (value) => {
         setOpen(open === value ? 0 : value);
     };
 
-    const handleLogout = () => {
-        setStoreData(emptyStore)
-        localStorage.removeItem('token')
-        navigate(`/auth/login`)
-    }   
+    const handleLogout = async () => {
+        try {
+            const response = await sendRequest({
+                method: "POST",
+                route: "/api/auth/logout",
+            });
+            if (response.message === "Successfully logged out") {
+                localStorage.clear()
+                setStoreData(emptyStore)
+                localStorage.clear()
+                navigate(`/`)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
-        <> 
-        <ProfileOverview open={openProfile} handleOpen={handleOpenProfile} />
-        <Card className="h-[100vh] rounded-none w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 bg-[--background-black] overflow-auto">
-            <div className="mb-2 p-4">
-                <img src={logoWhite} />
-            </div>
-            <hr className="my-2 border-[--text-gray]" />
-            <List>
-                {
-                sidebarLinks.length === 0 ? <Spinner className="w-10 h-10 self-center" /> :
-                sidebarLinks.map((Link, index) =>
-                    Link.id === "separator" ? (
-                        <hr className="my-2 border-[--text-gray]" key={index} />
-                    ) : (
-                        <ListItem
-                            key={`${Link.id}-${index}`}
-                            onClick={() => navigate(`/${store.usertype}/${Link.id}`)}
-                            className="text-[--text-gray]"
-                        >
-                            <ListItemPrefix>
-                                <Link.icon className="h-5 w-5" />
-                            </ListItemPrefix>
-                            {Link.text}
-                        </ListItem>
-                    )
-                )}
-            </List>
-
-            <div className="absolute bottom-0 left-0 w-[290px] px-4 bg-black py-4">
-                <Accordion
-                    open={open === 1}
-                    icon={
-                        <ChevronDownIcon
-                            strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 text-[--primary]  transition-transform ${open === 1 ? "rotate-180" : ""
-                                }`}
-                        />
-                    }
-                >
-                    <ListItem
-                        className="p-3 bg-black text-[--text-gray]"
-                        selected={open === 1}
-                        onClick={() => handleOpen(1)}
-                    >
-                        <ListItemPrefix>
-                            <Avatar
-                                src={store.pic_url ? `http://127.0.0.1:8000/storage/${store.pic_url}` : default_profile_pic}
-                                className="h-12 w-12 p-0.5 bg-[--primary]"
-                            />
-                        </ListItemPrefix>
-                        <div className="max-w-[150px] truncate">
-                            <span className="text-[21px]">{store.username}</span>
-                            <br />
-                            <span className="text-[16px]">{store.company_name}</span>
-                        </div>
-
-                        {store.usertype === "cashier" 
-                            ? 
-                                <PowerIcon 
-                                    className="absolute right-2 top-auto w-5 border-b-0 text-[--primary]"
-                                    onClick={handleLogout}
-                                /> 
-                            : 
-                            (
-                                <AccordionHeader className="absolute right-5 top-auto w-5 border-b-0 text-[--text-gray]" >{''}</AccordionHeader>
-                            )
-                        }
-
-                    </ListItem>
-                    <hr className="my-2 border-[--text-gray]" />
-
-                    {store.usertype === "cashier" ? null : (
-                        <AccordionBody className="py-1">
-                            <List className="p-0">
-
-                                {sidebarProfileLinks.map((Link, index) => (
+        <>
+            <ProfileOverview open={openProfile} handleOpen={handleOpenProfile} />
+            <Card className="h-[100vh] rounded-none w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 bg-[--background-black] overflow-auto">
+                <div className="mb-2 p-4">
+                    <img src={logoWhite} />
+                </div>
+                <hr className="my-2 border-[--text-gray]" />
+                <List>
+                    {
+                        sidebarLinks.length === 0 ? <Spinner className="w-10 h-10 self-center" /> :
+                            sidebarLinks.map((Link, index) =>
+                                Link.id === "separator" ? (
+                                    <hr className="my-2 border-[--text-gray]" key={index} />
+                                ) : (
                                     <ListItem
                                         key={`${Link.id}-${index}`}
-                                        onClick={Link.id === "logout" ? handleLogout : handleOpenProfile}
+                                        onClick={() => navigate(`/${store.usertype}/${Link.id}`)}
                                         className="text-[--text-gray]"
                                     >
                                         <ListItemPrefix>
@@ -139,15 +89,77 @@ const Sidebar = () => {
                                         </ListItemPrefix>
                                         {Link.text}
                                     </ListItem>
-                                ))}
+                                )
+                            )}
+                </List>
 
-                            </List>
-                        </AccordionBody>
-                    )}
+                <div className="absolute bottom-0 left-0 w-[290px] px-4 bg-black py-4">
+                    <Accordion
+                        open={open === 1}
+                        icon={
+                            <ChevronDownIcon
+                                strokeWidth={2.5}
+                                className={`mx-auto h-4 w-4 text-[--primary]  transition-transform ${open === 1 ? "rotate-180" : ""
+                                    }`}
+                            />
+                        }
+                    >
+                        <ListItem
+                            className="p-3 bg-black text-[--text-gray]"
+                            selected={open === 1}
+                            onClick={() => handleOpen(1)}
+                        >
+                            <ListItemPrefix>
+                                <Avatar
+                                    src={store.pic_url ? `http://127.0.0.1:8000/storage/${store.pic_url}` : default_profile_pic}
+                                    className="h-12 w-12 p-0.5 bg-[--primary]"
+                                />
+                            </ListItemPrefix>
+                            <div className="max-w-[150px] truncate">
+                                <span className="text-[21px]">{store.username}</span>
+                                <br />
+                                <span className="text-[16px]">{store.company_name}</span>
+                            </div>
 
-                </Accordion>
-            </div>
-        </Card>
+                            {store.usertype === "cashier"
+                                ?
+                                <PowerIcon
+                                    className="absolute right-2 top-auto w-5 border-b-0 text-[--primary]"
+                                    onClick={handleLogout}
+                                />
+                                :
+                                (
+                                    <AccordionHeader className="absolute right-5 top-auto w-5 border-b-0 text-[--text-gray]" >{''}</AccordionHeader>
+                                )
+                            }
+
+                        </ListItem>
+                        <hr className="my-2 border-[--text-gray]" />
+
+                        {store.usertype === "cashier" ? null : (
+                            <AccordionBody className="py-1">
+                                <List className="p-0">
+
+                                    {sidebarProfileLinks.map((Link, index) => (
+                                        <ListItem
+                                            key={`${Link.id}-${index}`}
+                                            onClick={Link.id === "logout" ? handleLogout : handleOpenProfile}
+                                            className="text-[--text-gray]"
+                                        >
+                                            <ListItemPrefix>
+                                                <Link.icon className="h-5 w-5" />
+                                            </ListItemPrefix>
+                                            {Link.text}
+                                        </ListItem>
+                                    ))}
+
+                                </List>
+                            </AccordionBody>
+                        )}
+
+                    </Accordion>
+                </div>
+            </Card>
         </>
     );
 };
