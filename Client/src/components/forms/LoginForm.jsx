@@ -7,6 +7,7 @@ import { useStoreData } from "../../global/store";
 import PrimaryButton from "../ui/Button";
 import InputField from "../ui/Input";
 import { emptyStore } from "../../constants";
+import { websocketRequest } from "../../config/websocketRequest";
 
 const LoginForm = () => {
 
@@ -63,6 +64,10 @@ const LoginForm = () => {
             if (response.message === "logged in successfully") {
                 localStorage.setItem('token', response.user.token);
 
+                if (response.user.usertype_id === 2) websocketRequest({
+                    inventoryId: response.user.inventory_id,
+                    WSevent: "cashier-login"
+                })
                 setStoreData({
                     ...store,
                     token: response.user.token,

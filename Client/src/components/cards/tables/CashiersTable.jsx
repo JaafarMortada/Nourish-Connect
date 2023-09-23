@@ -12,11 +12,10 @@ import PrimaryButton from "../../ui/Button";
 import { default_profile_pic } from "../../../assets";
 import AddCashierModal from "../../modals/addCashier/AddCashierModal";
 import moment from "moment"
-
-
+import { usePusher } from "../../../global/PusherContext";
 const TABLE_HEAD = ["Username & Email", "Employed At", "Last Login", "Number of Logins"];
 
-const Table = () => {
+const CashiersTable = () => {
 
   const { store } = useStoreData()
   const [open, setOpen] = useState(false);
@@ -24,36 +23,56 @@ const Table = () => {
 
   const handleOpen = () => setOpen(!open);
 
-  useEffect(() => {
-    const getCashiers = async () => {
-      try {
-        const response = await sendRequest({
-            method: "GET",
-            route: "/api/manager/get_cashiers",
-            token: store.token,
-        });
-        if(response.message === "success"){
-            setCashiersData(response.cashiers);
-        }
+  const getCashiers = async () => {
+    try {
+      const response = await sendRequest({
+        method: "GET",
+        route: "/api/manager/get_cashiers",
+        token: store.token,
+      });
+      if (response.message === "success") {
+        setCashiersData(response.cashiers);
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-    }
+  }
+
+  useEffect(() => {
     getCashiers()
   }, [])
+
+  const pusher = usePusher();
+  const pusherEvent = () => {
+
+    const channel = pusher.subscribe(`cashier-login-${store.inventory_id}`);
+    channel.bind('cashier-logged-in', () => {
+      getCashiers()
+    })
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }
+
+  useEffect(() => {
+    if (store.inventory_id) pusherEvent()
+  }, [store])
 
   const handleAddedCashier = (newData) => {
     setCashiersData((prevCashiersData) => [
       ...prevCashiersData,
       newData,
     ])
-    
+
   }
   return (
-    <>
-    <AddCashierModal open={open} handleOpen={handleOpen} handleNewCashier={handleAddedCashier}/>
+
 
     <Card className="flex flex-col h-[80%] w-[95%]">
+      <AddCashierModal open={open} handleOpen={handleOpen} handleNewCashier={handleAddedCashier} />
+
       <CardHeader floated={false} shadow={false} className="rounded-none ">
         <div className="mb-4 h-fit flex items-center justify-between gap-8">
           <div>
@@ -65,7 +84,7 @@ const Table = () => {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col sm:flex-row">
-            <PrimaryButton classNames="flex items-center bg-[--primary]" size="sm" label='Add Cashier' onClick={handleOpen}/>
+            <PrimaryButton classNames="flex items-center bg-[--primary]" size="sm" label='Add Cashier' onClick={handleOpen} />
           </div>
         </div>
 
@@ -100,7 +119,7 @@ const Table = () => {
             </thead>
             <tbody>
               {cashiersData.map(
-                ({ pic_url, username, email, login_count, most_recent_login, created_at}, index) => {
+                ({ pic_url, username, email, login_count, most_recent_login, created_at }, index) => {
                   const isLast = index === cashiersData.length - 1;
                   const classes = isLast
                     ? "px-4"
@@ -141,7 +160,7 @@ const Table = () => {
                       </td>
 
                       <td className={classes}>
-                      <Typography
+                        <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
@@ -151,7 +170,7 @@ const Table = () => {
                       </td>
                       <td className={classes}>
 
-                      <Typography
+                        <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal"
@@ -169,9 +188,9 @@ const Table = () => {
         </CardBody>}
 
     </Card>
-        
-    </>
+
+
   );
 }
 
-export default Table
+export default CashiersTable

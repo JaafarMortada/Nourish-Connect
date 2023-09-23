@@ -7,7 +7,11 @@ export const websocketRequest = async ({
 
 }) => {
   if (!(inventoryId || receiver_id) && !WSevent) throw Error("URL Error");
-  const query = WSevent === 'items' ? `trigger-items-event?inventory_id=${inventoryId}` : WSevent === "donation" ? `trigger-donation-event?receiver_id=${receiver_id}` : ""
+  const query = WSevent === 'items' ? `trigger-items-event?inventory_id=${inventoryId}` 
+  : WSevent === "donation" ? `trigger-donation-event?receiver_id=${receiver_id}` 
+  : WSevent ==="cashier-login" ? `trigger-cashier-login-event?inventory_id=${inventoryId}` 
+  : ""
+
   try {
     const response = await axios.request({
       method: "GET",
