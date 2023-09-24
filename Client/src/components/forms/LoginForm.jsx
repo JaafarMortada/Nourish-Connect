@@ -41,6 +41,7 @@ const LoginForm = () => {
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
+            console.log(store)
             if (store.usertype === "manager") {
                 navigate(`/${store.usertype}/dashboard`)
             } else if (store.usertype === "cashier") {

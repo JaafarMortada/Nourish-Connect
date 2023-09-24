@@ -89,12 +89,13 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
                     </li>
                     <li className="truncate">
                         <span className="font-bold">Description (Context written by the charity):<br /> </span>
-                        <span className="max-w-full max-h-40 whitespace-normal truncate py-10 mx-10">
+                    </li>
+                    <div className="max-w-full max-h-40 whitespace-normal text-justify px-10 my-3 overflow-scroll">
+                        
                             {data.request_description}
 
-                        </span>
-
-                    </li>
+                        
+                    </div>
 
                     <li className="truncate">
                         <span className="font-bold">Suggested item: </span> {data.item_name}
