@@ -14,6 +14,7 @@ import FileDragInput from "../../ui/FileDragInput";
 import { useState } from "react";
 import { sendRequest } from "../../../config/request";
 import { websocketRequest } from "../../../config/websocketRequest";
+import DownloadTemplate from "../../ui/DownloadTemplate";
 
 const UploadSalesData = ({ open, handleOpen }) => {
     const [data, setData] = useState({
@@ -36,9 +37,9 @@ const UploadSalesData = ({ open, handleOpen }) => {
         setUploading(false)
         setError(true)
         setTimeout(() => {
-          setError(false);
+            setError(false);
         }, 3000)
-      }
+    }
 
     const handleUpload = async () => {
         setUploading(true)
@@ -76,7 +77,7 @@ const UploadSalesData = ({ open, handleOpen }) => {
 
         <Dialog
             className="flex flex-col overflow-scroll"
-            size="xl"
+            size="lg"
             open={open}
             handler={handleOpen}
             animate={{
@@ -96,7 +97,7 @@ const UploadSalesData = ({ open, handleOpen }) => {
 
             </DialogHeader>
             <DialogBody className="overflow-scroll px-0 flex-1 flex justify-center">
-                <div className="flex lg:flex-row flex-col-reverse w-full items-center justify-between  p-10">
+                <div className="flex lg:flex-row lg:gap-0 gap-10 flex-col w-full items-center justify-between p-10">
                     <div>
                         {POSuploadConditions.map((condition) => (
                             condition.id === 'POSConditionsTitle'
@@ -113,14 +114,7 @@ const UploadSalesData = ({ open, handleOpen }) => {
                 </div>
             </DialogBody>
             <DialogFooter className="flex justify-between px-10">
-                <Button
-                    variant="text"
-                    color="red"
-                    onClick={handleOpen}
-                    className="mr-1"
-                >
-                    <span>Close</span>
-                </Button>
+                <DownloadTemplate path={"excel_templates"} fileName={"sale_template.xlsx"} />
                 <PrimaryButton classNames={"bg-[--primary] max-h-[40px] min-w-[104px] flex justify-center items-center"} onClick={handleUpload} label={uploading ? <Spinner className="w-4" /> : "Confirm"} />
             </DialogFooter>
         </Dialog>
