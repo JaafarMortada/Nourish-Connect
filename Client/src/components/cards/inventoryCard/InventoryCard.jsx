@@ -15,6 +15,7 @@ import { inventoryUploadConditions } from "../../../constants";
 import { sendRequest } from "../../../config/request";
 import { websocketRequest } from "../../../config/websocketRequest";
 import { useStoreData } from "../../../global/store";
+import DownloadTemplate from "../../ui/DownloadTemplate";
 
 const InventoryCard = () => {
 
@@ -283,7 +284,8 @@ const InventoryCard = () => {
             />
 
           </div>
-          <div className="flex justify-end lg:w-[920px] w-[200px]">
+          <div className="flex justify-between lg:w-[920px] w-[200px]">
+            <DownloadTemplate path={"excel_templates"} fileName={"inventory_template.xlsx"} />
             <PrimaryButton
               label={uploading ? <Spinner className="w-4" /> : `${fileError ? "An error occurred" : "Upload file"}`}
               classNames={`max-h-[40px]  flex justify-center items-center w-[200px] ${fileError ? "bg-red-500" : "bg-[--primary]"}`}
