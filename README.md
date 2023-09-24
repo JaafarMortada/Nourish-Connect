@@ -61,11 +61,17 @@
 <img width="100%" src="./readme/gifs/landing_page.gif"/>
 
 ### Manager Screens (Web)
-| Dashboard  | Cashiers screen |  Donations Screen |
-| ---| ---| ---|
-| ![dashboard](./readme/demo/1440x1024.png) | ![cashiers](./readme/demo/1440x1024.png) | ![donations](./readme/demo/1440x1024.png) |
-| Discounts screen  | Chats Screen | Map Screen |
-| ![Discounts](/readme/gifs/discounts_page.gif) | ![Chats](./readme/demo/1440x1024.png) | ![Map](./readme/demo/1440x1024.png) |
+| Dashboard  | Cashiers screen |  
+| ---| ---| 
+| ![dashboard](./readme/demo/1440x1024.png) | ![cashiers](./readme/demo/1440x1024.png) |
+
+|  Donations Screen | Discounts screen  |
+| ---| ---| 
+![donations](/readme/gifs/manager_donations_page.gif) | ![Discounts](/readme/gifs/discounts_page.gif) |
+
+| Chats Screen | Map Screen |
+| ---| ---| 
+| ![Chats](./readme/demo/1440x1024.png) | ![Map](./readme/demo/1440x1024.png) |
 
 <br><br>
 
