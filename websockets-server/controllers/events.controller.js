@@ -23,6 +23,12 @@ const donationsEvents = (req, res) => {
     res.json({ message: "websocket sent" })
 }
 
+const userDonationsEvents = (req, res) => {
+    const inventoryId = req.query.inventory_id;
+    pusher.trigger(`user-donation-${inventoryId}`, "donations-data-updated", {});
+    res.json({ message: "websocket sent" })
+}
+
 const cashierLoginEvents = (req, res) => {
     const inventoryId = req.query.inventory_id;
     pusher.trigger(`cashier-login-${inventoryId}`, "cashier-logged-in", {});
@@ -33,5 +39,6 @@ module.exports = {
     itemsEvents,
     donationsEvents,
     cashierLoginEvents,
+    userDonationsEvents,
 
 }
