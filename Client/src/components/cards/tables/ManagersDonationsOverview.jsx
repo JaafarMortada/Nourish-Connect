@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { useStoreData } from "../../../global/store";
 import { sendRequest } from "../../../config/request";
+import { usePusher } from "../../../global/PusherContext";
 import moment from "moment"
 
 
@@ -43,6 +44,23 @@ const ManagersDonationsOverview = () => {
     getDonationsData()
   }, [])
 
+  const pusher = usePusher();
+  const pusherEvent = () => {
+
+      const channel = pusher.subscribe(`user-donation-${store.inventory_id}`);
+      channel.bind('donations-data-updated', () => {
+        getDonationsData()
+      })
+
+      return () => {
+          channel.unbind_all();
+          channel.unsubscribe();
+      };
+  }
+
+  useEffect(() => {
+      pusherEvent()
+    }, [store])
 
   return (
     <>

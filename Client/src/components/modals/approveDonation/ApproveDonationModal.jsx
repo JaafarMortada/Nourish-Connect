@@ -45,6 +45,10 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
                     inventoryId: store.inventory_id,
                     WSevent: "items"
                 })
+                websocketRequest({
+                    inventoryId: store.inventory_id,
+                    WSevent: "user-donation"
+                })
                 handleOpen()
             } else {
                 handleError()
