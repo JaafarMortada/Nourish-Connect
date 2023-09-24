@@ -21,7 +21,7 @@ const CheckoutItemCard = ({ data, removeFromCart, handleQuantity }) => {
     return (
         <div className="flex items-center rounded-lg h-[100px] w-[240px] bg-[#E0F8EA] text-[--text-black]">
             <div className="flex flex-1 items-center h-full">
-                <img src={notFound} className="min-w-10 h-10 mx-2 rounded-md bg-[--accent]" />
+                <img src={data.pic_url ? `http://127.0.0.1:8000/storage/${data.pic_url}` : notFound} className="min-w-10 h-10 mx-2 rounded-md bg-[--accent]" />
             </div>
             <div className="flex flex-col flex-1 h-full text-center items-center">
                 <Tooltip content={'item name'} className="bg-[--primary]">
