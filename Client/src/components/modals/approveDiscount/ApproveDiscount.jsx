@@ -47,6 +47,10 @@ const ApproveDiscount = ({ open, handleOpen, data, removeApproved }) => {
                     inventoryId: store.inventory_id,
                     WSevent: "items"
                 })
+                websocketRequest({
+                    inventoryId: store.inventory_id,
+                    WSevent: "user-discount"
+                })
             } else {
                 handleError()
             }

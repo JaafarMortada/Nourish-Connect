@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { useStoreData } from "../../../global/store";
 import { sendRequest } from "../../../config/request";
+import { usePusher } from "../../../global/PusherContext";
 import moment from "moment"
 
 const TABLE_HEAD = ["Title", "Description", "Started At", "Time Left"];
@@ -21,26 +22,45 @@ const DiscountsTable = () => {
     const [discountsData, setDiscountsData] = useState([])
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const getDiscountsData = async () => {
-            try {
-                const response = await sendRequest({
-                    method: "GET",
-                    route: "/api/manager/get_discounts_data",
-                });
-                if (response.message === "success") {
-                    setDiscountsData(response.discounts);
-                    setLoading(false)
-                } else {
-                    setLoading(false)
-                }
-            } catch (error) {
-                console.log(error);
+    const getDiscountsData = async () => {
+        try {
+            const response = await sendRequest({
+                method: "GET",
+                route: "/api/manager/get_discounts_data",
+            });
+            if (response.message === "success") {
+                setDiscountsData(response.discounts);
+                setLoading(false)
+            } else {
                 setLoading(false)
             }
+        } catch (error) {
+            console.log(error);
+            setLoading(false)
         }
+    }
+
+    useEffect(() => {
         getDiscountsData()
     }, [])
+
+    const pusher = usePusher();
+    const pusherEvent = () => {
+
+        const channel = pusher.subscribe(`user-discount-${store.inventory_id}`);
+        channel.bind('discounts-data-updated', () => {
+            getDiscountsData()
+        })
+
+        return () => {
+            channel.unbind_all();
+            channel.unsubscribe();
+        };
+    }
+
+    useEffect(() => {
+        pusherEvent()
+    }, [store])
 
     return (
         <>

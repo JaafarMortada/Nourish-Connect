@@ -11,6 +11,7 @@ export const websocketRequest = async ({
   : WSevent === "donation" ? `trigger-donation-event?receiver_id=${receiver_id}` 
   : WSevent ==="cashier-login" ? `trigger-cashier-login-event?inventory_id=${inventoryId}` 
   : WSevent ==="user-donation" ? `trigger-user-donation-event?inventory_id=${inventoryId}` 
+  : WSevent ==="user-discount" ? `trigger-user-discount-event?inventory_id=${inventoryId}` 
   : ""
 
   try {
