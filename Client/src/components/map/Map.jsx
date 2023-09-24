@@ -93,8 +93,8 @@ const Map = ({
             }
             {
                 showMarkers ?
-                    showMarkers.map((marker) => (
-                        <Marker position={[marker.latitude, marker.longitude]} key={marker.id} draggable={false}>
+                    showMarkers.map((marker, index) => (
+                        <Marker position={[marker.latitude, marker.longitude]} key={index} draggable={false}>
                             <Popup >
                                 <div className="w-[80%] h-[90px] flex flex-col justify-between items-center mr-5 ">
                                     <div className="flex gap-5 w-full items-center">

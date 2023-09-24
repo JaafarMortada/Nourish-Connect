@@ -108,7 +108,7 @@ const ProfileOverview = ({ open, handleOpen }) => {
                     }}
 
                 >
-                    <DialogHeader floated={false} shadow={false} className="rounded-none absolute top-0 left-0">
+                    <DialogHeader className="rounded-none absolute top-0 left-0">
                         <div className="mb-4 h-fit flex items-center justify-between gap-8">
                             <div>
                                 <Typography variant="h5" color="blue-gray">

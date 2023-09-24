@@ -85,7 +85,7 @@ const UploadSalesData = ({ open, handleOpen }) => {
             }}
         // className="overflow-scroll"
         >
-            <DialogHeader floated={false} shadow={false} className="rounded-none ">
+            <DialogHeader className="rounded-none ">
                 <div className="mb-4 h-fit flex items-center justify-between gap-8">
                     <div>
                         <Typography variant="h5" color="blue-gray" className="left-0">

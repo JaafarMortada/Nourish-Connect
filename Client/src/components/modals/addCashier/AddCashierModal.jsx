@@ -81,6 +81,7 @@ const AddCashierModal = ({ open, handleOpen, handleNewCashier }) => {
                     image: '',
                 })
                 setAddingCashier(false)
+                handleOpen()
                 handleNewCashier(response.cashier)
             } else {
                 setAddingCashier(false)

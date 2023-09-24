@@ -68,8 +68,9 @@ const CashiersTable = () => {
 
   const handleAddedCashier = (newData) => {
     setCashiersData((prevCashiersData) => [
-      ...prevCashiersData,
       newData,
+      ...prevCashiersData,
+      
     ])
 
   }

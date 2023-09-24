@@ -67,7 +67,7 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
                 unmount: { scale: 0.9, y: -100 },
             }}
         >
-            <DialogHeader floated={false} className="rounded-none border-b-2">
+            <DialogHeader className="rounded-none border-b-2">
                 <div className="h-fit flex items-center justify-between gap-8">
                     <div>
                         <Typography variant="h5" color="blue-gray">

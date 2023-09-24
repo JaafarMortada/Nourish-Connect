@@ -12,7 +12,7 @@ import { useStoreData } from "../../../global/store";
 import { sendRequest } from "../../../config/request";
 import moment from "moment"
 
-const TABLE_HEAD = ["Title", "Description", "started_at", "time_left"];
+const TABLE_HEAD = ["Title", "Description", "Started At", "Time Left"];
 
 const DiscountsTable = () => {
 
