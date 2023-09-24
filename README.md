@@ -40,11 +40,11 @@
 
 
 ### Mockups
-| Sign up | Sign up |
+| Sign up 1 | Sign up 2 |
 | ---| ---| 
-| ![Signup1](./readme/screenshots/signup1.png) | ![Signup2](./readme/screenshots/signup2.png) | 
+| ![Signup1](./readme/screenshots/signup2.png) | ![Signup2](./readme/screenshots/signup1.png) | 
 
-| Sign up  | Sign in |
+| Sign up 3 | Sign in |
 | ---| ---|
 | ![Signup3](./readme/screenshots/signup3.png) | ![Signin](./readme/screenshots/signin.png) | 
 
@@ -54,12 +54,17 @@
 <img src="./readme/title4.svg"/>
 <a id="implementation"></a>
 
-> Using the wireframes and mockups as a guide, we implemented the Coffee Express app with the following features:
+> Using the wireframes and mockups as a guide, we implemented Nourish Connect website with the following features (These are GIFs recorded from the real website):
 
 ### Landing Page
 
 <img width="100%" src="./readme/gifs/landing_page.gif"/>
 
+
+### Auth Screens (Web)
+| Sign up | Sign in |  
+| ---| ---| 
+| ![dashboard](./readme/demo/1440x1024.png) | ![cashiers](./readme/demo/1440x1024.png) |
 ### Manager Screens (Web)
 | Dashboard  | Cashiers screen |  
 | ---| ---| 
@@ -69,9 +74,7 @@
 | ---| ---| 
 ![donations](/readme/gifs/manager_donations_page.gif) | ![Discounts](/readme/gifs/discounts_page.gif) |
 
-| Chats Screen | Map Screen |
-| ---| ---| 
-| ![Chats](./readme/demo/1440x1024.png) | ![Map](./readme/demo/1440x1024.png) |
+
 
 <br><br>
 
@@ -95,7 +98,7 @@ https://firebase.google.com/). Firebase is a comprehensive platform that offers 
 <!-- How to run -->
 <img src="./readme/title6.svg"/>
 <a id="how-to-run"></a>
-> To set up Coffee Express locally, follow these steps:
+> To set up Nourish Connect locally, follow these steps:
 
 ### Prerequisites
 
@@ -109,18 +112,86 @@ This is an example of how to list things you need to use the software and how to
 
 _Below is an example of how you can instruct your audience on installing and setting up your app._
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+1. **Clone the Repository**
+   - Get the source code by cloning the Nourish Connect repository.
+     ```sh
+     git clone https://github.com/JaafarMortada/Nourish-Connect.git
+     ```
+
+2. **Frontend Setup**
+   - Navigate to the frontend directory:
+     ```sh
+     cd Nourish-Connect/Client
+     ```
+   - Install npm packages:
+     ```sh
+     npm install
+     ```
+   - Change `.env.example` to `.env`. Then add your Pusher credentials:
+     ```env
+     VITE_PUSHER_APP_ID=YOUR_PUSHER_APP_ID
+     VITE_PUSHER_APP_KEY=YOUR_PUSHER_APP_KEY
+     VITE_PUSHER_APP_SECRET=YOUR_PUSHER_APP_SECRET
+     VITE_PUSHER_APP_CLUSTER=YOUR_PUSHER_CLUSTER
+     ```
+
+3. **Backend Setup**
+   - Navigate to the backend directory:
+     ```sh
+     cd ../Server
+     ```
+   - Install composer packages:
+     ```sh
+     composer install
+     ```
+   - Change `.env.example` to `.env`. Then add your ForgeAI API (Visit [TheForgeAI](https://theforgeai.com/) and create your app to get the free API key) key and specify your database name:
+     ```env
+     FORGE_KEY=YOUR_FORGE_KEY
+     DB_DATABASE=YOUR_DATABASE_NAME
+     DB_USERNAME=
+     DB_PASSWORD=
+     ```
+   - Migrate the database schema
+     ```sh
+      php artisan migrate
+     ```
+   - Generate a secret key to handle token encryption 
+     ```sh
+      php artisan jwt:secret
+     ```
+
+4. **Node.js Server Setup**
+   - Navigate to the websockets-server directory:
+     ```sh
+     cd ../websockets-server
+     ```
+   - Install npm packages:
+     ```sh
+     npm install
+     ```
+   - Change `.env.example` to `.env`. Then add your Pusher credentials:
+     ```env
+     PUSHER_APP_ID=YOUR_PUSHER_APP_ID
+     PUSHER_APP_KEY=YOUR_PUSHER_APP_KEY
+     PUSHER_APP_SECRET=YOUR_PUSHER_APP_SECRET
+     PUSHER_APP_CLUSTER=YOUR_PUSHER_CLUSTER
+     ```
+
+7. **Start the Application**
+   - Start the Laravel backend server (in the Server directory):
+     ```sh
+     php artisan serve
+     ```
+   - Start the Node.js server for real-time features (in the websockets-server directory):
+     ```sh
+     node index.js
+     ```
+   - Start the Vite development server for the frontend (in the Client directory):
+     ```sh
+     npm run dev
+     ```
+
+8. **Access the Application**
+   - Open your web browser and navigate to `http://localhost:5173` to access Nourish Connect.
 
 Now, you should be able to run Nourish Connect locally and explore its features.
