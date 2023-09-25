@@ -31,12 +31,9 @@ const DiscountsTable = () => {
             if (response.message === "success") {
                 setDiscountsData(response.discounts);
                 setLoading(false)
-            } else {
-                setLoading(false)
-            }
+            } 
         } catch (error) {
             
-            setLoading(false)
         }
     }
 

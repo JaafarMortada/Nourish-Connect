@@ -32,11 +32,9 @@ const DiscountSuggestions = () => {
             if (response.message === "success") {
                 setSuggestionsData(response.discount_suggestions);
                 setLoading(false)
-            } else {
-                setLoading(false)
-            }
+            } 
         } catch (error) {
-            setLoading(false)
+            
         }
     }
 

@@ -32,12 +32,9 @@ const DonationsSuggestions = () => {
             if (response.message === "success") {
                 setSuggestionsData(response.donation_suggestions);
                 setLoading(false)
-            } else {
-                setLoading(false)
-            }
+            } 
         } catch (error) {
             
-            setLoading(false)
         }
     }
 
@@ -50,9 +47,7 @@ const DonationsSuggestions = () => {
             });
             if (response.message === "success") {
                 getDonationSuggestions()
-            } else {
-                setLoading(false)
-            }
+            } 
         } catch (error) {
             
         }

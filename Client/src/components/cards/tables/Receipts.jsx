@@ -31,12 +31,9 @@ const ReceiptsTable = () => {
             if (response.carts) {
                 setReceiptsData(response.carts);
                 setLoading(false)
-            } else {
-                setLoading(false)
-            }
+            } 
         } catch (error) {
             
-            setLoading(false)
         }
     }
 

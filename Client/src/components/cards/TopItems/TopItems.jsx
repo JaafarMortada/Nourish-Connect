@@ -37,12 +37,9 @@ const TopItems = () => {
             if (response.message === "success") {
                 setTopFiveItemsData(response.top_five_items);
                 setLoading(false)
-            } else {
-                setLoading(false)
             }
         } catch (error) {
-
-            setLoading(false)
+            
         }
     }
 

@@ -36,12 +36,9 @@ const CashiersTable = () => {
       if (response.message === "success") {
         setCashiersData(response.cashiers);
         setLoading(false)
-      } else {
-        setLoading(false)
-      }
+      } 
     } catch (error) {
       
-      setLoading(false)
     }
   }
 

@@ -31,12 +31,9 @@ const ManagersDonationsOverview = () => {
       if (response.message === "success") {
         setDonationsData(response.donations);
         setLoading(false)
-      } else {
-        setLoading(false)
-      }
+      } 
     } catch (error) {
       
-      setLoading(false)
     }
   }
 
