@@ -36,7 +36,7 @@ class DashboardController extends Controller
             });
 
             $weekData[] = [
-                'day' => $dayOfWeek,
+                'day' => substr($dayOfWeek, 0, 3),
                 'revenue' => $revenueForDay
             ];
 
