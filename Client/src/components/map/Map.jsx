@@ -12,6 +12,7 @@ import { default_profile_pic } from "../../assets";
 import { useStoreData } from "../../global/store";
 import { Button } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import { baseStorageURL } from "../../constants";
 
 function GetUserLocation({ setClickedPosition, handleLocation = null }) {
     const map = useMapEvents({
@@ -98,7 +99,7 @@ const Map = ({
                             <Popup >
                                 <div className="w-[80%] h-[90px] flex flex-col justify-between items-center mr-5 ">
                                     <div className="flex gap-5 w-full items-center">
-                                        <Avatar withBorder={true} src={marker && marker.pic_url ? `http://127.0.0.1:8000/storage/${marker.pic_url}` : default_profile_pic} alt="avatar" />
+                                        <Avatar withBorder={true} src={marker && marker.pic_url ? `${baseStorageURL}${marker.pic_url}` : default_profile_pic} alt="avatar" />
                                         <Tooltip content={`${marker.company_name}`}>
                                             <Typography variant="h5" color="blue-gray" className="max-w-[250px] truncate">
                                                 {marker.company_name}

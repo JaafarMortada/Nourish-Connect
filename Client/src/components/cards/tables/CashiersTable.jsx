@@ -15,6 +15,7 @@ import { default_profile_pic } from "../../../assets";
 import AddCashierModal from "../../modals/addCashier/AddCashierModal";
 import moment from "moment"
 import { usePusher } from "../../../global/PusherContext";
+import { baseStorageURL } from "../../../constants";
 const TABLE_HEAD = ["Username & Email", "Employed At", "Last Login", "Number of Logins"];
 
 const CashiersTable = () => {
@@ -138,7 +139,7 @@ const CashiersTable = () => {
                       <tr key={email} className={`${index % 2 === 0 ? "" : "bg-blue-gray-50/50"}`}>
                         <td className={classes}>
                           <div className="flex items-center gap-3">
-                            <Avatar src={pic_url ? `http://127.0.0.1:8000/storage/${pic_url}` : default_profile_pic} alt={username} size="sm" />
+                            <Avatar src={pic_url ? `${baseStorageURL}${pic_url}` : default_profile_pic} alt={username} size="sm" />
                             <div className="flex flex-col">
                               <Typography
                                 variant="small"

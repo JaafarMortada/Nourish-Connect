@@ -15,6 +15,7 @@ import {
 import { ChevronDownIcon, PowerIcon } from "@heroicons/react/24/outline";
 import { default_profile_pic, logoWhite } from "../../assets";
 import {
+    baseStorageURL,
     emptyStore,
     sidebarCashierLinks,
     sidebarCharityLinks,
@@ -111,7 +112,7 @@ const Sidebar = () => {
                         >
                             <ListItemPrefix>
                                 <Avatar
-                                    src={store.pic_url ? `http://127.0.0.1:8000/storage/${store.pic_url}` : default_profile_pic}
+                                    src={store.pic_url ? `${baseStorageURL}${store.pic_url}` : default_profile_pic}
                                     className="h-12 w-12 p-0.5 bg-[--primary]"
                                 />
                             </ListItemPrefix>

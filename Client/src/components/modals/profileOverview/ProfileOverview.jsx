@@ -20,6 +20,7 @@ import UserInfoCard from "../../cards/miniCards/UserInfoCard";
 import InputField from "../../ui/Input";
 import Unauthorized from "../../../Pages/Unauthorized";
 import Map from "../../map/Map";
+import { baseStorageURL } from "../../../constants";
 const ProfileOverview = ({ open, handleOpen }) => {
     const { store } = useStoreData()
     const [newLogo, setNewLogo] = useState(null)
@@ -51,7 +52,7 @@ const ProfileOverview = ({ open, handleOpen }) => {
             if (response.message === "success") {
                 setProfileData(response.profile);
                 if (response.profile.pic_url) {
-                    setExistingLogo(`http://127.0.0.1:8000/storage/${response.profile.pic_url}`)
+                    setExistingLogo(`${baseStorageURL}${response.profile.pic_url}`)
                 }
                 setLoading(false)
             }
