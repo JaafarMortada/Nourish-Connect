@@ -66,7 +66,7 @@
 ### Manager Screens (Web)
 | Dashboard  | Cashiers screen |  
 | ---| ---| 
-| ![dashboard](./readme/demo/1440x1024.png) | ![cashiers](./readme/demo/1440x1024.png) |
+| ![dashboard](/readme/gifs/dashboard.gif) | ![cashiers](/readme/gifs/cashiers_table.gif) |
 
 |  Donations Screen | Discounts screen  |
 | ---| ---| 
