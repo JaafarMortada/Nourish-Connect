@@ -6,8 +6,6 @@
 **[PROJECT PHILOSOPHY](#project-philosophy) • [PROTOTYPING](#Prototyping) • [TECH STACK](#tech-stack) • [IMPLEMENTATION](#implementation) • [HOW TO RUN?](#how-to-run)**
 
 </div>
-
-
 <br><br>
 
 <!-- project philosophy -->
@@ -74,6 +72,10 @@
 | ---| ---| 
 ![donations](/readme/gifs/manager_donations_page.gif) | ![Discounts](/readme/gifs/discounts_page.gif) |
 
+| Chats Screen (Supermarket mangers & Charities) | Map Screen |
+| ---| ---| 
+| ![Chats](/readme/gifs/chat_page.gif) | ![Map](/readme/gifs/charities_map.gif) |
+
 
 
 <br><br>
@@ -82,7 +84,7 @@
 <img src="./readme/title5.svg"/>
 <a id="tech-stack"></a>
 
-###  Coffee Express is built using the following technologies:
+###  Nourish Connect is built using the following technologies:
 
 - Nourish Connect uses the [React](https://reactjs.org/) library for its frontend development. React is known for its flexibility and efficiency in building dynamic user interfaces.
 - The backend of Nourish Connect is powered by the [Laravel framework](https://laravel.com/). Laravel is a popular PHP framework known for its elegant syntax and robust features for web application development.
@@ -102,7 +104,8 @@ https://firebase.google.com/). Firebase is a comprehensive platform that offers 
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+This is an example of how to list things you need to use the website and how to install them.
+
 * npm
   ```sh
   npm install npm@latest -g
@@ -110,15 +113,14 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app._
-
-1. **Clone the Repository**
+1. **Open your XAMPP control panel and start Apache and MySQL**
+2. **Clone the Repository**
    - Get the source code by cloning the Nourish Connect repository.
      ```sh
      git clone https://github.com/JaafarMortada/Nourish-Connect.git
      ```
 
-2. **Frontend Setup**
+3. **Frontend Setup**
    - Navigate to the frontend directory:
      ```sh
      cd Nourish-Connect/Client
@@ -135,7 +137,7 @@ _Below is an example of how you can instruct your audience on installing and set
      VITE_PUSHER_APP_CLUSTER=YOUR_PUSHER_CLUSTER
      ```
 
-3. **Backend Setup**
+4. **Backend Setup**
    - Navigate to the backend directory:
      ```sh
      cd ../Server
@@ -151,6 +153,11 @@ _Below is an example of how you can instruct your audience on installing and set
      DB_USERNAME=
      DB_PASSWORD=
      ```
+   - Run the following commands
+     ```sh
+     php artisan key:generate
+     php artisan storage:link
+     ```
    - Migrate the database schema
      ```sh
       php artisan migrate
@@ -159,8 +166,8 @@ _Below is an example of how you can instruct your audience on installing and set
      ```sh
       php artisan jwt:secret
      ```
-
-4. **Node.js Server Setup**
+   
+5. **Node.js Server Setup**
    - Navigate to the websockets-server directory:
      ```sh
      cd ../websockets-server
@@ -177,7 +184,7 @@ _Below is an example of how you can instruct your audience on installing and set
      PUSHER_APP_CLUSTER=YOUR_PUSHER_CLUSTER
      ```
 
-7. **Start the Application**
+6. **Start the Application**
    - Start the Laravel backend server (in the Server directory):
      ```sh
      php artisan serve
@@ -191,7 +198,7 @@ _Below is an example of how you can instruct your audience on installing and set
      npm run dev
      ```
 
-8. **Access the Application**
+7. **Access the Application**
    - Open your web browser and navigate to `http://localhost:5173` to access Nourish Connect.
 
 Now, you should be able to run Nourish Connect locally and explore its features.
