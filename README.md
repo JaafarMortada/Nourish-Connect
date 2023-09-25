@@ -76,6 +76,11 @@
 | ---| ---| 
 | ![Chats](/readme/gifs/chat_page.gif) | ![Map](/readme/gifs/charities_map.gif) |
 
+### Charity Screens (Web)
+| Donations Overview Screen | Chats Screen (Supermarket mangers & Charities) |
+| ---| ---| 
+| ![Chats](/readme/gifs/chat_page.gif) | ![DonationsOverview](/readme/gifs/donations_overview.gif) |
+
 ### Cashier Screens (Web)
 | Point Of Sales Screen  | Inventory screen |  
 | ---| ---| 
