@@ -38,6 +38,7 @@
 
 
 ### Mockups
+#### Auth Screens
 | Sign up 1 | Sign up 2 |
 | ---| ---| 
 | ![Signup1](./readme/screenshots/signup2.png) | ![Signup2](./readme/screenshots/signup1.png) | 
@@ -45,6 +46,30 @@
 | Sign up 3 | Sign in |
 | ---| ---|
 | ![Signup3](./readme/screenshots/signup3.png) | ![Signin](./readme/screenshots/signin.png) | 
+
+#### Manager Screens
+| Dashboard | Cashiers |
+| ---| ---|
+| ![Signup3](./readme/screenshots/dashboard.png) | ![Signin](./readme/screenshots/cashiers.png) | 
+
+| Donations | Discounts |
+| ---| ---|
+| ![Signup3](./readme/screenshots/donations.png) | ![Signin](./readme/screenshots/discounts.png) | 
+
+| Charities Map | Chat |
+| ---| ---|
+| ![Signup3](./readme/screenshots/map.png) | ![Signin](./readme/screenshots/chat.png) | 
+
+#### Charity Screens
+| Requests Overview | Chat |
+| ---| ---|
+| ![Signup3](./readme/screenshots/requests_overview.png) | ![Signin](./readme/screenshots/chat.png) | 
+
+#### Cashier Screens
+| Point Of Sales | Inventory |
+| ---| ---|
+| ![Signup3](./readme/screenshots/POS.png) | ![Signin](./readme/screenshots/inventory.png) | 
+
 
 <br><br>
 
