@@ -56,7 +56,7 @@ const WeeksRevenue = () => {
       }, [store])
     return (
         <Card
-            className={`flex-1  md:min-w-[40%] md:max-w-[40%] min-w-[500px] max-w-[500px] `}
+            className={`flex-1  md:min-w-[30%] md:max-w-[30%] min-w-[500px] max-w-[500px] `}
         >
             <CardHeader floated={false} shadow={false} className=" rounded-none ">
                 <Typography variant="h5" color="blue-gray">
@@ -65,7 +65,7 @@ const WeeksRevenue = () => {
             </CardHeader>
 
 
-            <CardBody className="h-[400px] p-0 flex items-center justify-center">
+            <CardBody className="h-[400px] [&>div]:max-h-[350px] p-0 flex items-center justify-center">
                 {loading ?
                     <Spinner className="w-20 h-20 pt-3" />
                     :

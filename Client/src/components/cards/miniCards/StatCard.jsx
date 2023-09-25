@@ -8,7 +8,7 @@ import {
 import { intToString } from "../../../utilities";
 const StatCard = ({ data }) => {
     return (
-        <Card className="flex flex-col md:w-[23%] w-[90%] min-h-[200px]  max-h-[150px] rounded-none border-[--primary] border-b-4 transition-all py-0  bg-blue-gray-50/50 shadow-md">
+        <Card className="flex flex-col md:w-[23%] w-[90%] h-full min-h-[150px] rounded-none border-[--primary] border-b-4 transition-all py-0  bg-blue-gray-50/50 shadow-md">
             <CardBody className="flex flex-col flex-1 justify-around p-0 items-center">
 
                 <Typography variant="h5" color="blue-gray" >

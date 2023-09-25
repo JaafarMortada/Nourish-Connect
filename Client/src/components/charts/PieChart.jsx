@@ -13,7 +13,9 @@ const PieChart = ({ data, sortBy = 'quantity_sold' }) => {
   return (
     <ResponsivePie
       data={pieData}
-      margin={{ top: 40, right: 0, bottom: 80, left: 0 }}
+      width={450}
+      height={275}
+      margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
       innerRadius={0.5}
       padAngle={0}
       cornerRadius={3}

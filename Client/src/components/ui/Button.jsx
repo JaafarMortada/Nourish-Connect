@@ -4,7 +4,7 @@ const PrimaryButton = ({ classNames, label, onClick, disabled=false, variant }) 
     return (
         <Button
             variant={variant}
-            className={classNames}
+            className={`flex justify-center items-center ${classNames}`}
             onClick={onClick}
             disabled={disabled}
         >

@@ -113,10 +113,10 @@ const Sidebar = () => {
                             <ListItemPrefix>
                                 <Avatar
                                     src={store.pic_url ? `${baseStorageURL}${store.pic_url}` : default_profile_pic}
-                                    className="h-12 w-12 p-0.5 bg-[--primary]"
+                                    className="min-h-12 min-w-12 max-h-12 max-w-12 p-0.5 bg-[--primary]"
                                 />
                             </ListItemPrefix>
-                            <div className="max-w-[150px] truncate">
+                            <div className="max-w-[125px] truncate">
                                 <span className="text-[21px]">{store.username}</span>
                                 <br />
                                 <span className="text-[16px]">{store.company_name}</span>

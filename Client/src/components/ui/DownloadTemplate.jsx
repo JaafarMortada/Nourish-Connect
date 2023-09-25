@@ -10,7 +10,7 @@ const DownloadTemplate = ({ path, fileName }) => {
         >
             <PrimaryButton
                 label={"Download Template"}
-                classNames={`max-h-[40px] flex justify-center items-center w-[200px] bg-[--primary]`}
+                classNames={`max-h-[40px] flex justify-center items-center min-w-[200px] bg-[--primary]`}
 
             />
         </a>

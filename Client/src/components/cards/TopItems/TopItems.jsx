@@ -66,7 +66,7 @@ const TopItems = () => {
     }, [store])
     return (
         <Card
-            className={` md:h-full max-h-fit md:w-[58%] w-[500px] ${loading ? "justify-center items-center" : ""}`}
+            className={`md:max-h-[455px] h-full  md:w-[69%] flex justify-between gap-x-5 w-[500px] ${loading ? "justify-center items-center" : ""}`}
         >
             <CardHeader floated={false} shadow={false} className="rounded-none flex justify-between items-center min-w-[95%]">
 
@@ -89,12 +89,12 @@ const TopItems = () => {
 
             </CardHeader>
 
-            <CardBody className="overflow-scroll px-5 flex-1 md:flex-row flex-col-reverse md:gap-0 gap-5 flex items-center">
+            <CardBody className="[&>div]:flex [&>div]:items-center [&>div]:justify-center max-h-full overflow-scroll px-5 flex-1 md:flex-row flex-col-reverse gap-5 flex justify-between items-center">
                 {loading ? <Spinner className="w-20 h-20 pt-3" /> :
                     topFiveItemsData.length === 0 ? <span className="w-full text-center">No data found</span> :
                         <>
                             <div className="md:min-w-[45%] min-w-[90%] z-10">
-                                <table className="w-full min-w-max table-auto text-left">
+                                <table className="w-full text-left ml-3">
                                     <thead>
                                         <tr>
                                             {TABLE_HEAD.map((head) => (
@@ -113,17 +113,17 @@ const TopItems = () => {
                                     <tbody>
                                         {topFiveItemsData.map(({ item_name, quantity_sold, sold_value }, index) => (
                                             <tr key={item_name} className="even:bg-blue-gray-50">
-                                                <td className="p-4">
-                                                    <Typography variant="small" color="blue-gray" className="font-normal">
+                                                <td className="p-2">
+                                                    <Typography variant="small" color="blue-gray" className="font-normal max-w-[120px] truncate">
                                                         {item_name}
                                                     </Typography>
                                                 </td>
-                                                <td className="p-4">
+                                                <td className="p-2">
                                                     <Typography variant="small" color="blue-gray" className="font-normal">
                                                         {quantity_sold}
                                                     </Typography>
                                                 </td>
-                                                <td className="p-4">
+                                                <td className="p-2">
                                                     <Typography variant="small" color="blue-gray" className="font-normal">
                                                         {sold_value} $
                                                     </Typography>
