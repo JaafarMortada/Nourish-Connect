@@ -37,7 +37,7 @@ const FileDragInput = (
             />
             <Dropzone onDrop={handleDrop}>
                 {({ getRootProps, getInputProps }) => (
-                    <section className=" rounded-lg flex cursor-pointer">
+                    <section className=" rounded-lg flex cursor-pointer lg:w-[250px] w-[180px]">
                         <div {...getRootProps()} className={`lg:w-[250px] w-[180px] h-[120px] border-2 border-[--primary] rounded-lg flex flex-col items-center justify-center gap-3 ${classNames}`}>
                             <input
                                 {...getInputProps()}
@@ -47,10 +47,10 @@ const FileDragInput = (
                                 showIcon && !file ? <ArrowUpTrayIcon className="w-10 h-10 text-[--primary]" /> : null
 
                             }
-                            <div className='text-center'>
-                                {file ? <span className="text-[16px] font-bold text-[--primary]">{file && file.name} </span> :
+                            <div className='text-center max-w-[90%] truncate'>
+                                {file ? <span className="text-[16px] font-bold text-[--primary] max-w-[125px] ">{file && file.name} </span> :
                                 <>
-                                    <span className="text-[16px] font-bold text-[--primary]">{label ? label : 'Choose a file.'} </span>
+                                    <span className="text-[16px] font-bold text-[--primary]">{label ? label : 'Choose a file.'} <br/></span>
                                     <span className="text-[16px] text-[--primary]">Or Drag it here.</span>
                                 </>
                                     
