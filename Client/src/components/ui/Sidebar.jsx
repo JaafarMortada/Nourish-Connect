@@ -60,7 +60,7 @@ const Sidebar = () => {
                 navigate(`/`)
             }
         } catch (error) {
-            console.log(error);
+            
         }
     }
 

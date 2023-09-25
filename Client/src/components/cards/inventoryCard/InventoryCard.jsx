@@ -88,7 +88,7 @@ const InventoryCard = () => {
         body: formData,
 
       });
-      console.log('123')
+
       if (response.message === "Item added successfully") {
         setData({
           name: "",

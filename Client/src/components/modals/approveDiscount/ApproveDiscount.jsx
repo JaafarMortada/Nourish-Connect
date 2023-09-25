@@ -55,7 +55,7 @@ const ApproveDiscount = ({ open, handleOpen, data, removeApproved }) => {
                 handleError()
             }
         } catch (error) {
-            console.log(error);
+            
             handleError()
         }
     }
@@ -96,7 +96,7 @@ const ApproveDiscount = ({ open, handleOpen, data, removeApproved }) => {
                         <span className="font-bold">Quantity left: </span> {data.available_quantity} out of {data.initial_quantity}
                     </li>
                     <li className="truncate">
-                        <span className="font-bold">Suggested discount percentage: </span> {data.suggested_discount_percentage}
+                        <span className="font-bold">Suggested discount percentage: </span> {parseFloat(data.suggested_discount_percentage)*100}%
                     </li>
                     <li className="truncate">
                         <span className="font-bold">Discount valid until: </span> {moment(data.suggested_end_date).format('L')} <span>(Two days before expiry date)</span>

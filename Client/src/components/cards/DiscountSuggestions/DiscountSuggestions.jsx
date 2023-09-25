@@ -36,7 +36,6 @@ const DiscountSuggestions = () => {
                 setLoading(false)
             }
         } catch (error) {
-            console.log(error);
             setLoading(false)
         }
     }
@@ -54,7 +53,7 @@ const DiscountSuggestions = () => {
                 setLoading(false)
             }
         } catch (error) {
-            console.log(error);
+            
         }
     }
 

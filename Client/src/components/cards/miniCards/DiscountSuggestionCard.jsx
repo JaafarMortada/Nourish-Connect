@@ -29,7 +29,7 @@ const DiscountSuggestionCard = ({ data, removeApproved }) => {
                             <span className="font-bold">Item: </span> {data.item_name}
                         </li>
                         <li className="truncate">
-                            <span className="font-bold">Suggested discount percentage: </span> {data.suggested_discount_percentage}
+                            <span className="font-bold">Suggested percentage: </span> {parseFloat(data.suggested_discount_percentage)*100}%
                         </li>
                         <li className="truncate">
                             <span className="font-bold">Discount valid until: </span> {moment(data.suggested_end_date).format('L')}

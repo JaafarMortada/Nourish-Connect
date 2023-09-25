@@ -13,18 +13,18 @@ const PieChart = ({ data, sortBy = 'quantity_sold' }) => {
   return (
     <ResponsivePie
       data={pieData}
-      margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+      margin={{ top: 40, right: 0, bottom: 80, left: 0 }}
       innerRadius={0.5}
-      padAngle={0.7}
+      padAngle={0}
       cornerRadius={3}
-      activeOuterRadiusOffset={8}
+      activeOuterRadiusOffset={2}
       borderWidth={1}
       borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
-      arcLinkLabelsSkipAngle={10}
+      arcLinkLabelsSkipAngle={25}
       arcLinkLabelsTextColor="#333333"
-      arcLinkLabelsThickness={2}
+      arcLinkLabelsThickness={3}
       arcLinkLabelsColor={{ from: "color" }}
-      arcLabelsSkipAngle={10}
+      arcLabelsSkipAngle={25}
       arcLabelsTextColor={{ from: "color", modifiers: [["darker", 2]] }}
     />
   )

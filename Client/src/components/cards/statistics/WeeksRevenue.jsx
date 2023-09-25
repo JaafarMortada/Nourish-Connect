@@ -28,7 +28,7 @@ const WeeksRevenue = () => {
                 setLoading(false)
             }
         } catch (error) {
-            console.log(error);
+            
 
         }
     }

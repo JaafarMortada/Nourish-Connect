@@ -41,29 +41,26 @@ const ProfileOverview = ({ open, handleOpen }) => {
         }
     };
 
-    useEffect(() => {
-        const getProfile = async () => {
-            try {
-                const response = await sendRequest({
-                    method: "GET",
-                    route: "/api/manager_charity/profile/get_profile",
-                    token: store.token,
-                });
-                if (response.message === "success") {
-                    setProfileData(response.profile);
-                    if (response.profile.pic_url) {
-                        setExistingLogo(`http://127.0.0.1:8000/storage/${response.profile.pic_url}`)
-                    }
-                    setLoading(false)
-                } else if (response.message === "Unauthorized") {
-                    // setIsUnauthorized(true)
+    const getProfile = async () => {
+        try {
+            const response = await sendRequest({
+                method: "GET",
+                route: "/api/manager_charity/profile/get_profile",
+                token: store.token,
+            });
+            if (response.message === "success") {
+                setProfileData(response.profile);
+                if (response.profile.pic_url) {
+                    setExistingLogo(`http://127.0.0.1:8000/storage/${response.profile.pic_url}`)
                 }
-            } catch (error) {
-                console.log(error);
-                // setIsUnauthorized(true)
-
+                setLoading(false)
             }
+        } catch (error) {
+
         }
+    }
+    
+    useEffect(() => {
         if(store.usertype !== "cashier" && store.usertype !== '') getProfile()
     }, [])
 

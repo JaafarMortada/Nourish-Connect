@@ -41,7 +41,7 @@ const TopItems = () => {
                 setLoading(false)
             }
         } catch (error) {
-            console.log(error);
+
             setLoading(false)
         }
     }
@@ -96,7 +96,7 @@ const TopItems = () => {
                 {loading ? <Spinner className="w-20 h-20 pt-3" /> :
                     topFiveItemsData.length === 0 ? <span className="w-full text-center">No data found</span> :
                         <>
-                            <div className="md:min-w-[45%] min-w-[90%]">
+                            <div className="md:min-w-[45%] min-w-[90%] z-10">
                                 <table className="w-full min-w-max table-auto text-left">
                                     <thead>
                                         <tr>
@@ -115,7 +115,7 @@ const TopItems = () => {
                                     </thead>
                                     <tbody>
                                         {topFiveItemsData.map(({ item_name, quantity_sold, sold_value }, index) => (
-                                            <tr key={item_name} className="even:bg-blue-gray-50/50">
+                                            <tr key={item_name} className="even:bg-blue-gray-50">
                                                 <td className="p-4">
                                                     <Typography variant="small" color="blue-gray" className="font-normal">
                                                         {item_name}

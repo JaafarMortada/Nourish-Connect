@@ -54,7 +54,7 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
                 handleError()
             }
         } catch (error) {
-            console.log(error);
+            
             handleError()
         }
     }

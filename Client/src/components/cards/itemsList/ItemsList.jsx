@@ -55,7 +55,7 @@ const ItemsList = ({ setCheckoutItems }) => {
         setLoading(false)
       }
     } catch (error) {
-      console.log(error);
+      
       setLoading(false)
     }
   }

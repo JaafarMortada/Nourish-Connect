@@ -36,7 +36,7 @@ const DonationsSuggestions = () => {
                 setLoading(false)
             }
         } catch (error) {
-            console.log(error);
+            
             setLoading(false)
         }
     }
@@ -54,7 +54,7 @@ const DonationsSuggestions = () => {
                 setLoading(false)
             }
         } catch (error) {
-            console.log(error);
+            
         }
     }
 

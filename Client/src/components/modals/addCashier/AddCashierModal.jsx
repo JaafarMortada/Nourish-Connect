@@ -108,7 +108,7 @@ const AddCashierModal = ({ open, handleOpen, handleNewCashier }) => {
         >
             <DialogHeader>Create a new cashier account</DialogHeader>
             <DialogBody divider className="overflow-scroll flex flex-wrap justify-center  gap-10">
-                <div className="flex gap-10 ">
+                <div className="flex gap-10 w-full justify-center">
                     <div className="w-[200px]">
                         <InputField
                             label={"Username"}
@@ -127,7 +127,7 @@ const AddCashierModal = ({ open, handleOpen, handleNewCashier }) => {
                         />
                     </div>
                 </div>
-                <div className="flex gap-10 ">
+                <div className="flex gap-10 w-full justify-center">
                     <div className="w-[200px]">
                         <InputField type={"password"}
                             label={"Password"}
