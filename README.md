@@ -62,7 +62,7 @@
 ### Auth Screens (Web)
 | Sign up | Sign in |  
 | ---| ---| 
-| ![dashboard](./readme/demo/1440x1024.png) | ![cashiers](./readme/demo/1440x1024.png) |
+| ![dashboard](/readme/gifs/signup.gif) | ![cashiers](/readme/gifs/signin.gif) |
 ### Manager Screens (Web)
 | Dashboard  | Cashiers screen |  
 | ---| ---| 
