@@ -17,6 +17,11 @@ import shoppingBag from './SVGs/shoppingBag.svg'
 import testimonial1 from './images/testimonial-1.jpg'
 import testimonial2 from './images/testimonial-2.jpg'
 import testimonial3 from './images/testimonial-3.png'
+import bg1 from './images/bg1.png'
+import bg2 from './images/bg2.png'
+import bg3 from './images/bg3.png'
+import bg4 from './images/bg4.png'
+
 export {
     logoBlack,
     logoWhite,
@@ -37,5 +42,9 @@ export {
     testimonial1,
     testimonial2,
     testimonial3,
+    bg1,
+    bg2,
+    bg3,
+    bg4,
 
 }

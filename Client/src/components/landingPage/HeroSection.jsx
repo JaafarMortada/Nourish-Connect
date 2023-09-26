@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react"
 import { foodWasteFacts } from "../../constants";
 import Typed from 'typed.js';
 import CTA from "./CTA";
+import ChangingBackground from "./ChangingBackgound";
 
 const HeroSection = () => {
 
@@ -46,7 +47,8 @@ const HeroSection = () => {
                 </div>
             </div>
 
-            <div className="flex-1 flex justify-center items-start flex-col md:pb-0 pb-10 xl:px-2 sm:px-16 px-6 bg-[--primary] ">
+            <div className="flex-1 flex justify-center items-start flex-col md:pb-0 pb-10 xl:px-2 sm:px-16 px-6 bg-[--primary] relative">
+                {/* <ChangingBackground /> */}
                 <h1 className="font-semibold ss:text-[72px] text-[52px] text-[--primary] ss:leading-[100px] leading-[75px] mt-20 text-white">
                     Did You Know?
                 </h1>
