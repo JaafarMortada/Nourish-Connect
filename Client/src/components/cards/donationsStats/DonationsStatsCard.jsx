@@ -19,7 +19,7 @@ const DonationsStatsCard = () => {
         try {
             const response = await sendRequest({
                 method: "GET",
-                route: `/api/manager/get_donations_stats/`,
+                route: `/api/manager/get_donations_stats`,
             });
             if (response.message === 'success') {
                 setStats(Object.entries(response.stats))

@@ -45,7 +45,7 @@ const ItemsList = ({ setCheckoutItems }) => {
     try {
       const response = await sendRequest({
         method: "GET",
-        route: `/api/cashier/items/get_items/${debouncedSearchTerm}`,
+        route: `/api/cashier/items/get_items${debouncedSearchTerm.length > 0 ? `/${debouncedSearchTerm}` : ''}` ,
         token: store.token,
       });
       if (response.item) {
