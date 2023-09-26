@@ -159,7 +159,7 @@ const DonationsOverviewTable = ({ newRequests }) => {
                                                         className="font-normal"
                                                     >
                                                         {
-                                                            donated_by.length === 0 ? null :
+                                                            donated_by.length === 0 ? '' :
                                                                 donated_by.length === 1 ?
                                                                     donated_by[0] :
                                                                     <Tooltip className="bg-[--primary]" content={

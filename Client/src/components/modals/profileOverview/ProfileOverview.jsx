@@ -1,23 +1,19 @@
 import {
-    Card,
-    CardBody,
     Avatar,
     Spinner,
     Dialog,
     DialogHeader,
     DialogBody,
     Typography,
-    DialogFooter,
 } from "@material-tailwind/react";
 import { BiSolidDonateHeart } from 'react-icons/bi'
-import { EnvelopeIcon, MapPinIcon } from "@heroicons/react/24/solid";
+import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { useStoreData } from "../../../global/store";
 import { sendRequest } from "../../../config/request";
 import PrimaryButton from "../../ui/Button";
 import { default_profile_pic } from "../../../assets";
 import UserInfoCard from "../../cards/miniCards/UserInfoCard";
-import InputField from "../../ui/Input";
 import Unauthorized from "../../../Pages/Unauthorized";
 import Map from "../../map/Map";
 import { baseStorageURL } from "../../../constants";
@@ -163,7 +159,7 @@ const ProfileOverview = ({ open, handleOpen }) => {
                                         {profileData.username}
                                     </Typography>
                                     <Typography variant="h5" color="gray" className="font-normal ">
-                                        {`${store.usertype === 'manager' ? "Manager" : store.usertype === 'charity' ? 'Coordinator' : ''}`} at a {profileData.company_name}
+                                        {`${store.usertype === 'manager' ? "Manager" : store.usertype === 'charity' ? 'Coordinator' : ''}`} at {profileData.company_name}
                                     </Typography>
                                 </div>
                                 <div className="flex h-full lg:flex-row flex-col ">
@@ -173,12 +169,6 @@ const ProfileOverview = ({ open, handleOpen }) => {
                                             title={"Email"}
                                             info={[profileData.email]}
                                         />
-
-                                        {/* <UserInfoCard
-                                            icon={<MapPinIcon />}
-                                            title={"Location"}
-                                            info={[`Latitude: ${profileData.latitude}`, `longitude: ${profileData.longitude}`]}
-                                        /> */}
                                         <UserInfoCard
                                             icon={<BiSolidDonateHeart className="w-8 h-8" />}
                                             title={"Donations"}
@@ -200,9 +190,6 @@ const ProfileOverview = ({ open, handleOpen }) => {
                                     />
                                 </div>
                             </div>
-                            {/* <div className="h-[500px] w-[500px]">
-                                <Map profile={profileData} zoomCenter={[profileData.latitude, profileData.longitude]} />
-                            </div> */}
 
                         </DialogBody>}
                 </Dialog>

@@ -113,17 +113,17 @@ const TopItems = () => {
                                     <tbody>
                                         {topFiveItemsData.map(({ item_name, quantity_sold, sold_value }, index) => (
                                             <tr key={item_name} className="even:bg-blue-gray-50">
-                                                <td className="p-2">
+                                                <td className="p-4">
                                                     <Typography variant="small" color="blue-gray" className="font-normal max-w-[120px] truncate">
                                                         {item_name}
                                                     </Typography>
                                                 </td>
-                                                <td className="p-2">
+                                                <td className="p-4">
                                                     <Typography variant="small" color="blue-gray" className="font-normal">
                                                         {quantity_sold}
                                                     </Typography>
                                                 </td>
-                                                <td className="p-2">
+                                                <td className="p-4">
                                                     <Typography variant="small" color="blue-gray" className="font-normal">
                                                         {sold_value} $
                                                     </Typography>
