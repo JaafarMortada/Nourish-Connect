@@ -217,6 +217,14 @@ export const foodWasteFacts = [
     "A modest reduction of just 25% in food waste could provide enough food to feed the entire global population. This reduction would not only help address hunger but also make a significant impact on waste-related challenges."
 ];
 
+export const loadingSuggestionsText = [
+    "Retrieving data...",
+    "Transmitting data to AI...",
+    "The AI is thinking...",
+    "Give it one more second...",
+
+]
+
 export const features = [
     {
         icon: gpt,

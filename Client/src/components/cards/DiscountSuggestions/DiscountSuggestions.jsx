@@ -7,14 +7,17 @@ import {
 
 } from "@material-tailwind/react";
 import PrimaryButton from "../../ui/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { sendRequest } from "../../../config/request";
 import DiscountSuggestionCard from "../miniCards/DiscountSuggestionCard";
+import { loadingSuggestionsText } from "../../../constants";
+import Typed from 'typed.js';
 
 const DiscountSuggestions = () => {
 
     const [suggestionsData, setSuggestionsData] = useState([])
     const [loading, setLoading] = useState(true)
+    const [loadingSuggestions, setLoadingSuggestions] = useState(true)
 
     const removeApprovedSuggestion = (suggestionId) => {
         const updatedSuggestions = suggestionsData.filter(
@@ -32,6 +35,8 @@ const DiscountSuggestions = () => {
             if (response.message === "success") {
                 setSuggestionsData(response.discount_suggestions);
                 setLoading(false)
+                setLoadingSuggestions(false)
+
             } 
         } catch (error) {
             
@@ -39,7 +44,7 @@ const DiscountSuggestions = () => {
     }
 
     const generateSuggestions = async () => {
-        setLoading(true)
+        setLoadingSuggestions(true)
         try {
             const response = await sendRequest({
                 method: "GET",
@@ -49,15 +54,40 @@ const DiscountSuggestions = () => {
                 getDiscountsSuggestions()
             } else {
                 setLoading(false)
+                setLoadingSuggestions(false)
             }
         } catch (error) {
-            
+            setLoadingSuggestions(false)
         }
     }
 
     useEffect(() => {
         getDiscountsSuggestions()
     }, [])
+
+    const loadingRef = useRef(null)
+    useEffect(() => {
+        const options = {
+            strings: loadingSuggestionsText,
+            typeSpeed: 25,
+            backSpeed: 0,
+            bindInputFocusEvents: true,
+            loop: false,
+            cursorChar: '<span class="typed-cursor"></span>',
+            backDelay: 4500,
+            startDelay: 0,
+
+        };
+
+        if (loadingRef.current) {
+            const typed = new Typed(loadingRef.current, options);
+
+            return () => {
+                typed.destroy();
+            };
+        }
+    }, [loadingSuggestions]);
+
 
     return (
         <>
@@ -74,7 +104,15 @@ const DiscountSuggestions = () => {
                 </CardHeader>}
 
                 {
-                    loading ? <Spinner className="w-20 h-20" /> :
+                    loadingSuggestions ? 
+                    <div className=" flex flex-col min-h-full m-auto items-center justify-center gap-5 min-w-[500px]">
+                        <Spinner className="w-20 h-20" /> 
+                        <p ref={loadingRef} className="font-normal text-black min-h-[20px] text-[16px]"> </p>
+                    </div>
+                    :
+                    
+                    loading ? <Spinner className="w-20 h-20" /> 
+                    : 
                         suggestionsData.length === 0
                             ?
                             <div className="flex flex-1 h-full justify-center items-center">
