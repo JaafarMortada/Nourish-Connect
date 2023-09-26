@@ -1,10 +1,27 @@
 import { DonationsOverviewTable, PrimaryButton, RequestDonation, Sidebar } from "../../components"
 import { styles } from "../../constants"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const CharityDonations = () => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const [newRequests, setNewRequest] = useState([])
+  const handleAddedRequest = (newData) => {
+    setNewRequest((prevRequests) => [
+      {
+        title: newData.title,
+        category: newData.category,
+        requested_quantity: newData.quantity,
+        received_quantity: 0,
+        donated_by: [],
+        status: false,
+
+      },
+      ...prevRequests,
+      
+    ])
+  }
+
   return (
     <>
       <div className="flex ">
@@ -23,8 +40,8 @@ const CharityDonations = () => {
 
           </div>
         
-            <RequestDonation open={open} handleOpen={handleOpen}/>
-            <DonationsOverviewTable />
+            <RequestDonation open={open} handleOpen={handleOpen} handleNewRequest={handleAddedRequest}/>
+            <DonationsOverviewTable newRequests={newRequests}/>
        
 
         </div>

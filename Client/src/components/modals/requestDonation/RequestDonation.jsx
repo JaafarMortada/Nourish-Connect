@@ -15,7 +15,7 @@ import { useState } from "react";
 import { sendRequest } from "../../../config/request";
 import { useStoreData } from "../../../global/store";
 
-const RequestDonation = ({open, handleOpen}) => {
+const RequestDonation = ({open, handleOpen, handleNewRequest}) => {
 
     const [data, setData] = useState({
         title: "",
@@ -51,12 +51,14 @@ const RequestDonation = ({open, handleOpen}) => {
 
             });
             if (response.message === "success") {
+                handleNewRequest(response.donationRequest)
                 setData({
-                    name: "",
+                    title: "",
                     description: "",
                     quantity: "",
                     category: "",
                 })
+                
             } else {
                 handleError()
             }

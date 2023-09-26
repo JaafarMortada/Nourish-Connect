@@ -15,11 +15,17 @@ import { usePusher } from "../../../global/PusherContext";
 
 const TABLE_HEAD = ["Title", "Category", "Quantity", "Donated By", "Status"];
 
-const DonationsOverviewTable = () => {
+const DonationsOverviewTable = ({ newRequests }) => {
 
     const { store } = useStoreData()
 
     const [donationsData, setDonationsData] = useState([])
+    const [newDonationsData, setNewDonationsData] = useState([])
+
+    useEffect(() => {
+        setNewDonationsData(newRequests);
+    }, [newRequests]);
+
     const [loading, setLoading] = useState(true);
 
     const getDonations = async () => {
@@ -104,7 +110,7 @@ const DonationsOverviewTable = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {donationsData.map(
+                                {[...newDonationsData, ...donationsData].map(
                                     ({ title, category, requested_quantity, received_quantity, donated_by, status }, index) => {
                                         const isLast = index === donationsData.length - 1;
                                         const classes = isLast
