@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         $endDate = Carbon::now();
-        $startDate = $endDate->copy()->subDays(6);
+        $startDate = $endDate->copy()->subDays(7);
 
         $carts = $user->inventories[0]->carts
             ->where('created_at', '>=', $startDate)
@@ -21,15 +21,16 @@ class DashboardController extends Controller
             ->sortBy('created_at');
         $weekData = [];
 
-        for ($i = 0; $i < 7; $i++) {
+        for ($i = 0; $i < 8; $i++) {
             $dayOfWeek = $startDate->format('l');
 
             $cartsForDay = $carts
                 ->where('created_at', '>=', $startDate->startOfDay())
                 ->where('created_at', '<', $startDate->copy()->endOfDay())
                 ->values();
-
+            
             $revenueForDay = $cartsForDay->sum(function ($cart) {
+                // dd($cart);
                 return  $cart->items->sum(function ($item) {
                     return $item->price * $item->pivot->quantity;
                 });
@@ -42,10 +43,10 @@ class DashboardController extends Controller
 
             $startDate->addDay();
         }
-
+        array_shift($weekData);
         return response()->json([
             'message' => 'success',
-            'weekData' => $weekData
+            'weekData' => $weekData,
         ], 200);
     }
 
