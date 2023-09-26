@@ -1,2 +1,5 @@
-*
 !.gitignore
+!.excel_templates/
+/itemsImages/
+/profilePictures/
+/excel/
