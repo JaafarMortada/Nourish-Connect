@@ -12,9 +12,12 @@ const PointOfSales = () => {
   const { store, setStoreData } = useStoreData()
   const [error, setError] = useState(false)
   const handleAddToCheckout = (data) => {
-    const uniqueId = uuidv4();
-    const dataWithAutoId = { ...data, unique_id: uniqueId, quantityToCheckout: 1 };
-    setCheckoutItems([...checkoutItems, dataWithAutoId])
+    const existingItem = checkoutItems.find(item => item.id === data.id);
+    if (!existingItem) {
+      const uniqueId = uuidv4();
+      const dataWithAutoId = { ...data, unique_id: uniqueId, quantityToCheckout: 1 };
+      setCheckoutItems([...checkoutItems, dataWithAutoId])
+    }
   }
 
   const handleQuantity = (data, action) => {
@@ -89,13 +92,13 @@ const PointOfSales = () => {
         <div className={styles.pageContainer}>
           <div className={`${styles.pageHeaderText} `}>
             Point Of Sales
-            <PrimaryButton 
+            <PrimaryButton
               label={'Upload File'}
               classNames={"bg-[--primary]"}
               onClick={handleOpen}
-              />
+            />
           </div>
-          <UploadSalesData open={open} handleOpen={handleOpen}/>
+          <UploadSalesData open={open} handleOpen={handleOpen} />
           <div className="w-full min-h-[85%] flex justify-center">
             <div className="flex flex-col gap-5 w-[70%] min-h-[full] ">
               <ItemsList setCheckoutItems={handleAddToCheckout} />

@@ -8,8 +8,10 @@ const CheckoutItemCard = ({ data, removeFromCart, handleQuantity }) => {
     const [quantity, setQuantity] = useState(data.quantityToCheckout)
 
     const increment = () => {
-        setQuantity(prev => prev + 1)
-        handleQuantity(data, "increment")
+        if (quantity < data.available_quantity) {
+            setQuantity(prev => prev + 1)
+            handleQuantity(data, "increment")
+        }
     }
     const decrement = () => {
         setQuantity(prev => prev - 1)
@@ -29,7 +31,7 @@ const CheckoutItemCard = ({ data, removeFromCart, handleQuantity }) => {
                     <span className="text-[--text-black] text-[21px] truncate w-[110px]">{data.name}</span>
                 </Tooltip>
                 <span className="text-gray-700 text-[16px]">{data.price.toFixed(2)} $</span>
-                <div className="w-full flex pt-2 justify-between items-center">
+                <div className={`w-full flex pt-2 items-center ${quantity < data.available_quantity ? 'justify-between' : ' gap-3'}`}>
                     <Tooltip className="bg-[--primary]" content={'Remove 1'}>
                         <MinusCircleIcon
                             className="w-[30px] h-[30px] text-[--primary] hover:scale-[1.2] transition-all cursor-pointer"
@@ -40,7 +42,7 @@ const CheckoutItemCard = ({ data, removeFromCart, handleQuantity }) => {
 
                     <Tooltip className="bg-[--primary]" content={'Add 1'}>
                         <PlusCircleIcon
-                            className="w-[30px] h-[30px] text-[--primary] hover:scale-[1.2] transition-all cursor-pointer"
+                            className={`w-[30px] h-[30px] text-[--primary] hover:scale-[1.2] transition-all cursor-pointer ${quantity < data.available_quantity ? '' : 'hidden'}`}
                             onClick={increment}
                         />
                     </Tooltip>
