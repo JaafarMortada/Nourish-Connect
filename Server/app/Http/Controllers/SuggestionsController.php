@@ -111,7 +111,9 @@ class SuggestionsController extends Controller
             })->toArray();
         })->filter(function ($suggestion) {
             return !empty($suggestion);
-        })->flatten(1);
+        })->flatten(1)->reject(function ($suggestion) {
+            return $suggestion['available_quantity'] == 0;
+        });
         return response()->json([
             'message' => 'success',
             'discount_suggestions' => $discountsSuggestionsData->sortByDesc('created_at')->values(),
