@@ -98,7 +98,12 @@ const LoginForm = () => {
                 <span className="text-[21px] text-[--text-black] ">
                     Sign in to
                 </span>
-                <img src={logoBlack} className="w-[50%] cursor-pointer" onClick={()=>navigate('/')}/>
+                <img 
+                    src={logoBlack} 
+                    className="w-[50%] cursor-pointer" 
+                    onClick={()=>navigate('/')}
+                    alt="Nourish Connect Logo"
+                />
                 <span className="text-[16px] text-gray-700">
                     To help the word and reduce food waste
                 </span>

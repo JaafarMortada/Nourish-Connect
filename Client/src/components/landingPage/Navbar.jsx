@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className='w-full flex py-6 md:justify-between justify-center bg-[--background] items-center border-b-2 border-gray-200'>
-      <img src={logoBlack} alt='nourish connect' className='' />
+      <img src={logoBlack} alt='Nourish Connect Logo' className='' />
       <ul className='list-none sm:flex hidden justify-end items-center flex-1'>
         {navLinks.map((navLink, index) => (
           <li

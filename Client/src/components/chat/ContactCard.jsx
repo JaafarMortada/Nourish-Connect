@@ -9,7 +9,10 @@ const ContactCard = ({ headerCard = false, data, handleContactClick }) => {
             onClick={() => {
                 if(!headerCard) handleContactClick(data.id, data)
             }}>
-            <Avatar src={data && data.pic_url ? `${baseStorageURL}${data.pic_url}` : default_profile_pic} alt="avatar" />
+            <Avatar 
+                src={data && data.pic_url ? `${baseStorageURL}${data.pic_url}` : default_profile_pic} 
+                alt={`${data.company_name}'s profile picture`} 
+            />
             <div className={`flex flex-1 py-4 flex-col justify-center ${headerCard ? "" : "border-b-[1px] border-gray-700 "}`}>
                 <span className={`text-[--text-gray] ${headerCard ? "text-[27px] max-w-[400px]" : "text-[21px] max-w-[200px]"}]  truncate font-bold `}>{data && data.company_name}</span>
                 {/* {

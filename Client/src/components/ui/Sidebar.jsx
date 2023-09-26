@@ -70,7 +70,7 @@ const Sidebar = () => {
             <ProfileOverview open={openProfile} handleOpen={handleOpenProfile} />
             <Card className="h-[100vh] rounded-none w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 bg-[--background-black] overflow-auto">
                 <div className="mb-2 p-4">
-                    <img src={logoWhite} />
+                    <img src={logoWhite} alt="Nourish Connect Logo"/>
                 </div>
                 <hr className="my-2 border-[--text-gray]" />
                 <List>
@@ -114,6 +114,7 @@ const Sidebar = () => {
                                 <Avatar
                                     src={store.pic_url ? `${baseStorageURL}${store.pic_url}` : default_profile_pic}
                                     className="min-h-12 min-w-12 max-h-12 max-w-12 p-0.5 bg-[--primary]"
+                                    alt={`${store.username}'s profile picture`}
                                 />
                             </ListItemPrefix>
                             <div className="max-w-[125px] truncate">

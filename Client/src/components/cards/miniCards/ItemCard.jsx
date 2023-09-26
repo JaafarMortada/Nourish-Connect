@@ -8,6 +8,7 @@ const ItemCard = ({ data, setCheckoutItems }) => {
             <img
                 src={data.pic_url ? `${baseStorageURL}${data.pic_url}` : notFound}
                 className="w-10  h-10 mx-2 rounded-md bg-[--accent]"
+                alt={`${data.name} picture`}
             />
             <div className="flex flex-col ">
                 <Tooltip content={data.name} className="bg-[--primary]">
