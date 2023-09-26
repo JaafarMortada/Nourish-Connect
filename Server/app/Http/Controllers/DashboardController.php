@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
             $cartsForDay = $carts
                 ->where('created_at', '>=', $startDate->startOfDay())
-                ->where('created_at', '<', $startDate->copy()->addDay()->endOfDay())
+                ->where('created_at', '<', $startDate->copy()->endOfDay())
                 ->values();
 
             $revenueForDay = $cartsForDay->sum(function ($cart) {
