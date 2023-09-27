@@ -90,7 +90,7 @@ const TopItems = () => {
             </CardHeader>
 
             <CardBody className="[&>div]:flex [&>div]:items-center [&>div]:justify-center max-h-full overflow-scroll px-5 flex-1 md:flex-row flex-col-reverse gap-5 flex justify-between items-center">
-                {loading ? <Spinner className="w-20 h-20 pt-3" /> :
+                {loading ? <Spinner className="w-20 h-20" /> :
                     topFiveItemsData.length === 0 ? <span className="w-full text-center">No data found</span> :
                         <>
                             <div className="md:min-w-[45%] min-w-[90%] z-10">

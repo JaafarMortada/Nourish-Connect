@@ -113,7 +113,7 @@ const ItemsList = ({ setCheckoutItems }) => {
         </div>
         :
         <CardBody className={`overflow-scroll flex flex-wrap gap-x-10 gap-y-5 flex-1 ${loading ? "h-full justify-center items-center" : "justify-around"}`}>
-          {loading ? <Spinner className="w-20 h-20 pt-3" />
+          {loading ? <Spinner className="w-20 h-20" />
             :
             itemsData.map((item) => (
               <ItemCard

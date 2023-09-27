@@ -47,7 +47,7 @@ const DonationsStatsCard = () => {
             </CardHeader>
             {loading ? 
             <div className="w-full h-full flex items-center justify-center">
-                <Spinner className="w-20 h-20 pt-3" />
+                <Spinner className="w-20 h-20" />
             </div> 
             : <CardBody className="overflow-hidden px-5 flex-1 flex md:flex-row flex-col justify-around items-center md:gap-0 gap-10 ">
                     {

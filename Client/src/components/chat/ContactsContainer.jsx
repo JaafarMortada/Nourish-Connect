@@ -82,7 +82,7 @@ const ContactsContainer = ({ setReceiverData }) => {
                         <ContactCard data={contact} key={contact.id} handleContactClick={setReceiverData} />
 
                     )) :
-                    loading ? <Spinner className="w-20 h-20 pt-3" />
+                    loading ? <Spinner className="w-20 h-20" />
                         : <span className="text-[--text-gray] text-center">You have no chats, search users and start a new chat </span>
                 }
             </div>

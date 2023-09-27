@@ -80,7 +80,7 @@ const ReceiptsTable = () => {
                 </div>
                 :
                 <CardBody className={`overflow-scroll px-0 flex-1 ${loading ? "flex w-full h-full items-center justify-center" : ""} `}>
-                    {loading ? <Spinner className="w-20 h-20 pt-3" />
+                    {loading ? <Spinner className="w-20 h-20" />
                         :
                         <table className="w-full min-w-max table-auto text-left">
                             <thead>
