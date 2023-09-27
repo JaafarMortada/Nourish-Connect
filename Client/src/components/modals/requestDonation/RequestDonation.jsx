@@ -1,11 +1,10 @@
 
 import {
-    Card,
     Dialog,
     DialogHeader,
     DialogBody,
     Typography,
-    CardBody,
+    Spinner,
 } from "@material-tailwind/react";
 
 import PrimaryButton from "../../ui/Button";
@@ -28,7 +27,7 @@ const RequestDonation = ({open, handleOpen, handleNewRequest}) => {
     const { store } = useStoreData()
 
     const [error, setError] = useState(false)
-
+    const [loading, setLoading] = useState(false)
 
     const handleDataChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
@@ -42,6 +41,7 @@ const RequestDonation = ({open, handleOpen, handleNewRequest}) => {
     }
 
     const handleSendDonationRequest = async () => {
+        setLoading(true)
         try {
             const response = await sendRequest({
                 method: "POST",
@@ -58,11 +58,14 @@ const RequestDonation = ({open, handleOpen, handleNewRequest}) => {
                     quantity: "",
                     category: "",
                 })
-                
+                handleOpen()
+                setLoading(false)
             } else {
+                setLoading(false)
                 handleError()
             }
         } catch (error) {
+            setLoading(false)
             handleError()
         }
     }
@@ -131,9 +134,10 @@ const RequestDonation = ({open, handleOpen, handleNewRequest}) => {
                     
                     <div className="flex lg:justify-end justify-center lg:w-[920px] w-[200px] max-h-[40px]">
                         <PrimaryButton
-                            label={`${error ? "An error occurred" : "Send Request"}`}
+                            label={error ? "An error occurred" : loading ? <Spinner /> : "Send Request"}
                             classNames={`w-[200px] ${error ? "bg-red-500" : "bg-[--primary]"}`}
                             onClick={handleSendDonationRequest}
+                            disabled={loading}
                         />
                     </div>
                 </div>
