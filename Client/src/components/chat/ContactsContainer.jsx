@@ -39,7 +39,6 @@ const ContactsContainer = ({ setReceiverData }) => {
                     const response = await sendRequest({
                         method: "GET",
                         route: `/api/manager_charity/chat/search_users/${store.receiver_id ? store.receiver_id : debouncedSearchTerm}`,
-                        token: store.token,
                     });
                     if (response.message === "success") {
                         if (store.receiver_id) setReceiverData(store.receiver_id, response.contactFromMap)

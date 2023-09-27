@@ -68,7 +68,6 @@ const AddCashierModal = ({ open, handleOpen, handleNewCashier }) => {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-                token: store.token,
                 body: formData,
             });
 

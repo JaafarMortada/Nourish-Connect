@@ -46,7 +46,6 @@ const ItemsList = ({ setCheckoutItems }) => {
       const response = await sendRequest({
         method: "GET",
         route: `/api/cashier/items/get_items${debouncedSearchTerm.length > 0 ? `/${debouncedSearchTerm}` : ''}` ,
-        token: store.token,
       });
       if (response.item) {
         setItemsData(response.item);

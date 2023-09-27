@@ -59,7 +59,6 @@ const PointOfSales = () => {
             'Content-Type': 'multipart/form-data',
           },
           body: formData,
-          token: store.token
         });
         if (response.message === "success") {
           setCheckoutItems([])

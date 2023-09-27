@@ -43,7 +43,6 @@ const ProfileOverview = ({ open, handleOpen }) => {
             const response = await sendRequest({
                 method: "GET",
                 route: "/api/manager_charity/profile/get_profile",
-                token: store.token,
             });
             if (response.message === "success") {
                 setProfileData(response.profile);
@@ -69,7 +68,6 @@ const ProfileOverview = ({ open, handleOpen }) => {
             const response = await sendRequest({
                 method: "POST",
                 route: "/api/manager_charity/profile/edit_profile",
-                token: store.token,
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -183,8 +181,6 @@ const ProfileOverview = ({ open, handleOpen }) => {
                                     </Typography>
                                     <Map
                                         styles={" !min-h-[250px] rounded-t-lg"}
-                                        draggable={true}
-                                        locateUser={true}
                                         zoomCenter={[profileData.latitude, profileData.longitude]}
                                         profile={profileData}
                                     />

@@ -46,7 +46,6 @@ const RequestDonation = ({open, handleOpen, handleNewRequest}) => {
             const response = await sendRequest({
                 method: "POST",
                 route: "/api/charity/request_donation",
-                token: store.token,
                 body: data,
 
             });

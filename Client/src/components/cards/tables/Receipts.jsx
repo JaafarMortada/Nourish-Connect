@@ -25,7 +25,6 @@ const ReceiptsTable = () => {
             const response = await sendRequest({
                 method: "GET",
                 route: "/api/cashier/items/get_receipts",
-                token: store.token,
 
             });
             if (response.carts) {

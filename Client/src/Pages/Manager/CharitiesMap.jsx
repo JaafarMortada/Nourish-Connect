@@ -22,7 +22,6 @@ const CharitiesMap = () => {
               const response = await sendRequest({
                   method: "GET",
                   route: "/api/manager/get_charities",
-                  token: store.token,
               });
               if(response.message === "success"){
                   setData(response.charities);

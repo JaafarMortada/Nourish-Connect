@@ -1,8 +1,4 @@
 import axios from "axios";
-import { useStoreData } from "../global/store.jsx";
-
-
-
 
 axios.defaults.baseURL = "http://127.0.0.1:8000";
 
@@ -10,7 +6,6 @@ export const sendRequest = async ({
   method = "GET",
   route,
   body,
-  token = '',
   includeHeaders = true,
 }) => {
   if (!route) throw Error("URL required");

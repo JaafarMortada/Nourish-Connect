@@ -84,7 +84,6 @@ const UploadSalesData = ({ open, handleOpen }) => {
                 mount: { scale: 1, y: 0 },
                 unmount: { scale: 0.9, y: -100 },
             }}
-        // className="overflow-scroll"
         >
             <DialogHeader className="rounded-none ">
                 <div className="mb-4 h-fit flex items-center justify-between gap-8">

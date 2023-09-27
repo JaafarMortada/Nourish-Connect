@@ -81,7 +81,6 @@ const InventoryCard = () => {
       const response = await sendRequest({
         method: "POST",
         route: "/api/cashier/items/add_item",
-        token: store.token,
         headers: {
           'Content-Type': 'multipart/form-data',
         },

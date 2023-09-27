@@ -33,7 +33,6 @@ const DonationsOverviewTable = ({ newRequests }) => {
             const response = await sendRequest({
                 method: "GET",
                 route: "/api/charity/get_requests",
-                token: store.token,
             });
             if (response.message === "success") {
                 setDonationsData(response.donations);
