@@ -59,7 +59,7 @@ const ContactsContainer = ({ setReceiverData }) => {
 
 
     return (
-        <div className='min-w-[20rem] h-full bg-[--background-black] mb-2 p-4 border-l-4 border-black flex flex-col gap-4'>
+        <div className='min-w-[20rem] max-w-[20rem] h-full bg-[--background-black] mb-2 p-4 border-l-4 border-black flex flex-col gap-4'>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
                 <Input
                     placeholder={`Search ${store.usertype === "manager" ? "charities" : "supermarkets"}`}

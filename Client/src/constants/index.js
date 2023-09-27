@@ -239,12 +239,12 @@ export const features = [
     {
         icon: shoppingBag,
         title: 'Cashier Integration',
-        description: 'Simplify cashier workflows with our integrated point-of-sale system. Cashiers easily upload inventory data through user-friendly forms or file submissions, ensuring accurate inventory management and reducing errors.',
+        description: 'Simplify cashier workflows with our integrated realtime point-of-sale system. Cashiers easily upload inventory data through user-friendly forms or file submissions, ensuring accurate inventory management and reducing errors.',
     },
     {
         icon: chart,
         title: 'Dashboard Insights',
-        description: "Access personalized dashboards presenting donation data, weekly revenue, and top products . Visual summaries empower informed decisions and track your store's positive environmental and social impact.",
+        description: "Access personalized realtime dashboard presenting donation data, weekly revenue, and top products . Visual summaries empower informed decisions and track your store's positive environmental and social impact.",
     },
     {
         icon: inbox,

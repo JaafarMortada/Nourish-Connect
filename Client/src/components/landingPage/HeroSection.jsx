@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import { foodWasteFacts } from "../../constants";
 import Typed from 'typed.js';
 import CTA from "./CTA";
-import ChangingBackground from "./ChangingBackgound";
+import ChangingBackground from "./ChangingBackground";
 
 const HeroSection = () => {
 
