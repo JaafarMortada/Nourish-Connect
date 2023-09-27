@@ -140,19 +140,11 @@ class AuthController extends Controller
                 'username' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255',
                 'image' => 'sometimes|image',
-                // 'latitude' => 'required|numeric',
-                // 'longitude' => 'required|numeric',
                 'password' => 'required|string|min:8',
             ]);
         } catch (\Throwable $e) {
             return response()->json(["message" => 'validation failed']);
         }
-
-
-        // $location = new Location;
-        // $location->latitude = $request->latitude;
-        // $location->longitude = $request->longitude;
-        // $location->save();
 
         $cashier = new User;
         $cashier->username = $request->username;

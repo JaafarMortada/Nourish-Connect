@@ -30,7 +30,6 @@ class DashboardController extends Controller
                 ->values();
             
             $revenueForDay = $cartsForDay->sum(function ($cart) {
-                // dd($cart);
                 return  $cart->items->sum(function ($item) {
                     return $item->price * $item->pivot->quantity;
                 });
