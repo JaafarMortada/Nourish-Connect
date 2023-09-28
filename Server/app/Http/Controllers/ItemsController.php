@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\File;
 
+use function Laravel\Prompts\search;
+
 class ItemsController extends Controller
 {
     public function addItem(Request $request) {
@@ -65,12 +67,22 @@ class ItemsController extends Controller
     public function getItems($search = null){
 
         $inventory_id = Auth::user()->cashiers[0]->company->inventories[0]->id;
-        $query = Item::where('inventory_id', $inventory_id)->where('available_quantity', '>', 0)
-        ->whereDate('expiry_date', '>=', now());
 
-        if ($search) {
+        if($search == "all"){
+            $query = Item::where('inventory_id', $inventory_id);
+        } else {
+            $query = Item::where('inventory_id', $inventory_id)
+            ->where('available_quantity', '>', 0)
+            ->whereDate('expiry_date', '>=', now());
+
+        }
+
+
+
+        if ($search && $search != "all") {
             $query->where(function ($innerQuery) use ($search) {
-                $innerQuery->where('name', 'like', '%' . $search . '%')
+                $innerQuery
+                    ->where('name', 'like', '%' . $search . '%')
                     ->orWhere('category', $search)
                     ->orWhere('barcode', $search);
             });
