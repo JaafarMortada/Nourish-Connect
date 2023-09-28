@@ -34,7 +34,7 @@ const CheckoutItemCard = ({ data, removeFromCart, handleQuantity }) => {
                 <Tooltip content={'item name'} className="bg-[--primary]">
                     <span className="text-[--text-black] text-[21px] truncate w-[110px]">{data.name}</span>
                 </Tooltip>
-                <span className="text-gray-700 text-[16px]">{data.price.toFixed(2)} $</span>
+                <span className="text-gray-700 text-[16px]">${data.price.toFixed(2)}</span>
                 <div className={`w-full flex pt-2 items-center ${quantity < data.available_quantity ? 'justify-between' : ' gap-3'}`}>
                     <Tooltip className="bg-[--primary]" content={'Remove 1'}>
                         <MinusCircleIcon

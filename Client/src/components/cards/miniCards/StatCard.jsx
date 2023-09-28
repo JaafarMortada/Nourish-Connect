@@ -15,7 +15,7 @@ const StatCard = ({ data }) => {
                     {data[0]}
                 </Typography>
                 <Typography variant="h2" className="text-[--primary]">
-                    {intToString(data[1])} {data[2] === "worth of items" ? " $" : ""}
+                    {data[2] === "worth of items" ? "$" : ""}{intToString(data[1])}
                 </Typography>
                 <Typography variant="h5" color="blue-gray">
                     {data[2]}

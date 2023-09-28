@@ -14,7 +14,7 @@ const ItemCard = ({ data, setCheckoutItems }) => {
                 <Tooltip content={data.name} className="bg-[--primary]">
                     <span className="text-[--text-black] text-[21px] truncate w-[110px]">{data.name}</span>
                 </Tooltip>
-                <span className="text-gray-700 text-[16px]">{data.price.toFixed(2)} $</span>
+                <span className="text-gray-700 text-[16px]">${data.price.toFixed(2)}</span>
             </div>
             <div className="flex flex-1 justify-center">
                 {

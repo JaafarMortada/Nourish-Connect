@@ -125,7 +125,7 @@ const TopItems = () => {
                                                 </td>
                                                 <td className="p-4">
                                                     <Typography variant="small" color="blue-gray" className="font-normal">
-                                                        {sold_value} $
+                                                        ${sold_value}
                                                     </Typography>
                                                 </td>
 

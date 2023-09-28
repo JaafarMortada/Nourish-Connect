@@ -13,7 +13,7 @@ import { sendRequest } from "../../../config/request";
 import { usePusher } from "../../../global/PusherContext";
 import moment from "moment"
 
-const TABLE_HEAD = ["Title", "Description", "Started At", "Time Left"];
+const TABLE_HEAD = ["Title", "Description", "Started At", "Days Left"];
 
 const DiscountsTable = () => {
 

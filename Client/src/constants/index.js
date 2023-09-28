@@ -82,7 +82,7 @@ export const sidebarManagerLinks = [
 export const sidebarCashierLinks = [
     {
         id: "point-of-sales",
-        text: "Point Of Sales",
+        text: "Point of Sales",
         icon: ShoppingBagIcon,
 
     },
