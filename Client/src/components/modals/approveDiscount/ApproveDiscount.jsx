@@ -14,6 +14,8 @@ import { useStoreData } from "../../../global/store";
 import { sendRequest } from "../../../config/request";
 import { websocketRequest } from "../../../config/websocketRequest";
 import moment from "moment";
+import toast from 'react-hot-toast';
+
 const ApproveDiscount = ({ open, handleOpen, data, removeApproved }) => {
 
     const { store } = useStoreData()
@@ -29,6 +31,7 @@ const ApproveDiscount = ({ open, handleOpen, data, removeApproved }) => {
             setApproving(false)
         }, 3000)
     }
+    const notify = () => toast.success(`Discount Approved! `,{duration: 6000})
 
     const approveDiscount = async () => {
         setApproving(true)
@@ -40,6 +43,7 @@ const ApproveDiscount = ({ open, handleOpen, data, removeApproved }) => {
 
             });
             if (response.message === "success") {
+                notify()
                 setApproving(false)
                 removeApproved(data.discount_suggestion_id)
                 handleOpen()

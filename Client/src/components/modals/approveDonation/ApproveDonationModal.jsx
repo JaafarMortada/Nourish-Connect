@@ -12,6 +12,7 @@ import { useState } from "react";
 import { sendRequest } from "../../../config/request";
 import { websocketRequest } from "../../../config/websocketRequest";
 import { useStoreData } from "../../../global/store";
+import toast from 'react-hot-toast';
 
 const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
 
@@ -26,6 +27,7 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
             setApproving(false)
         }, 3000)
     }
+    const notify = () => toast.success(`Donation Approved! `,{duration: 6000})
 
     const approveDonation = async () => {
         setApproving(true)
@@ -35,6 +37,7 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
                 route: `/api/manager/approve_donation/${data.suggestion_id}`,
             });
             if (response.message === "success") {
+                notify()
                 setApproving(false)
                 removeApproved(data.suggestion_id)
                 websocketRequest({
@@ -54,7 +57,7 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
                 handleError()
             }
         } catch (error) {
-            
+
             handleError()
         }
     }
@@ -83,6 +86,7 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
             </DialogHeader>
 
             <DialogBody className="flex flex-wrap overflow-scroll flex-col">
+                
                 <Typography variant="h6" color="blue-gray">
                     Thank you for your generous contribution. Before proceeding, we kindly request your approval to finalize the donation process.
                     <br />The details of your donation are listed below.
@@ -95,10 +99,10 @@ const ApproveDonation = ({ open, handleOpen, data, removeApproved }) => {
                         <span className="font-bold">Description (Context written by the charity):<br /> </span>
                     </li>
                     <div className="max-w-full max-h-40 whitespace-normal text-justify px-10 my-3 overflow-scroll">
-                        
-                            {data.request_description}
 
-                        
+                        {data.request_description}
+
+
                     </div>
 
                     <li className="truncate">
