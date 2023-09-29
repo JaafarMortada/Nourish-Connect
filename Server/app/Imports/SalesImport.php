@@ -25,7 +25,7 @@ class SalesImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         
-        $dbItem = Item::where('id', $row['id'])->first();
+        $dbItem = Item::where('id', $row['item_id'])->first();
         if (is_null($dbItem) || $dbItem->available_quantity <= 0) {
             return;
         }
