@@ -15,6 +15,7 @@ import { useState } from "react";
 import { sendRequest } from "../../../config/request";
 import { websocketRequest } from "../../../config/websocketRequest";
 import DownloadTemplate from "../../ui/DownloadTemplate";
+import toast from 'react-hot-toast';
 
 const UploadSalesData = ({ open, handleOpen }) => {
     const [data, setData] = useState({
@@ -41,6 +42,8 @@ const UploadSalesData = ({ open, handleOpen }) => {
         }, 3000)
     }
 
+    const notify = () => toast.success(`Data Imported Successfully! `,{duration: 6000})
+
     const handleUpload = async () => {
         setUploading(true)
         try {
@@ -57,6 +60,8 @@ const UploadSalesData = ({ open, handleOpen }) => {
 
             });
             if (response.message === "data imported successfully") {
+                handleOpen()
+                notify()
                 setData({
                     inventoryFile: "",
                 })

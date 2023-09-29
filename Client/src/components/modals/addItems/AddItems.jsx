@@ -1,178 +1,184 @@
 import {
-    Card,
-    CardHeader,
-    Typography,
-    CardBody,
-    Spinner,
-    Dialog,
-    DialogBody,
-    DialogFooter,
-    DialogHeader
-  } from "@material-tailwind/react";
-  
-  import PrimaryButton from "../../ui/Button";
-  import InputField from "../../ui/Input";
-  import TextAreaField from "../../ui/TextAreaField";
-  import FileDragInput from "../../ui/FileDragInput";
-  import { useState } from "react";
-  import { inventoryUploadConditions } from "../../../constants";
-  import { sendRequest } from "../../../config/request";
-  import { websocketRequest } from "../../../config/websocketRequest";
-  import { useStoreData } from "../../../global/store";
-  import DownloadTemplate from "../../ui/DownloadTemplate";
+  Card,
+  CardHeader,
+  Typography,
+  CardBody,
+  Spinner,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader
+} from "@material-tailwind/react";
+
+import PrimaryButton from "../../ui/Button";
+import InputField from "../../ui/Input";
+import TextAreaField from "../../ui/TextAreaField";
+import FileDragInput from "../../ui/FileDragInput";
+import { useState } from "react";
+import { inventoryUploadConditions } from "../../../constants";
+import { sendRequest } from "../../../config/request";
+import { websocketRequest } from "../../../config/websocketRequest";
+import { useStoreData } from "../../../global/store";
+import DownloadTemplate from "../../ui/DownloadTemplate";
+import toast from 'react-hot-toast';
 
 const AddItems = ({ open, handleOpen }) => {
-    const [data, setData] = useState({
-        name: "",
-        description: "",
-        price: "",
-        original_price: "",
-        quantity: "",
-        production_date: "",
-        expiry_date: "",
-        category: "",
-        barcode: "",
-        inventoryFile: "",
-    
-      })
-    
-      const { store } = useStoreData()
-    
-      const [error, setError] = useState(false)
-      const [fileError, setFileError] = useState(false)
-      const [uploading, setUploading] = useState(false)
-    
-      const handleFileUpload = (file) => {
-        setData({ ...data, inventoryFile: file })
-      };
-      const handleImageUpload = (file) => {
-        setData({ ...data, image: file })
-      };
-    
-      const handleDataChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value })
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    original_price: "",
+    quantity: "",
+    production_date: "",
+    expiry_date: "",
+    category: "",
+    barcode: "",
+    inventoryFile: "",
+
+  })
+
+  const { store } = useStoreData()
+
+  const [error, setError] = useState(false)
+  const [fileError, setFileError] = useState(false)
+  const [uploading, setUploading] = useState(false)
+
+  const handleFileUpload = (file) => {
+    setData({ ...data, inventoryFile: file })
+  };
+  const handleImageUpload = (file) => {
+    setData({ ...data, image: file })
+  };
+
+  const handleDataChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value })
+  }
+
+  const handleError = () => {
+    setError(true)
+    setTimeout(() => {
+      setError(false);
+    }, 3000)
+  }
+
+  const handleFileError = () => {
+    setUploading(false)
+    setFileError(true)
+    setTimeout(() => {
+      setFileError(false);
+    }, 3000)
+  }
+
+  const handleAddItem = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('description', data.description);
+      formData.append('price', data.price);
+      formData.append('original_price', data.original_price);
+      formData.append('quantity', data.quantity);
+      formData.append('production_date', data.production_date);
+      formData.append('expiry_date', data.expiry_date);
+      if (data.image) formData.append('image', data.image);
+      formData.append('category', data.category);
+      formData.append('barcode', data.barcode);
+      const response = await sendRequest({
+        method: "POST",
+        route: "/api/cashier/items/add_item",
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData,
+
+      });
+
+      if (response.message === "Item added successfully") {
+        setData({
+          name: "",
+          description: "",
+          price: "",
+          original_price: "",
+          quantity: "",
+          production_date: "",
+          expiry_date: "",
+          category: "",
+          barcode: "",
+          inventoryFile: "",
+        })
+        websocketRequest({
+          inventoryId: store.inventory_id,
+          WSevent: "items"
+        })
+      } else {
+        handleError()
       }
-    
-      const handleError = () => {
-        setError(true)
-        setTimeout(() => {
-          setError(false);
-        }, 3000)
-      }
-    
-      const handleFileError = () => {
+    } catch (error) {
+      handleError()
+    }
+  }
+
+  const notify = () => toast.success(`Data Imported Successfully! `, { duration: 6000 })
+
+  const handleUpload = async () => {
+    setUploading(true)
+    try {
+      const formData = new FormData();
+      formData.append('file', data.inventoryFile);
+
+      const response = await sendRequest({
+        method: "POST",
+        route: "/api/cashier/items/import_file/items",
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData,
+
+      });
+      if (response.message === "data imported successfully") {
+        handleOpen()
+        notify()
+        setData({
+          ...data,
+          inventoryFile: "",
+        })
+
         setUploading(false)
-        setFileError(true)
-        setTimeout(() => {
-          setFileError(false);
-        }, 3000)
+        websocketRequest({
+          inventoryId: store.inventory_id,
+          WSevent: "items"
+        })
+      } else {
+        handleFileError()
       }
-    
-      const handleAddItem = async () => {
-        try {
-          const formData = new FormData();
-          formData.append('name', data.name);
-          formData.append('description', data.description);
-          formData.append('price', data.price);
-          formData.append('original_price', data.original_price);
-          formData.append('quantity', data.quantity);
-          formData.append('production_date', data.production_date);
-          formData.append('expiry_date', data.expiry_date);
-          if (data.image) formData.append('image', data.image);
-          formData.append('category', data.category);
-          formData.append('barcode', data.barcode);
-          const response = await sendRequest({
-            method: "POST",
-            route: "/api/cashier/items/add_item",
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-            body: formData,
-    
-          });
-    
-          if (response.message === "Item added successfully") {
-            setData({
-              name: "",
-              description: "",
-              price: "",
-              original_price: "",
-              quantity: "",
-              production_date: "",
-              expiry_date: "",
-              category: "",
-              barcode: "",
-              inventoryFile: "",
-            })
-            websocketRequest({
-              inventoryId: store.inventory_id,
-              WSevent: "items"
-            })
-          } else {
-            handleError()
-          }
-        } catch (error) {
-          handleError()
-        }
-      }
-    
-      const handleUpload = async () => {
-        setUploading(true)
-        try {
-          const formData = new FormData();
-          formData.append('file', data.inventoryFile);
-    
-          const response = await sendRequest({
-            method: "POST",
-            route: "/api/cashier/items/import_file/items",
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-            body: formData,
-    
-          });
-          if (response.message === "data imported successfully") {
-            setData({
-              ...data,
-              inventoryFile: "",
-            })
-            setUploading(false)
-            websocketRequest({
-              inventoryId: store.inventory_id,
-              WSevent: "items"
-            })
-          } else {
-            handleFileError()
-          }
-        } catch (error) {
-          handleFileError()
-        }
-      }
+    } catch (error) {
+      handleFileError()
+    }
+  }
 
-    return (
+  return (
 
-        <Dialog
-            className="flex h-[90vh] flex-col overflow-scroll"
-            size="xl"
-            open={open}
-            handler={handleOpen}
-            animate={{
-                mount: { scale: 1, y: 0 },
-                unmount: { scale: 0.9, y: -100 },
-            }}
-        >
-            <DialogHeader className="rounded-none ">
-                <div className="mb-4 h-fit flex items-center justify-between gap-8">
-                    <div>
-                        <Typography variant="h5" color="blue-gray">
-                            Add Stock
-                        </Typography>
-                    </div>
-                </div>
+    <Dialog
+      className="flex h-[90vh] flex-col overflow-scroll"
+      size="xl"
+      open={open}
+      handler={handleOpen}
+      animate={{
+        mount: { scale: 1, y: 0 },
+        unmount: { scale: 0.9, y: -100 },
+      }}
+    >
+      <DialogHeader className="rounded-none ">
+        <div className="mb-4 h-fit flex items-center justify-between gap-8">
+          <div>
+            <Typography variant="h5" color="blue-gray">
+              Add Stock
+            </Typography>
+          </div>
+        </div>
 
-            </DialogHeader>
-            <DialogBody className="overflow-scroll px-0 flex-1 flex justify-center">
-            <div className="w-[full] flex-1 flex flex-col items-center gap-10 overflow-scroll">
+      </DialogHeader>
+      <DialogBody className="overflow-scroll px-0 flex-1 flex justify-center">
+        <div className="w-[full] flex-1 flex flex-col items-center gap-10 overflow-scroll">
           <div className="flex gap-10 lg:flex-row flex-col pt-5">
             <div className="w-[200px]">
               <InputField
@@ -304,9 +310,9 @@ const AddItems = ({ open, handleOpen }) => {
           </div>
         </div>
 
-            </DialogBody>
-        </Dialog>
-    );
+      </DialogBody>
+    </Dialog>
+  );
 }
 
 export default AddItems
