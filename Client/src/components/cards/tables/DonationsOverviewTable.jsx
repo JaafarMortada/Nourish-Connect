@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { useStoreData } from "../../../global/store";
 import { sendRequest } from "../../../config/request";
 import { usePusher } from "../../../global/PusherContext";
+import { BellAlertIcon } from "@heroicons/react/24/solid";
+import toast from 'react-hot-toast';
 
 const TABLE_HEAD = ["Title", "Category", "Quantity", "Donated By", "Status"];
 
@@ -47,11 +49,18 @@ const DonationsOverviewTable = ({ newRequests }) => {
         getDonations()
     }, [])
 
+    const notify = () => toast.success(`You Received A New Donation! `,
+                                            {
+                                                duration: 6000,
+                                                icon: <BellAlertIcon className="text-yellow-600 w-5 h-5"/>
+                                            })
+
     const pusher = usePusher();
     const pusherEvent = () => {
 
         const channel = pusher.subscribe(`donation-${store.user_id}`);
         channel.bind('donation-data-updated', () => {
+            notify()
             getDonations()
         })
 
