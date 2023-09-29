@@ -14,7 +14,7 @@ import { usePusher } from "../../../global/PusherContext";
 
 import AddItems from "../../modals/addItems/AddItems";
 import moment from "moment";
-const TABLE_HEAD = ["Name", "Quantity Left", "Stock Price/Unit", "Price/Unit", "Production Date", "Expiry Date"];
+const TABLE_HEAD = ["Name", "Quantity Left", "Unit Stock Price", "Unit Price", "Production Date", "Expiry Date"];
 
 const ItemsTable = () => {
 

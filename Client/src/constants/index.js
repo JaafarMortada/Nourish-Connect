@@ -172,11 +172,7 @@ export const POSuploadConditions = [
     },
     {
         id: 'POS-condition-1',
-        text: 'Item’s Name'
-    },
-    {
-        id: 'POS-condition-2',
-        text: 'item’s barcode'
+        text: 'Item’s Id'
     },
     {
         id: 'POS-condition-3',
