@@ -17,7 +17,7 @@ const DiscountSuggestions = () => {
 
     const [suggestionsData, setSuggestionsData] = useState([])
     const [loading, setLoading] = useState(true)
-    const [loadingSuggestions, setLoadingSuggestions] = useState(true)
+    const [loadingSuggestions, setLoadingSuggestions] = useState(false)
 
     const removeApprovedSuggestion = (suggestionId) => {
         const updatedSuggestions = suggestionsData.filter(
