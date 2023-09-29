@@ -19,7 +19,7 @@ class DiscountsController extends Controller
 
             $untilDate = Carbon::parse($discount->until);
 
-            $timeLeft = $untilDate->isFuture() ? $untilDate->diffForHumans() : 'Expired';
+            $timeLeft = $untilDate->isFuture() ? $untilDate->diffInDays() : 'Expired';
             $itemsData = $discount->items->map(function ($item) {
                 return [
                     'name' => $item->name,
