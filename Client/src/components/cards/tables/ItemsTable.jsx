@@ -178,7 +178,7 @@ const ItemsTable = () => {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        ${original_price}
+                                                        ${original_price.toFixed(2)}
                                                     </Typography>
                                                 </td>
                                                 <td className={classes}>

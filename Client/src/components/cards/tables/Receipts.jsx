@@ -156,7 +156,7 @@ const ReceiptsTable = () => {
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {total_price}
+                                                        {total_price.toFixed(2)}
                                                     </Typography>
                                                 </td>
                                             </tr>
