@@ -49,7 +49,7 @@ const Checkout = ({ data, setCheckoutItems, handleRemoveFromCheckout, handleQuan
       <div className="w-full min-h-[130px] rounded-b-lg border-t-2 border-[--background-black] flex flex-col justify-center items-center gap-2">
         <div>
           <span className="font-bold">Total: </span>
-          <span>{total}$</span>
+          <span>${total.toFixed(2)}</span>
         </div>
         <PrimaryButton label={`${error ? "An error occurred" : "Checkout"}`} classNames={`w-[80%] ${ error ? "bg-red-500" : "bg-[--primary]"}`} onClick={checkoutRequest} />
       </div>
