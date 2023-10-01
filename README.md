@@ -120,13 +120,21 @@
 ###  Nourish Connect is built using the following technologies:
 
 - Nourish Connect uses the [React](https://reactjs.org/) library for its frontend development. React is known for its flexibility and efficiency in building dynamic user interfaces.
+
+- The user interface adheres to a responsive and modern design using [Tailwind CSS](https://tailwindcss.com) framework and the [material tailwind](https://www.material-tailwind.com) library. Tailwind CSS is a utility-first CSS framework that simplifies the styling process while maintaining a highly customizable design.
+
 - The backend of Nourish Connect is powered by the [Laravel framework](https://laravel.com/). Laravel is a popular PHP framework known for its elegant syntax and robust features for web application development.
+
 - The project uses a SQL database for data storage and management. SQL databases are well-suited for structured data and provide strong data consistency.
+
 - Nourish Connect incorporates real-time chat functionality using [Firebase](
 https://firebase.google.com/). Firebase is a comprehensive platform that offers real-time database capabilities, making it ideal for chat applications.
-- To enable real-time updates, the project leverages the [Pusher](https://pusher.com) service for WebSocket functionality. Websockets ensure instant data synchronization between different users and components of the application.
+
 - Nourish Connect utilizes [Node.js](https://nodejs.org/en) for handling endpoints that trigger WebSocket events. Node.js is known for its non-blocking, event-driven architecture, making it suitable for real-time applications and API endpoints.
 
+- To enable real-time updates, the project leverages the [Pusher](https://pusher.com) service for WebSocket functionality. Websockets ensure instant data synchronization between different users and components of the application.
+
+- NourishConnect's APIs are hosted on [AWS](https://aws.amazon.com/fr/ec2/). You can find a concise documentation of these APIs using [Postman](https://www.postman.com) by following this [link](https://documenter.getpostman.com/view/28634431/2s9YJaZPjj).
 
 <br><br>
 
@@ -144,6 +152,15 @@ This is an example of how to list things you need to use the website and how to 
   npm install npm@latest -g
   ```
 
+*  To access the AWS server via the website instead of Postman, you can easily switch between these options by modifying the URLs in the following files in the client directory.
+
+    ```sh
+    /src/config/request.js
+    /src/config/websocketRequest.js
+    /src/constants/index.js
+    ```
+    
+
 ### Installation
 
 1. **Open your XAMPP control panel and start Apache and MySQL**
@@ -156,7 +173,7 @@ This is an example of how to list things you need to use the website and how to 
 3. **Frontend Setup**
    - Navigate to the frontend directory:
      ```sh
-     cd Nourish-Connect/Client
+     cd /Client
      ```
    - Install npm packages:
      ```sh
@@ -173,7 +190,7 @@ This is an example of how to list things you need to use the website and how to 
 4. **Backend Setup**
    - Navigate to the backend directory:
      ```sh
-     cd ../Server
+     cd /Server
      ```
    - Install composer packages:
      ```sh
@@ -203,7 +220,7 @@ This is an example of how to list things you need to use the website and how to 
 5. **Node.js Server Setup**
    - Navigate to the websockets-server directory:
      ```sh
-     cd ../websockets-server
+     cd /websockets-server
      ```
    - Install npm packages:
      ```sh
