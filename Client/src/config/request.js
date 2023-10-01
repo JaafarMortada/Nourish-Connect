@@ -1,6 +1,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "http://127.0.0.1:8000";
+// axios.defaults.baseURL = "http://34.254.113.110";
 
 export const sendRequest = async ({
   method = "GET",
@@ -18,6 +19,7 @@ export const sendRequest = async ({
     const response = await axios.request({
       method,
       url: route,
+      // url: `${route}?cacheblock=true`,
       data: body,
     });
 

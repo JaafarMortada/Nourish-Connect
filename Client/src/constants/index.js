@@ -36,6 +36,7 @@ export const emptyStore = {
 }
 
 export const baseStorageURL = 'http://127.0.0.1:8000/storage/'
+// export const baseStorageURL = 'http://34.254.113.110/storage/'
 
 export const sidebarManagerLinks = [
     {

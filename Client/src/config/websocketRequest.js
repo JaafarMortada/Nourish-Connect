@@ -18,6 +18,7 @@ export const websocketRequest = async ({
     const response = await axios.request({
       method: "GET",
       url: `http://localhost:6001/ws/${query}`,
+      // url: `http://34.254.113.110:3000/ws/${query}`,
     });
 
     return response.data;
