@@ -1,7 +1,7 @@
 <img src="./readme/title1.svg"/>
 <div align="center">
 
-> Hello, world! This is the project’s summary that describes the project plain and simple, limited to the space available.  
+> Hello, world! This is the project’s summary that describes the project plain and simple, limited to the space available.
 
 **[PROJECT PHILOSOPHY](#project-philosophy) • [PROTOTYPING](#Prototyping) • [TECH STACK](#tech-stack) • [IMPLEMENTATION](#implementation) • [HOW TO RUN?](#how-to-run)**
 
@@ -16,15 +16,16 @@
 >
 > Our philosophy revolves around the principles of sustainability, efficiency, and social impact. We envision a world where no edible food goes to waste, and every surplus item can nourish those in need.
 
-### Supermarkets User Stories
+<span style="font-size: 21px;">Supermarkets User Stories</span>
 - As a supermarket manager, I want to sales data in real-time so that I can make informed decisions about surplus food items.
 - As a supermarket manager, I want AI-generated suggestions on which items to donate to local charities to minimize food waste and maximize social impact.
 - As a supermarket manager, I want to view a dashboard summarizing donation data, weekly revenue, and top products to monitor the positive environmental and social impact of my store.
-### Charities User Stories
+
+<span style="font-size: 21px;">Charities User Stories</span>
 - As a representative of a local charity, I want to post requests for specific food donations on the platform and track the status of these requests in real-time. This ensures that our organization receives the items needed to support our community efficiently and allows us to coordinate effectively with supermarkets.
 - As a charity, I want to easily communicate and coordinate with supermarket managers to schedule food pickups and streamline the donation process.
 
-### Cashiers User Stories
+<span style="font-size: 21px;">Cashiers User Stories</span>
 - As a cashier, I want a user-friendly point-of-sale system integrated into the platform, making it easy for me to update inventory data and reduce errors.
 - As a cashier, I want the option to upload inventory data by filling out a form or by uploading CSV/XLSX files, ensuring accurate inventory management.
 
@@ -37,8 +38,9 @@
 
 
 
-### Mockups
-#### Auth Screens
+<span style="font-size: 21px;">Mockups</span>
+
+<span style="font-size: 16px;">Auth Screens (Web)</span>
 | Sign up 1 | Sign up 2 |
 | ---| ---| 
 | ![Signup1](./readme/screenshots/signup2.png) | ![Signup2](./readme/screenshots/signup1.png) | 
@@ -47,7 +49,8 @@
 | ---| ---|
 | ![Signup3](./readme/screenshots/signup3.png) | ![Signin](./readme/screenshots/signin.png) | 
 
-#### Manager Screens
+
+<span style="font-size: 16px;">Manager Screens (Web)</span>
 | Dashboard | Cashiers |
 | ---| ---|
 | ![Signup3](./readme/screenshots/dashboard.png) | ![Signin](./readme/screenshots/cashiers.png) | 
@@ -60,12 +63,14 @@
 | ---| ---|
 | ![Signup3](./readme/screenshots/map.png) | ![Signin](./readme/screenshots/chat.png) | 
 
-#### Charity Screens
+
+<span style="font-size: 16px;">Charity Screens (Web)</span>
 | Requests Overview | Chat |
 | ---| ---|
 | ![Signup3](./readme/screenshots/requests_overview.png) | ![Signin](./readme/screenshots/chat.png) | 
 
-#### Cashier Screens
+
+<span style="font-size: 16px;">Cashier Screens (Web)</span>
 | Point Of Sales | Inventory |
 | ---| ---|
 | ![Signup3](./readme/screenshots/POS.png) | ![Signin](./readme/screenshots/inventory.png) | 
@@ -79,16 +84,19 @@
 
 > Using the wireframes and mockups as a guide, we implemented Nourish Connect website with the following features (These are GIFs recorded from the real website):
 
-### Landing Page
+<span style="font-size: 16px;">Landing Page</span>
+
 
 <img width="100%" src="./readme/gifs/landing_page.gif"/>
 
 
-### Auth Screens (Web)
+<span style="font-size: 16px;">Auth Screens (Web)</span>
 | Sign up | Sign in |  
 | ---| ---| 
 | ![dashboard](/readme/gifs/signup.gif) | ![cashiers](/readme/gifs/signin.gif) |
-### Manager Screens (Web)
+
+
+<span style="font-size: 16px;">Manager Screens (Web)</span>
 | Dashboard  | Cashiers screen |  
 | ---| ---| 
 | ![dashboard](/readme/gifs/dashboard.gif) | ![cashiers](/readme/gifs/cashiers_table.gif) |
@@ -101,12 +109,14 @@
 | ---| ---| 
 | ![Chats](/readme/gifs/chat_page.gif) | ![Map](/readme/gifs/charities_map.gif) |
 
-### Charity Screens (Web)
+
+<span style="font-size: 16px;">Charity Screens (Web)</span>
 | Chats Screen (Supermarket mangers & Charities) | Donations Overview Screen |
 | ---| ---| 
 | ![Chats](/readme/gifs/chat_page.gif) | ![DonationsOverview](/readme/gifs/donations_overview.gif) |
 
-### Cashier Screens (Web)
+
+<span style="font-size: 16px;">Cashier Screens (Web)</span>
 | Point Of Sales Screen  | Inventory screen |  
 | ---| ---| 
 | ![POS](/readme/gifs/POS.gif) | ![inventory](/readme/gifs/inventory.gif) |
@@ -117,7 +127,8 @@
 <img src="./readme/title5.svg"/>
 <a id="tech-stack"></a>
 
-###  Nourish Connect is built using the following technologies:
+
+<span style="font-size: 21px;">Nourish Connect is built using the following technologies:</span>
 
 - Nourish Connect uses the [React](https://reactjs.org/) library for its frontend development. React is known for its flexibility and efficiency in building dynamic user interfaces.
 
@@ -143,7 +154,8 @@ https://firebase.google.com/). Firebase is a comprehensive platform that offers 
 <a id="how-to-run"></a>
 > To set up Nourish Connect locally, follow these steps:
 
-### Prerequisites
+<br><br>
+<span style="font-size: 21px;">Prerequisites</span>
 
 This is an example of how to list things you need to use the website and how to install them.
 
@@ -161,7 +173,8 @@ This is an example of how to list things you need to use the website and how to 
     ```
     
 
-### Installation
+<br><br>
+<span style="font-size: 21px;">Installation</span>
 
 1. **Open your XAMPP control panel and start Apache and MySQL**
 2. **Clone the Repository**
