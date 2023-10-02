@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
-import CharityDonations from '../../Pages/Charity/CharityDonations';
-import ChatsPage from '../../Pages/ChatsPage';
+import CharityDonations from '../../pages/charity/CharityDonations';
+import ChatsPage from '../../pages/ChatsPage';
 
 const CharityRoutes = () => {
     return ( 

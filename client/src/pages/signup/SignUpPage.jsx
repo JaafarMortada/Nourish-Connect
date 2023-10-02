@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { hands_light_blue, hands_blue, hands_purple } from "../../assets";
-import SignUpForm from "../../components/forms/SignupForm/SignupForm";
+import SignUpForm from "../../components/forms/signupForm/SignupForm";
 
 const SignUpPage = () => {
 

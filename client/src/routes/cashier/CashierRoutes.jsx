@@ -3,7 +3,7 @@ import {
     PointOfSales, 
     Inventory,
 
-} from '../../Pages/Cashier';
+} from '../../pages/cashier';
 
 const CashierRoutes = () => {
     return ( 

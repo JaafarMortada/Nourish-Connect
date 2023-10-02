@@ -6,8 +6,8 @@ import {
     Discounts,
 
 } from '../../Pages/Manager';
-import ChatsPage from '../../Pages/ChatsPage';
-import CharitiesMap from '../../Pages/Manager/CharitiesMap';
+import ChatsPage from '../../pages/ChatsPage';
+import CharitiesMap from '../../pages/manager/CharitiesMap';
 
 const ManagerRoutes = () => {
     return ( 
