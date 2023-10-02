@@ -3,7 +3,7 @@
 
 > Hello, world! This is the project’s summary that describes the project plain and simple, limited to the space available.
 
-**[PROJECT PHILOSOPHY](#project-philosophy) • [PROTOTYPING](#Prototyping) • [TECH STACK](#tech-stack) • [IMPLEMENTATION](#implementation) • [HOW TO RUN?](#how-to-run)**
+**[PROJECT PHILOSOPHY](#project-philosophy) • [PROTOTYPING](#Prototyping) • [TECH STACK](#tech-stack) • [IMPLEMENTATION](#implementation) • [PERFORMANCE](#performance) • [HOW TO RUN?](#how-to-run)**
 
 </div>
 <br><br>
@@ -127,8 +127,7 @@
 <img src="./readme/title5.svg"/>
 <a id="tech-stack"></a>
 
-
-<span style="font-size: 21px;">Nourish Connect is built using the following technologies:</span>
+>Nourish Connect is built using the following technologies:
 
 - Nourish Connect uses the [React](https://reactjs.org/) library for its frontend development. React is known for its flexibility and efficiency in building dynamic user interfaces.
 
@@ -145,16 +144,96 @@ https://firebase.google.com/). Firebase is a comprehensive platform that offers 
 
 - To enable real-time updates, the project leverages the [Pusher](https://pusher.com) service for WebSocket functionality. Websockets ensure instant data synchronization between different users and components of the application.
 
-- NourishConnect's APIs are hosted on [AWS](https://aws.amazon.com/fr/ec2/). You can find a concise documentation of these APIs using [Postman](https://www.postman.com) by following this [link](https://documenter.getpostman.com/view/28634431/2s9YJaZPjj).
 
 <br><br>
 
+
+<!-- Tech stack -->
+<img src="./readme/title7.svg"/>
+<a id="performance"></a>
+
+> NourishConnect's APIs are hosted on [AWS](https://aws.amazon.com/fr/ec2/). You can find a concise documentation of these APIs using [Postman](https://www.postman.com) by following this [link](https://documenter.getpostman.com/view/28634431/2s9YJaZPjj).
+
+Here are the average response times for several APIs outlined in the documentation, along with a concise overview of each API. These response times were determined by automating 50 consecutive requests using Postman and calculating the resulting average response time.
+
+<table>
+  <tr>
+    <td style="width: 20%;">Top Five Items</td>
+    <td style="width: 80%;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="./readme/performance/topFiveItems.jpg" alt="top five items performance"></td>
+    <td>During this test, the API is collecting sales data spanning the previous 30 days and offering insights on the top five items sold within the current month. The choice of whether to rank them based on their sales value or quantity sold is determined by the user's preference.</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td style="width: 20%;">Weekdays Revenue</td>
+    <td style="width: 80%;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="./readme/performance/weekdaysRevenue.jpg" alt="top five items performance"></td>
+    <td>During this test, the API is collecting sales data spanning the previous 7 days and offering insights on each day's total sales.</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td style="width: 20%;">Generate Suggestions</td>
+    <td style="width: 80%;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="./readme/performance/generateSuggestions.jpg" alt="Generate Suggestions performance"></td>
+    <td>During this test, the API is responsible for gathering and refining data, specifically food items within the supermarket's inventory and incoming charity requests. The data transmitted to the AI, which then generates recommendations, and subsequently, storing the AI's response in the database.</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td style="width: 20%;">Get Items</td>
+    <td style="width: 80%;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="./readme/performance/getItems.jpg" alt="Get Items performance"></td>
+    <td>During this test, the API is obtaining around 1500 items and, as a preliminary step, verifying if they are currently discounted in order to update their prices.</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td style="width: 20%;">Checkout</td>
+    <td style="width: 80%;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="./readme/performance/checkout.jpg" alt="Checkout performance"></td>
+    <td>During this test, the API is processing a receipt that includes a list of 100 items, by calculating totals, applying discounts, and providing a final transaction summary.</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td style="width: 20%;">Import Excel Data</td>
+    <td style="width: 80%;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="./readme/performance/importExcel.jpg" alt="import excel performance"></td>
+    <td>During this test, the API is tasked with transferring information from an Excel file containing data on 500 items into the database.</td>
+  </tr>
+</table>
+
+
+
+
+
+<br><br>
 <!-- How to run -->
 <img src="./readme/title6.svg"/>
 <a id="how-to-run"></a>
+
 > To set up Nourish Connect locally, follow these steps:
 
-<br><br>
+
 <span style="font-size: 21px;">Prerequisites</span>
 
 This is an example of how to list things you need to use the website and how to install them.
