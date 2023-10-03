@@ -1,13 +1,33 @@
 <img src="./readme/title1.svg"/>
-<div align="center">
+<div>
 
 > Hello, world! This is the project’s summary that describes the project plain and simple, limited to the space available.
 
-**[PROJECT PHILOSOPHY](#project-philosophy) • [PROTOTYPING](#Prototyping) • [TECH STACK](#tech-stack) • [IMPLEMENTATION](#implementation) • [PERFORMANCE](#performance) • [HOW TO RUN?](#how-to-run)**
+
 
 </div>
 <br><br>
 
+<img src="./readme/title8.svg"/>
+<br><br>
+
+- [Project Philosophy](#project-philosophy) 
+  - [User Stories](#user-stories)
+- [Prototyping](#Prototyping) 
+
+- [Tech Stack](#tech-stack) 
+  - [Frontend](#frontend)
+  - [Backend](#backend)
+
+- [Demo](#implementation) 
+
+- [Performance](#performance) 
+
+- [How to Run?](#how-to-run)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+
+<br><br>
 <!-- project philosophy -->
 <img src="./readme/title2.svg"/>
 <a id="project-philosophy"></a>
@@ -16,7 +36,9 @@
 >
 > Our philosophy revolves around the principles of sustainability, efficiency, and social impact. We envision a world where no edible food goes to waste, and every surplus item can nourish those in need.
 
-<span style="font-size: 21px;">Supermarkets User Stories</span>
+<a id="user-stories"></a>
+
+<span style="font-size: 21px;">Supermarket Manager User Stories</span>
 - As a supermarket manager, I want to sales data in real-time so that I can make informed decisions about surplus food items.
 - As a supermarket manager, I want AI-generated suggestions on which items to donate to local charities to minimize food waste and maximize social impact.
 - As a supermarket manager, I want to view a dashboard summarizing donation data, weekly revenue, and top products to monitor the positive environmental and social impact of my store.
@@ -78,6 +100,36 @@
 
 <br><br>
 
+<!-- Tech stack -->
+<img src="./readme/title5.svg"/>
+<a id="tech-stack"></a>
+
+>Nourish Connect is built using (but not limited to) the following technologies:
+
+<span style="font-size: 16px;">Frontend:</span>
+<a id="frontend" ></a>
+
+- Nourish Connect uses the [React](https://reactjs.org/) library for its frontend development. React is known for its flexibility and efficiency in building dynamic user interfaces.
+
+- The user interface adheres to a responsive and modern design using [Tailwind CSS](https://tailwindcss.com) framework and the [material tailwind](https://www.material-tailwind.com) library. Tailwind CSS is a utility-first CSS framework that simplifies the styling process while maintaining a highly customizable design.
+
+<span style="font-size: 16px;">Backend:</span>
+<a id="backend" ></a>
+
+- The backend of Nourish Connect is powered by the [Laravel framework](https://laravel.com/). Laravel is a popular PHP framework known for its elegant syntax and robust features for web application development.
+
+- The project uses a SQL database for data storage and management. SQL databases are well-suited for structured data and provide strong data consistency.
+
+- Nourish Connect incorporates real-time chat functionality using [Firebase](
+https://firebase.google.com/). Firebase is a comprehensive platform that offers real-time database capabilities, making it ideal for chat applications.
+
+- Nourish Connect utilizes [Node.js](https://nodejs.org/en) for handling endpoints that trigger WebSocket events. Node.js is known for its non-blocking, event-driven architecture, making it suitable for real-time applications and API endpoints.
+
+- To enable real-time updates, the project leverages the [Pusher](https://pusher.com) service for WebSocket functionality. Websockets ensure instant data synchronization between different users and components of the application.
+
+
+<br><br>
+
 <!-- Implementation -->
 <img src="./readme/title4.svg"/>
 <a id="implementation"></a>
@@ -123,29 +175,6 @@
 
 <br><br>
 
-<!-- Tech stack -->
-<img src="./readme/title5.svg"/>
-<a id="tech-stack"></a>
-
->Nourish Connect is built using the following technologies:
-
-- Nourish Connect uses the [React](https://reactjs.org/) library for its frontend development. React is known for its flexibility and efficiency in building dynamic user interfaces.
-
-- The user interface adheres to a responsive and modern design using [Tailwind CSS](https://tailwindcss.com) framework and the [material tailwind](https://www.material-tailwind.com) library. Tailwind CSS is a utility-first CSS framework that simplifies the styling process while maintaining a highly customizable design.
-
-- The backend of Nourish Connect is powered by the [Laravel framework](https://laravel.com/). Laravel is a popular PHP framework known for its elegant syntax and robust features for web application development.
-
-- The project uses a SQL database for data storage and management. SQL databases are well-suited for structured data and provide strong data consistency.
-
-- Nourish Connect incorporates real-time chat functionality using [Firebase](
-https://firebase.google.com/). Firebase is a comprehensive platform that offers real-time database capabilities, making it ideal for chat applications.
-
-- Nourish Connect utilizes [Node.js](https://nodejs.org/en) for handling endpoints that trigger WebSocket events. Node.js is known for its non-blocking, event-driven architecture, making it suitable for real-time applications and API endpoints.
-
-- To enable real-time updates, the project leverages the [Pusher](https://pusher.com) service for WebSocket functionality. Websockets ensure instant data synchronization between different users and components of the application.
-
-
-<br><br>
 
 
 <!-- Tech stack -->
@@ -192,7 +221,8 @@ Here are the average response times for several APIs outlined in the documentati
 <table>
   <tr>
     <td style="width: 20%;">Get Items</td>
-    <td style="width: 80%;">&nbsp;</td>
+    <td style="width: 80%;">
+   </td>
   </tr>
   <tr>
     <td><img src="./readme/performance/getItems.jpg" alt="Get Items performance"></td>
@@ -235,6 +265,7 @@ Here are the average response times for several APIs outlined in the documentati
 
 
 <span style="font-size: 21px;">Prerequisites</span>
+<a id="prerequisites"></a>
 
 This is an example of how to list things you need to use the website and how to install them.
 
@@ -254,6 +285,7 @@ This is an example of how to list things you need to use the website and how to 
 
 <br><br>
 <span style="font-size: 21px;">Installation</span>
+<a id="installation"></a>
 
 1. **Open your XAMPP control panel and start Apache and MySQL**
 2. **Clone the Repository**
