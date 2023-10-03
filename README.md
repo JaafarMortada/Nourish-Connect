@@ -17,9 +17,13 @@
 
 - [Tech Stack](#tech-stack) 
   - [Frontend](#frontend)
+  - [OpenAI Integration](#openai)
+  - [Realtime Features](#realtime)
   - [Backend](#backend)
-
+  
 - [Demo](#implementation) 
+
+- [OpenAi](#OpenAiSection)
 
 - [Performance](#performance) 
 
@@ -113,6 +117,19 @@
 
 - The user interface adheres to a responsive and modern design using [Tailwind CSS](https://tailwindcss.com) framework and the [material tailwind](https://www.material-tailwind.com) library. Tailwind CSS is a utility-first CSS framework that simplifies the styling process while maintaining a highly customizable design.
 
+<span style="font-size: 16px;">OpenAI Integration:</span>
+<a id="openai"></a>
+
+ - Nourish Connect harnesses the power of [OpenAI](https://openai.com) to generate thoughtful suggestions for donations and discounts. This integration plays a pivotal role in the project's mission to reduce food waste by providing intelligent recommendations based on gathered data. OpenAI, with its advanced natural language processing capabilities, enables the application to offer tailored suggestions that maximize the impact of donations and discounts.
+
+<span style="font-size: 16px;">Realtime Features:</span>
+<a id="realtime" ></a>
+
+- Nourish Connect incorporates real-time chat functionality using [Firebase](
+https://firebase.google.com/). Firebase is a comprehensive platform that offers real-time database capabilities, making it ideal for chat applications.
+
+- To enable real-time updates, the project leverages the [Pusher](https://pusher.com) service for WebSocket functionality. Websockets ensure instant data synchronization between different users and components of the application.
+
 <span style="font-size: 16px;">Backend:</span>
 <a id="backend" ></a>
 
@@ -120,13 +137,9 @@
 
 - The project uses a SQL database for data storage and management. SQL databases are well-suited for structured data and provide strong data consistency.
 
-- Nourish Connect incorporates real-time chat functionality using [Firebase](
-https://firebase.google.com/). Firebase is a comprehensive platform that offers real-time database capabilities, making it ideal for chat applications.
-
 - Nourish Connect utilizes [Node.js](https://nodejs.org/en) for handling endpoints that trigger WebSocket events. Node.js is known for its non-blocking, event-driven architecture, making it suitable for real-time applications and API endpoints.
 
-- To enable real-time updates, the project leverages the [Pusher](https://pusher.com) service for WebSocket functionality. Websockets ensure instant data synchronization between different users and components of the application.
-
+- NourishConnect's APIs are hosted on [AWS](https://aws.amazon.com/fr/ec2/), taking advantage of Amazon Web Services' robust infrastructure and cloud computing capabilities.
 
 <br><br>
 
@@ -174,7 +187,6 @@ https://firebase.google.com/). Firebase is a comprehensive platform that offers 
 | ![POS](/readme/gifs/POS.gif) | ![inventory](/readme/gifs/inventory.gif) |
 
 <br><br>
-
 
 
 <!-- Tech stack -->
