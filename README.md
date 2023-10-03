@@ -23,7 +23,7 @@
   
 - [Demo](#implementation) 
 
-- [OpenAi](#OpenAiSection)
+- [OpenAi](#open-ai-section)
 
 - [Performance](#performance) 
 
@@ -190,7 +190,7 @@ https://firebase.google.com/). Firebase is a comprehensive platform that offers 
 
 <!-- Open AI -->
 <img src="./readme/title9.svg"/>
-<a id="performance"></a>
+<a id="open-ai-section"></a>
 
 > Nourish Connect harnesses the power of [OpenAI](https://openai.com) to generate thoughtful suggestions for donations and discounts to combat food waste effectively.
 
@@ -245,8 +245,8 @@ Nourish Connect leverages OpenAI to provide actionable insights that facilitate 
 <br><br>
 
 <!-- Performance -->
-<img src="./readme/title7.svg"/>
-<a id="OpenAiSection"></a>
+<img src="./readme/title7.svg"/><a id="performance"></a>
+
 
 > NourishConnect's APIs are hosted on [AWS](https://aws.amazon.com/fr/ec2/). You can find a concise documentation of these APIs using [Postman](https://www.postman.com) by following this [link](https://documenter.getpostman.com/view/28634431/2s9YJaZPjj).
 
