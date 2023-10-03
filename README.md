@@ -188,10 +188,65 @@ https://firebase.google.com/). Firebase is a comprehensive platform that offers 
 
 <br><br>
 
-
-<!-- Tech stack -->
-<img src="./readme/title7.svg"/>
+<!-- Open AI -->
+<img src="./readme/title9.svg"/>
 <a id="performance"></a>
+
+> Nourish Connect harnesses the power of [OpenAI](https://openai.com) to generate thoughtful suggestions for donations and discounts to combat food waste effectively.
+
+
+Below is an example of how the OpenAI-powered feature works in Nourish Connect, utilizing data to suggest donations and discounts effectively:
+
+- Prompt:
+
+  ```sh
+  Given the following data:
+
+  {{data}}
+
+  Suggest donations for charities ( you can pick multiple charities and distribute the quantity of the item on them, or you can pick one charity and donate the whole quantity too), or, if you found no charity request that states the need to any of the items, you can suggest discounts.
+
+  The data is structured as follows:
+  First we have the charities, where each charity has an ID and multiple requests, each request has a title and description that can be helpful to determine what food items they need, and most importantly a category of the food they need, the needed quantity, and the already received quantity, and the ID of the request, if the ID of the request is null, don’t suggest a donation to this request.
+
+  Then we have the items in a supermarket inventory, these items are about to expire in less than two weeks, so you have to give suggestions on how to distribute them as donations to charities, or suggest discounts on them if there is no request that needs such item.
+
+  Return the answer as JSON parsable object (DO NOT Return ANY TEXT OR EXPLANATION OR NOTES BEFORE OR AFTER THE JSON OBJECT)
+  The JSON object should be in this format:
+
+    {"response": 
+      {
+        "donation_suggestions": [
+          {"item_id": "", "charity_id": "", "quantity_to_donate", "request_id": ""}, ...],
+        "discount_suggestions": [
+          {"item_id":"", "dicount_percentage":"(between 0 and 1)" , "discount_until": ""}, ...]
+      }
+  ```
+
+- Example Response:
+
+  ```sh
+  {
+    "response": [
+      {"donation_suggestions": [
+        {"item_id": 3, "charity_id": 23, "quantity_to_donate": 50},
+        {"item_id": 6, "charity_id": 23, "quantity_to_donate": 20},
+        {"item_id": 10, "charity_id": 23, "quantity_to_donate": 32},
+        {"item_id": 11, "charity_id": 23, "quantity_to_donate": 55},
+        {"item_id": 5, "charity_id": 25, "quantity_to_donate": 200},
+      ]},
+      {"discount_suggestions": [
+        {"item_id": 14, "discount_percentage": 0.5, "discount_until": "2023-09-26"}
+      ]}
+  ]}
+  ```
+
+Nourish Connect leverages OpenAI to provide actionable insights that facilitate a more efficient and impactful approach to food waste reduction and community support.
+<br><br>
+
+<!-- Performance -->
+<img src="./readme/title7.svg"/>
+<a id="OpenAiSection"></a>
 
 > NourishConnect's APIs are hosted on [AWS](https://aws.amazon.com/fr/ec2/). You can find a concise documentation of these APIs using [Postman](https://www.postman.com) by following this [link](https://documenter.getpostman.com/view/28634431/2s9YJaZPjj).
 
